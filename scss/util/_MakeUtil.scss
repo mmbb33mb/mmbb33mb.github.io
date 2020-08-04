@@ -1,0 +1,4172 @@
+@charset 'utf-8';
+
+// ===================================================================
+// ユーティリティ拡張クラス
+// ===================================================================
+
+// ********************************************  A  **********************************************//
+
+// ==============================
+// ポジションを親ボックスのコンテナ内の左上に配置する
+// @param $top 					: コンテナ上側からの位置
+// @param $left 				: コンテナ左側からの位置
+// ==============================
+@mixin absolute-top-left($top: 0, $left: 0) {
+	@include position(absolute);
+	@include top($top);
+	@include left($left);
+}
+
+// ==============================
+// ポジションを親ボックスのコンテナ内の右上に配置する
+// @param $top 					: コンテナ上側からの位置
+// @param $right 				: コンテナ右側からの位置
+// ==============================
+@mixin absolute-top-right($top: 0, $right: 0) {
+	@include position(absolute);
+	@include top($top);
+	@include right($right);
+}
+
+// ==============================
+// ポジションを親ボックスのコンテナ内の左下に配置する
+// @param $bottom 				: コンテナ下側からの位置
+// @param $left 				: コンテナ左側からの位置
+// ==============================
+@mixin absolute-bottom-left($bottom: 0, $left: 0) {
+	@include position(absolute);
+	@include bottom($bottom);
+	@include left($left);
+}
+
+// ==============================
+// ポジションを親ボックスのコンテナ内の右下に配置する
+// @param $bottom 				: コンテナ下側からの位置
+// @param $right 				: コンテナ右側からの位置
+// ==============================
+@mixin absolute-bottom-left($bottom: 0, $left: 0) {
+	@include position(absolute);
+	@include bottom($bottom);
+	@include left($left);
+}
+
+// ********************************************  C  **********************************************//
+
+// ==============================
+// 丸いレイアウトを作成する
+// ==============================
+@mixin circle() {
+	@include border-radius(100%);
+}
+
+// ==============================
+// フォントに強制的にクリアタイプを適用する
+// ==============================
+@mixin clearType() {
+	-webkit-transform-origin: 0 0;
+	-webkit-transform: scale(1, 1.01);
+	-moz-transform-origin: 0 0;
+	-moz-transform: scale(1, 1.01);
+	-ms-transform-origin: 0 0;
+	-ms-transform: scale(1, 1.02); // IE9のみ1.02
+	 -o-transform-origin: 0 0;
+	 -o-transform: scale(1, 1.01);
+}
+
+// ----------------------------------------------------------------------
+// フロートの解除を行う
+// ----------------------------------------------------------------------
+@mixin clearfix(){
+	.clearfix {
+		@if $legacy-support-for-ie7 {
+			@include min-height(1px, true);
+		}
+		@if $legacy-support-for-ie6 {
+			@include height(1%, true);
+		}
+		&::after {
+			@include content(".");
+			@include display(block);
+			@include clear(both);
+			@include height(0);
+			@include visibility(hidden);
+		}
+	}
+}
+
+// ==============================
+// テキストを見えなくする
+// ==============================
+@mixin clearText() {
+	.clearText {
+		@include text-indent(100%);
+		@include white-space(nowrap);
+		@include overflow(hidden);
+	}
+}
+
+// ********************************************  F  **********************************************//
+
+// ==============================
+// フェード間隔を設定する
+// @param $duration 			フェード間隔（初期値は0.2s）
+// ==============================
+@mixin fade($duration: 0.2s) {
+	@include transition(opacity $duration linear, visibility $duration linear);
+}
+
+// ********************************************  H  **********************************************//
+
+// ==============================
+// ホバー時にテキストの色を変更する
+// @param $name 				クラス名
+// @param $color 				テキストの色
+// @param $border 				ボーダー設定値
+// ==============================
+@mixin hover-change-color($name: null, $color: $base-font-color) {
+	.hover-change-color#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include transition(all $hover-duration !important);
+
+		&:hover {
+			@include color($color);
+		}
+	}
+}
+
+// ==============================
+// ホバー時にテキストの色とボーダーを変更する
+// @param $name 				クラス名
+// @param $color 				テキストの色
+// @param $border 				ボーダー設定値
+// ==============================
+@mixin hover-change-color-and-border($name: null, $color: $base-font-color, $border: $base-border) {
+	.hover-change-color-and-border#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include transition(all $hover-duration !important);
+
+		&:hover {
+			@include border($base-border);
+			@include color($color);
+		}
+	}
+}
+
+// ==============================
+// ホバー時にボーダーの太さを変更する
+// @param $name 				クラス名
+// @param $border-width 	 	ボーダーの太さ
+// ==============================
+@mixin hover-border-width($name: null, $border-width: $base-border-width) {
+	.hover-border-width#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include z-index(2);
+
+		&::after {
+			@include display(block);
+			@include content("");
+			@include position(absolute);
+			@include z-index(1);
+			@include top(0);
+			@include left(0);
+			@include width(100%);
+			@include height(100%);
+			@include border(0 solid transparent);
+			@include transition(all $hover-duration !important);
+		}
+
+		&:hover {
+			@include border-width($border-width);
+		}
+	}
+}
+
+// ==============================
+// ホバー時に外側に向けて影を表示する
+// @param $name 				クラス名
+// @param $shadow-color 	 	影の色
+// ==============================
+@mixin hover-shadow($name: null, $shadow-color: $base-shadow-color) {
+	.hover-shadow#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include transition(all $hover-duration !important);
+
+		&:hover {
+			@include box-shadow(0 0 45px rgba($shadow-color, 0.6));
+		}
+	}
+}
+
+// ==============================
+// ホバー時に内側に向けて影を表示する
+// @param $name 				クラス名
+// @param $shadow-color 	 	影の色
+// ==============================
+@mixin hover-inline-shadow($name: null, $shadow-color: $base-shadow-color) {
+	.hover-inline-shadow#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include transition(all $hover-duration !important);
+
+		&:hover {
+			@include box-shadow(0 0 30px rgba($shadow-color, 0.6) inset);
+		}
+	}
+}
+
+// ==============================
+// ホバー時にアウトラインを外側に向けて広げる
+// @param $name 				クラス名
+// @param $shadow-color 		影の色
+// @param $outline-color 		アウトラインの色
+// ==============================
+@mixin hover-outline($name: null, $shadow-color: $base-shadow-color, $outline-color: $base-outline-color) {
+	.hover-outline#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include box-shadow(inset 0 0 20px rgba($shadow-color, 0));
+		@include outline(none);
+		@include border(0 solid);
+		@include outline($base-outline-width solid);
+		@include outline-color(rgba($outline-color, 1));
+		@include outline-offset(0);
+		@include transition(all $hover-duration cubic-bezier(0.19, 1, 0.22, 1) !important);
+
+		&:hover {
+			@include border($base-outline-width solid);
+			@include box-shadow(inset 0 0 20px rgba($shadow-color, 0.5), 0 0 20px rgba($shadow-color, 0.2));
+			@include outline-color(rgba($outline-color, 0));
+			@include outline-offset(15px);
+		}
+	}
+}
+
+// ==============================
+// ホバー時に角丸の設定値を変更する
+// @param $name 				クラス名
+// @param $radius 				角丸の設定値
+// @param $background-color 	背景色
+// ==============================
+@mixin hover-radius($name: null, $radius: $base-radius, $background-color: inherit) {
+	.hover-radius#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include transition(all $hover-duration !important);
+
+		&:hover {
+			@if $background-color != inherit {
+				@include background-color(rgba($background-color, 0.3));
+			}
+			@else {
+				@include background-color($background-color);
+				@include opacity(0.3);
+			}
+			@include border-radius($radius);
+		}
+	}
+}
+
+// ==============================
+// ホバー時に右下に複製したボーダーをずらす
+// @param $name 				クラス名
+// @param $border 				ボーダーの設定値
+// ==============================
+@mixin hover-slide($name: null, $border: $base-border) {
+	.hover-slide#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include border($border);
+
+		&::after {
+			@include position(absolute);
+			@include top(0);
+			@include left(0);
+			@include content("");
+			@include width(100%);
+			@include height(100%);
+			@include min-height($button-min-height);
+			@include min-width($button-min-width);
+			@include border-radius($button-radius);
+			@include border($border);
+			@include opacity(0);
+			@include transition(all $hover-duration !important);
+		}
+
+		&:hover::after {
+			@include top(4px);
+			@include left(4px);
+			@include opacity(1);
+		}
+	}
+}
+
+// ==============================
+// ホバー時に内側から外側に向けて背景色を変更する
+// @param $name 				クラス名
+// @param $background-color 	背景色
+// ==============================
+@mixin hover-in-out($name: null, $background-color: $base-bg-color) {
+	.hover-in-out#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include z-index(2);
+		@include overflow(hidden);
+
+		&::after {
+			@include display(block);
+			@include content("");
+			@include position(absolute);
+			@include z-index(-1);
+			@include top(50%);
+			@include left(50%);
+			@include width(0);
+			@include height(0);
+			@include margin(0);
+			@include border-radius(50%);
+			@include background-color(rgba($background-color, 0.3));
+			@include transition(all $hover-duration !important);
+		}
+
+		&:hover::after {
+			@include width($button-min-width * 2);
+			@include height($button-min-width * 2);
+			@include margin(-80% 0 0 -80%);
+		}
+	}
+}
+
+// ==============================
+// ホバー時に内側から外側に向けて背景色を変更し、テキストの色を変える
+// @param $name 				クラス名
+// @param $background-color 	背景色
+// @param $color 				テキストの色
+// ==============================
+@mixin hover-in-out-color($name: null, $background-color: $base-bg-color, $color: $base-font-color) {
+	.hover-in-out-color#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include z-index(2);
+		@include overflow(hidden);
+
+		&::after {
+			@include display(block);
+			@include content("");
+			@include position(absolute);
+			@include z-index(-1);
+			@include top(50%);
+			@include left(50%);
+			@include width(0);
+			@include height(0);
+			@include margin(0);
+			@include border-radius(50%);
+			@include background($background-color);
+			@include transition(all $hover-duration !important);
+		}
+
+		&:hover {
+			@include color($color);
+			&::after {
+				@include width($button-min-width * 2);
+				@include height($button-min-width * 2);
+				@include margin(-80% 0 0 -80%);
+			}
+		}
+	}
+}
+
+// ==============================
+// ホバー時に内側から外側に向けて円形のボーダーが広がったのちに消えます
+// @param $name 				クラス名
+// @param $border-color 	 	ボーダーの色
+// ==============================
+@mixin hover-in-out-lost($name: null, $border-color: $base-border-color) {
+	.hover-in-out-lost#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include z-index(2);
+		@include overflow(hidden);
+
+		&::after {
+			@include display(block);
+			@include content("");
+			@include position(absolute);
+			@include z-index(-1);
+			@include top(50%);
+			@include left(50%);
+			@include width($button-min-width);
+			@include height($button-min-width);
+			@include margin(-50% 0 0 -50%);
+			@include border($button-min-width / 2 solid rgba($border-color, 0));
+			@include border-radius(50%);
+			@include transition(all $hover-duration !important);
+		}
+
+		&:hover::after {
+			@include border-width(0);
+			@include border-color(rgba($border-color, 1));
+		}
+	}
+}
+
+// ==============================
+// ホバー時に内側から外側に向けて波紋状の円形のボーダーが広がったのちに消えます
+// @param $name 				クラス名
+// @param $border-color 		ボーダーの色
+// ==============================
+@mixin hover-in-out-lost-dotted($name: null, $border-color: $base-border-color) {
+	.hover-in-out-lost-dotted#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include overflow(hidden);
+
+		&::after {
+			@include display(block);
+			@include content("");
+			@include position(absolute);
+			@include z-index(-1);
+			@include top(50%);
+			@include left(50%);
+			@include width($button-min-width);
+			@include height($button-min-width);
+			@include margin(-50% 0 0 -50%);
+			@include border($button-min-width / 2 dotted rgba($border-color, 0));
+			@include border-radius(50%);
+			@include transition(all $hover-duration !important);
+		}
+
+		&:hover::after {
+			@include border-width(0);
+			@include border-color(rgba($border-color, 1));
+		}
+	}
+}
+
+// ==============================
+// ホバー時に内側から外側に向けて二重線状の円形のボーダーが広がったのちに消えます
+// @param $name 				クラス名
+// @param $border-color 		ボーダーの色
+// ==============================
+@mixin hover-in-out-lost-double($name: null, $border-color: $base-border-color) {
+	.hover-in-out-lost-double#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include overflow(hidden);
+
+		&::after {
+			@include display(block);
+			@include content("");
+			@include position(absolute);
+			@include z-index(-1);
+			@include top(50%);
+			@include left(50%);
+			@include width($button-min-width);
+			@include height($button-min-width);
+			@include margin(-50% 0 0 -50%);
+			@include border($button-min-width / 2 double rgba($border-color, 0));
+			@include border-radius(50%);
+			@include transition(all $hover-duration !important);
+		}
+
+		&:hover::after {
+			@include border-width(0);
+			@include border-color(rgba($border-color, 1));
+		}
+	}
+}
+
+// ==============================
+// ホバー時に内側から外側に向けて二重線状の円形のボーダーが広がったのちに背景色となり、テキストの色を変更します
+// @param $name 				クラス名
+// @param $border-color 		ボーダーの色
+// ==============================
+@mixin hover-in-out-lost-double-background($name: null, $border-color: $base-border-color, $color: $base-font-color) {
+	.hover-in-out-lost-double-background#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include overflow(hidden);
+
+		&::after {
+			@include display(block);
+			@include content("");
+			@include position(absolute);
+			@include z-index(-1);
+			@include top(50%);
+			@include left(50%);
+			@include width($button-min-width);
+			@include height($button-min-width);
+			@include margin(-50% 0 0 -50%);
+			@include border($button-min-width / 2 double rgba($border-color, 0));
+			@include border-radius(50%);
+			@include transition(all $hover-duration !important);
+		}
+
+		&:hover {
+			@include color($color);
+
+			&::after {
+				@include border-width(0);
+				@include border-color(rgba($border-color, 1));
+				@include background($border-color);
+			}
+		}
+	}
+}
+
+// ==============================
+// ホバー時に内側から外側に向けて四角状のボーダーが広がったのちに消えます
+// @param $name 				クラス名
+// @param $border-color 		ボーダーの色
+// ==============================
+@mixin hover-in-out-square($name: null, $background-color: $base-bg-color) {
+	.hover-in-out-square#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include z-index(2);
+
+		&::after {
+			@include display(block);
+			@include content("");
+			@include position(absolute);
+			@include z-index(-1);
+			@include top(0);
+			@include bottom(0);
+			@include left(0);
+			@include right(0);
+			@include width(0);
+			@include height(0);
+			@include margin(auto);
+			@include background(rgba($background-color, 0.2));
+			@include transition(all $hover-duration !important);
+		}
+
+		&:hover::after {
+			@include width(100%);
+			@include height(100%);
+		}
+	}
+}
+
+// ==============================
+// ホバー時に外側から内側に向けて円形のボーダーが広がったのちに消えます
+// @param $name 				クラス名
+// @param $border-color 		ボーダーの色
+// ==============================
+@mixin hover-out-in($name: null, $background-color: $base-bg-color) {
+	.hover-out-in#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include overflow(hidden);
+
+		&::after {
+			@include position(absolute);
+			@include top(50%);
+			@include left(50%);
+			@include z-index(-1);
+			@include display(block);
+			@include content('');
+			@include width(20em);
+			@include height(20em);
+			@include border-radius(50%);
+			@include transform(translate(-50%, -50%));
+			@include transition(all $hover-duration !important);
+		}
+
+		&:hover::after {
+			@include box-shadow(inset 0 0 0 10em rgba($background-color, 0.4));
+		}
+	}
+}
+
+// ==============================
+// ホバー時に外側から内側に向けて円形のボーダーが広がったのちに消えます
+// @param $name 				クラス名
+// @param $background-color 	背景色
+// ==============================
+@mixin hover-out-in-side-content($name: null, $background-color: $base-bg-color) {
+	.hover-out-in-side-content#{$name} {
+		@include display(inline-block);
+		@include position(relative);
+		@include overflow(hidden);
+		@include margin(0 5px);
+		@include letter-spacing(0);
+
+		dl {
+			@include position(absolute);
+			@include top(0);
+			@include left(0);
+			@include right(0);
+			@include bottom(0);
+			@include margin(auto);
+			@include background-color(transparent);
+
+			dt,
+			dd {
+				@include position(relative);
+				@include z-index(1);
+				@include opacity(0);
+				@include transition(opacity 0.3s);
+			}
+
+			&::before,
+			&::after {
+				@include content("");
+				@include display(block);
+				@include position(absolute);
+				@include top(0);
+				@include left(0);
+				@include width(100px);
+				@include height(180px);
+				@include background($background-color);
+				@include opacity(0);
+				@include transition(opacity 0.6s, transform 0.6s);
+			}
+
+			&::before {
+				@include transform(translateX(-175px) skew(-30deg));
+			}
+
+			&::after {
+				@include transform(translateX(275px) skew(-30deg));
+			}
+		}
+
+		&:hover dl dt,
+		&:hover dl dd {
+			@include opacity(1);
+			@include transition-delay(0.3s);
+		}
+
+		&:hover dl::before,
+		&:hover dl::after {
+			@include opacity(0.9);
+			@include transition-duration(0.3s);
+		}
+
+		&:hover dl::before {
+			@include transform(translateX(0) skew(0));
+		}
+
+		&:hover dl::after {
+			@include transform(translateX(100px) skew(0));
+		}
+	}
+}
+
+// ==============================
+// ホバー時に上側から下側に向けて背景色を変更します
+// @param $name 				クラス名
+// @param $background-color 	背景色
+// ==============================
+@mixin hover-top-bottom($name: null, $background-color: $base-bg-color) {
+	.hover-top-bottom#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+
+		&::after {
+			@include display(block);
+			@include content("");
+			@include position(absolute);
+			@include top(0);
+			@include left(0);
+			@include width(100%);
+			@include height(0);
+			@include margin(0);
+			@include background(rgba($background-color, 0.2));
+			@include transition(all $hover-duration !important);
+		}
+
+		&:hover::after {
+			@include height(100%);
+		}
+	}
+}
+
+// ==============================
+// ホバー時に上側から下側に向けて背景色を変更したのちに、テキストの色を変更します
+// @param $name 				クラス名
+// @param $background-color 	背景色
+// ==============================
+@mixin hover-top-bottom-color($name: null, $background-color: $base-bg-color, $color: $base-font-color) {
+	.hover-top-bottom-color#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include z-index(2);
+		@include overflow(hidden);
+		@include transition-delay(0);
+
+		&::after {
+			@include display(block);
+			@include content("");
+			@include position(absolute);
+			@include z-index(-1);
+			@include top(0);
+			@include left(0);
+			@include width(100%);
+			@include height(0);
+			@include margin(0);
+			@include background($background-color);
+			@include transition(all $hover-duration !important);
+		}
+
+		&:hover {
+			@include color($color);
+		}
+
+		&:hover::after {
+			@include height(100%);
+			@include transition-delay(0);
+		}
+	}
+}
+
+// ==============================
+// ホバー時に下側から上側に向けて背景色を変更します
+// @param $name 				クラス名
+// @param $background-color 	背景色
+// ==============================
+@mixin hover-bottom-top($name: null, $background-color: $base-bg-color) {
+	.hover-bottom-top#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+
+		&::after {
+			@include display(block);
+			@include content("");
+			@include position(absolute);
+			@include bottom(0);
+			@include left(0);
+			@include width(100%);
+			@include height(0);
+			@include margin(0);
+			@include background(rgba($background-color, 0.2));
+			@include transition(all $hover-duration !important);
+		}
+
+		&:hover::after {
+			@include height(100%);
+		}
+	}
+}
+
+// ==============================
+// ホバー時に下側から上側に向けて背景色を変更したのちに、テキストの色を変更します
+// @param $name 				クラス名
+// @param $background-color 	背景色
+// ==============================
+@mixin hover-bottom-top-color($name: null, $background-color: $base-bg-color, $color: $base-font-color) {
+	.hover-bottom-top-color#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include z-index(2);
+		@include overflow(hidden);
+		@include transition-delay(0);
+
+		&::after {
+			@include display(block);
+			@include content("");
+			@include position(absolute);
+			@include z-index(-1);
+			@include bottom(0);
+			@include left(0);
+			@include width(100%);
+			@include height(0);
+			@include margin(0);
+			@include background($background-color);
+			@include transition(all $hover-duration !important);
+		}
+
+		&:hover {
+			@include color($color);
+		}
+
+		&:hover::after {
+			@include height(100%);
+			@include transition-delay(0);
+		}
+	}
+}
+
+// ==============================
+// ホバー時に右側から左側に向けて背景色を変更します
+// @param $name 				クラス名
+// @param $background-color 	背景色
+// ==============================
+@mixin hover-right-left($name: null, $background-color: $base-bg-color) {
+	.hover-right-left#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+
+		&::after {
+			@include display(block);
+			@include content("");
+			@include position(absolute);
+			@include top(0);
+			@include right(0);
+			@include width(0);
+			@include height(100%);
+			@include margin(0);
+			@include background(rgba($background-color, 0.2));
+			@include transition(all $hover-duration !important);
+		}
+
+		&:hover::after {
+			@include width(100%);
+		}
+	}
+}
+
+// ==============================
+// ホバー時に右側から左側に向けて背景色を変更したのちに、テキストの色を変更します
+// @param $name 				クラス名
+// @param $background-color 	背景色
+// ==============================
+@mixin hover-right-left-color($name: null, $background-color: $base-bg-color, $color: $base-font-color) {
+	.hover-right-left-color#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include z-index(2);
+		@include overflow(hidden);
+		@include transition-delay(0);
+
+		&::after {
+			@include display(block);
+			@include content("");
+			@include position(absolute);
+			@include z-index(-1);
+			@include top(0);
+			@include right(-100%);
+			@include width(100%);
+			@include height(100%);
+			@include margin(0);
+			@include background($background-color);
+			@include transition(all $hover-duration !important);
+		}
+
+		&:hover {
+			@include color($color);
+		}
+
+		&:hover::after {
+			@include right(0);
+			@include transition-delay(0);
+		}
+	}
+}
+
+// ==============================
+// ホバー時に左側から右側に向けて背景色を変更します
+// @param $name 				クラス名
+// @param $background-color 	背景色
+// ==============================
+@mixin hover-left-right($name: null, $background-color: $base-bg-color) {
+	.hover-left-right#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+
+		&::after {
+			@include display(block);
+			@include content("");
+			@include position(absolute);
+			@include top(0);
+			@include left(0);
+			@include width(0);
+			@include height(100%);
+			@include margin(0);
+			@include background(rgba($background-color, 0.2));
+			@include transition(all $hover-duration !important);
+		}
+
+		&:hover::after {
+			@include width(100%);
+		}
+	}
+}
+
+// ==============================
+// ホバー時に左側から右側に向けて背景色を変更したのちに、テキストの色を変更します
+// @param $name 				クラス名
+// @param $background-color 	背景色
+// ==============================
+@mixin hover-left-right-color($name: null, $background-color: $base-bg-color, $color: $base-font-color) {
+	.hover-left-right-color#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include z-index(2);
+		@include overflow(hidden);
+		@include transition-delay(0);
+
+		&::after {
+			@include display(block);
+			@include content("");
+			@include position(absolute);
+			@include z-index(-1);
+			@include top(0);
+			@include left(-100%);
+			@include width(100%);
+			@include height(100%);
+			@include margin(0);
+			@include background($background-color);
+			@include transition(all $hover-duration !important);
+		}
+
+		&:hover {
+			@include color($color);
+		}
+
+		&:hover::after {
+			@include left(0);
+			@include transition-delay(0);
+		}
+	}
+}
+
+// ==============================
+// ホバー時に左側から右側に向けて背景色とテキストの色を変更します
+// @param $name 				クラス名
+// @param $background-color 	背景色
+// ==============================
+@mixin hover-left-right-color-border($name: null, $background-color: $base-link-color, $hover-background-color: $base-link-color-hover) {
+	.hover-left-right-color-border#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include padding(10px 0);
+		@include border-top(2px solid $background-color);
+		@include color($background-color);
+		@include text-shadow(none);
+
+		&::before {
+			@include position(absolute);
+			@include top(0);
+			@include left(0);
+			@include overflow(hidden);
+			@include padding(10px 0);
+			@include max-width(0);
+			@include border-bottom(2px solid $hover-background-color);
+			@include color($hover-background-color);
+			@include content(attr(data));
+			@include transition(max-width 0.5s !important);
+			@include word-break(keep-all);
+		}
+
+		&:hover,
+		&:focus {
+
+			&::before {
+				@include max-width(100%);
+			}
+		}
+	}
+}
+
+// ==============================
+// ホバー時に左側から右側に向けてコンテンツを切り替えます
+// @param $name 					クラス名
+// @param $background-color 		背景色
+// @param $hover-background-color 	ホバー時の背景色
+// ==============================
+@mixin hover-switch-content($name: null, $background-color: $base-bg-color, $hover-background-color: $hover-bg-color) {
+	.hover-switch-content#{$name} {
+		@include position(relative);
+		@include z-index(1);
+		@include display(inline-block);
+		@include overflow(hidden);
+		@include margin(0 15px);
+
+		span {
+			@include display(block);
+			@include padding(10px 20px);
+			@include background($background-color);
+			@include transition(transform 0.3s !important);
+		}
+
+		&::before {
+			@include position(absolute);
+			@include top(0);
+			@include left(0);
+			@include z-index(-1);
+			@include padding(10px 20px);
+			@include width(100%);
+			@include height(100%);
+			@include background($hover-background-color);
+			@include color($background-color);
+			@include content(attr(data));
+			@include transition(transform 0.3s !important);
+			@include transform(translateX(-25%));
+		}
+
+		&:hover,
+		&:focus {
+			span {
+				@include transform(translateX(100%));
+			}
+
+			&::before {
+				@include transform(translateX(0%));
+			}
+		}
+	}
+}
+
+// ==============================
+// ホバー時に左上側から右下側に向けて回転しながら背景色を変更します
+// @param $name 				クラス名
+// @param $background-color 	背景色
+// ==============================
+@mixin hover-rotate-top-left($name: null, $background-color: $base-bg-color) {
+	.hover-rotate-top-left#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include overflow(hidden);
+
+		&::after {
+			@include display(block);
+			@include content("");
+			@include position(absolute);
+			@include top(0);
+			@include left(0);
+			@include width(100%);
+			@include height(100%);
+			@include margin(0);
+			@include background(rgba($background-color, 0.2));
+			@include transform(rotate(-90deg));
+			@include transform-origin(top left);
+			@include transition(all $hover-duration !important);
+		}
+
+		&:hover::after {
+			@include transform(rotate(0deg));
+		}
+	}
+}
+
+// ==============================
+// ホバー時に左上側から右下側に向けて回転しながら背景色を変更したのちに、テキストの色を変更します
+// @param $name 				クラス名
+// @param $background-color 	背景色
+// ==============================
+@mixin hover-rotate-top-left-color($name: null, $background-color: $base-bg-color, $color: $base-font-color) {
+	.hover-rotate-top-left-color#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include z-index(2);
+		@include overflow(hidden);
+		@include transition-delay(0);
+
+		&::after {
+			@include display(block);
+			@include content("");
+			@include position(absolute);
+			@include z-index(-1);
+			@include top(0);
+			@include left(0);
+			@include width(100%);
+			@include height(0);
+			@include margin(0);
+			@include background($background-color);
+			@include transform(rotate(-90deg));
+			@include transform-origin(top left);
+			@include transition(all $hover-duration !important);
+		}
+
+		&:hover {
+			@include color($color);
+		}
+
+		&:hover::after {
+			@include height(100%);
+			@include transform(rotate(0deg));
+			@include transition-delay(0);
+		}
+	}
+}
+
+// ==============================
+// ホバー時に右上側から左下側に向けて回転しながら背景色を変更します
+// @param $name 				クラス名
+// @param $background-color 	背景色
+// ==============================
+@mixin hover-rotate-top-right($name: null, $background-color: $base-bg-color) {
+	.hover-rotate-top-right#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include overflow(hidden);
+
+		&::after {
+			@include display(block);
+			@include content("");
+			@include position(absolute);
+			@include top(0);
+			@include right(0);
+			@include width(100%);
+			@include height(100%);
+			@include margin(0);
+			@include background(rgba($background-color, 0.2));
+			@include transform(rotate(90deg));
+			@include transform-origin(top right);
+			@include transition(all $hover-duration !important);
+		}
+
+		&:hover::after {
+			@include transform(rotate(0deg));
+		}
+	}
+}
+
+// ==============================
+// ホバー時に右上側から左下側に向けて回転しながら背景色を変更したのちに、テキストの色を変更します
+// @param $name 				クラス名
+// @param $background-color 	背景色
+// ==============================
+@mixin hover-rotate-top-right-color($name: null, $background-color: $base-bg-color, $color: $base-font-color) {
+	.hover-rotate-top-right-color#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include z-index(2);
+		@include overflow(hidden);
+		@include transition-delay(0);
+
+		&::after {
+			@include display(block);
+			@include content("");
+			@include position(absolute);
+			@include z-index(-1);
+			@include top(0);
+			@include right(0);
+			@include width(100%);
+			@include height(0);
+			@include margin(0);
+			@include background($background-color);
+			@include transform(rotate(90deg));
+			@include transform-origin(top right);
+			@include transition(all $hover-duration !important);
+		}
+
+		&:hover {
+			@include color($color);
+		}
+
+		&:hover::after {
+			@include height(100%);
+			@include transform(rotate(0deg));
+			@include transition-delay(0);
+		}
+	}
+}
+
+// ==============================
+// ホバー時に左下側から右上側に向けて回転しながら背景色を変更します
+// @param $name 				クラス名
+// @param $background-color 	背景色
+// ==============================
+@mixin hover-rotate-bottom-left($name: null, $background-color: $base-bg-color) {
+	.hover-rotate-bottom-left#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include overflow(hidden);
+
+		&::after {
+			@include display(block);
+			@include content("");
+			@include position(absolute);
+			@include bottom(0);
+			@include left(0);
+			@include width(100%);
+			@include height(100%);
+			@include margin(0);
+			@include background(rgba($background-color, 0.2));
+			@include transform(rotate(90deg));
+			@include transform-origin(bottom left);
+			@include transition(all $hover-duration !important);
+		}
+
+		&:hover::after {
+			@include transform(rotate(0deg));
+		}
+	}
+}
+
+// ==============================
+// ホバー時に左下側から右上側に向けて回転しながら背景色を変更したのちに、テキストの色を変更します
+// @param $name 				クラス名
+// @param $background-color 	背景色
+// ==============================
+@mixin hover-rotate-bottom-left-color($name: null, $background-color: $base-bg-color, $color: $base-font-color) {
+	.hover-rotate-bottom-left-color#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include z-index(2);
+		@include overflow(hidden);
+		@include transition-delay(0);
+
+		&::after {
+			@include display(block);
+			@include content("");
+			@include position(absolute);
+			@include z-index(-1);
+			@include bottom(0);
+			@include left(0);
+			@include width(100%);
+			@include height(0);
+			@include margin(0);
+			@include background($background-color);
+			@include transform(rotate(90deg));
+			@include transform-origin(bottom left);
+			@include transition(all $hover-duration !important);
+		}
+
+		&:hover {
+			@include color($color);
+		}
+
+		&:hover::after {
+			@include height(100%);
+			@include transform(rotate(0deg));
+			@include transition-delay(0);
+		}
+	}
+}
+
+// ==============================
+// ホバー時に右下側から左上側に向けて回転しながら背景色を変更します
+// @param $name 				クラス名
+// @param $background-color 	背景色
+// ==============================
+@mixin hover-rotate-bottom-right($name: null, $background-color: $base-bg-color) {
+	.hover-rotate-bottom-right#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include overflow(hidden);
+
+		&::after {
+			@include display(block);
+			@include content("");
+			@include position(absolute);
+			@include bottom(0);
+			@include right(0);
+			@include width(100%);
+			@include height(100%);
+			@include margin(0);
+			@include background(rgba($background-color, 0.2));
+			@include transform(rotate(-90deg));
+			@include transform-origin(bottom right);
+			@include transition(all $hover-duration !important);
+		}
+
+		&:hover::after {
+			@include transform(rotate(0deg));
+		}
+	}
+}
+
+// ==============================
+// ホバー時に右下側から左上側に向けて回転しながら背景色を変更したのちに、テキストの色を変更します
+// @param $name 				クラス名
+// @param $background-color 	背景色
+// ==============================
+@mixin hover-rotate-bottom-right-color($name: null, $background-color: $base-bg-color, $color: $base-font-color) {
+	.hover-rotate-bottom-right-color#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include z-index(2);
+		@include overflow(hidden);
+		@include transition-delay(0);
+
+		&::after {
+			@include display(block);
+			@include content("");
+			@include position(absolute);
+			@include z-index(-1);
+			@include bottom(0);
+			@include right(0);
+			@include width(100%);
+			@include height(0);
+			@include margin(0);
+			@include background($background-color);
+			@include transform(rotate(-90deg));
+			@include transform-origin(bottom right);
+			@include transition(all $hover-duration !important);
+		}
+
+		&:hover {
+			@include color($color);
+		}
+
+		&:hover::after {
+			@include height(100%);
+			@include transform(rotate(0deg));
+			@include transition-delay(0);
+		}
+	}
+}
+
+// ==============================
+// ホバー時にコンテンツを回転させ<dl>タグ配下のレイアウトを表示します
+// @param $name 				クラス名
+// @param $background-color 	背景色
+// ==============================
+@mixin hover-rotate-content($name: null, $background-color: $base-bg-color) {
+	.hover-rotate-content#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include perspective(400px);
+
+		div,
+		dl {
+			@include transition(opacity 0.6s, transform 0.6s);
+			@include backface-visibility(hidden);
+		}
+
+		&:hover div {
+			@include transform(rotateX(180deg));
+		}
+
+		dl {
+			@include position(absolute);
+			@include top(0);
+			@include height(100%);
+			@include margin(0);
+			@include background(rgba($background-color, 0.9));
+			@include transform(rotateX(-180deg));
+		}
+
+		&:hover dl {
+			@include transform(rotateX(0));
+		}
+	}
+}
+
+// ==============================
+// ホバー時にライトエフェクトを表示したのちに、背景色と文字色を変更します。
+// @param $name 				クラス名
+// @param $background-color 	背景色
+// -------------------------------------------------
+// ※example
+// <button class="btn btn-ghost hover-light-background">
+//     <div class="insider"></div>
+//     ボタン
+// </button>
+// -------------------------------------------------
+// ==============================
+@mixin hover-light-background($name: null, $background-color: $hover-light-background, $color: $base-font-color) {
+	.hover-light-background#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include overflow(hidden);
+		@include transition(all $hover-duration !important);
+
+		.insider#{$name} {
+			@include background(#fff);
+			@include width(100%);
+			@include height(20px);
+			@include position(absolute);
+			@include left(-135px);
+			@include transform(rotateZ(45deg));
+		}
+
+		&:hover {
+			@include background($background-color);
+			@include color($color);
+
+			.insider {
+				@include transition(all $hover-duration);
+				@include left(135px);
+			}
+		}
+	}
+}
+
+// ==============================
+// ホバー時にコンテンツを回転させ<dl>タグ配下のレイアウトを表示します
+// @param $name 					クラス名
+// @param $background-color 		背景色
+// @param $hover-background-color 	ホバー時の背景色
+// ==============================
+@mixin hover-turn-content($name: null, $background-color: $base-bg-color, $hover-background-color: #fff, $hover-color: $base-link-color-hover) {
+	.hover-turn-content#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include line-height(2em);
+		@include perspective(800px);
+
+		span {
+			@include position(relative);
+			@include display(inline-block);
+			@include padding(3px 15px 0);
+			@include background($background-color);
+			@include box-shadow(inset 0 3px darken($background-color, 10%));
+			@include transition(backgrouund 0.6s !important);
+			@include transform-origin(0 50%);
+			@include transform-style(preserve-3d);
+
+			&::before {
+				@include position(absolute);
+				@include top(0);
+				@include left(0);
+				@include width(100%);
+				@include height(100%);
+				@include background($hover-background-color);
+				@include color($hover-color);
+				@include content(attr(data));
+				@include transition(transform 0.6s !important);
+				@include transform(rotateX(270deg));
+				@include transform-origin(0 0);
+				@include pointer-events(none);
+				@include text-align(center);
+			}
+		}
+
+		&:hover,
+		&:focus {
+			span {
+				@include background(darken($background-color, 10%));
+
+				&::before {
+					@include transform(rotateX(10deg));
+				}
+			}
+		}
+	}
+}
+
+// ==============================
+// ホバー時に上部裏側からページをめくったように背景色が設定されます
+// @param $name 				クラス名
+// @param $background-color 	背景色
+// ==============================
+@mixin hover-turn-over($name: null, $background-color: $base-bg-color) {
+	.hover-turn-over#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include z-index(2);
+		@include perspective(400px);
+		@include transition-delay(0);
+
+		&::after {
+			@include display(block);
+			@include content("");
+			@include position(absolute);
+			@include z-index(-1);
+			@include top(0);
+			@include left(0);
+			@include width(100%);
+			@include height(100%);
+			@include margin(0);
+			@include background(rgba($background-color, 0.2));
+			@include visibility(hidden);
+			@include transform(rotateX(270deg));
+			@include transform-origin(50% 0);
+			@include transition(all $hover-duration !important);
+		}
+
+		&:hover::before {
+			@include overflow(hidden);
+		}
+
+		&:hover::after {
+			@include visibility(visible);
+			@include transform(rotateX(0));
+		}
+	}
+}
+
+// ==============================
+// ホバー時に下側から上側に向けてdataに設定されたテキストをポップアップ表示します
+// @param $name 				クラス名
+// @param $background-color 	背景色
+// ==============================
+@mixin hover-popup($name: null, $background-color: $base-bg-color) {
+	.hover-popup#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include overflow(hidden);
+
+		&::after {
+			@include position(absolute);
+			@include top(100%);
+			@include left(0);
+			@include z-index(2);
+			@include display(-webkit-flex);
+			@include display(flex);
+			@include align-items(center);
+			@include justify-content(center);
+			@include content(attr(data));
+			@include width(100%);
+			@include height(100%);
+			@include background-color($background-color);
+			@include color(#333);
+			@include opacity(0);
+			@include transition(all $hover-duration !important);
+			@include box-sizing(border-box);
+		}
+
+		&:hover::after {
+			@include top(0);
+			@include opacity(1);
+		}
+	}
+}
+
+// ==============================
+// ホバー時に下側から上側に向けて<dl>タグ配下に設定されたレイアウトをポップアップ表示します
+// @param $name 				クラス名
+// @param $background-color 	背景色
+// ==============================
+@mixin hover-popup-content($name: null, $background-color: $base-bg-color) {
+	.hover-popup-content#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include overflow(hidden);
+
+		dl {
+			@include position(absolute);
+			@include top(0);
+			@include left(0);
+			@include right(0);
+			@include bottom(0);
+			@include opacity(0);
+			@include background(rgba($background-color, 0.9));
+			@include transform(translateY(100%));
+			@include transition(opacity $hover-duration, transform $hover-duration !important);
+		}
+
+		&:hover dl {
+			@include opacity(1);
+			@include transform(translateY(0));
+		}
+	}
+}
+
+// ==============================
+// ホバー時にテキストをフェードアウトさせdataに設定されているテキストをフェードインで表示します
+// （子要素に<span>タグで変更前のテキストを指定して下さい）
+// @param $name 				クラス名
+// @param $background-color 	背景色
+// ==============================
+@mixin hover-fade-out-in($name: null) {
+	.hover-fade-out-in#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+
+		&::after {
+			@include position(absolute);
+			@include top(0);
+			@include left(0);
+			@include width(100%);
+			@include height(100%);
+			@include content(attr(data));
+			@include transform(scale(0.3));
+			@include transition(all $hover-duration !important);
+			@include opacity(0);
+			@include display(-webkit-flex);
+			@include display(flex);
+			@include align-items(center);
+			@include justify-content(center);
+		}
+
+		span {
+			@include display(block);
+			@include transition(all $hover-duration 0.2s !important);
+		}
+
+		&:hover::after {
+			@include transform(scale(1));
+			@include transition(all $hover-duration 0.2s !important);
+			@include opacity(1);
+		}
+
+		&:hover span {
+			@include transform(scale(0.3));
+			@include transition(all $hover-duration !important);
+			@include opacity(0);
+		}
+	}
+}
+
+// ==============================
+// ホバー時にテキストを回転させてdataに設定されているテキストに変更します
+// （子要素に<span>タグで変更前のテキストを指定して下さい）
+// @param $name 				クラス名
+// @param $background-color 	背景色
+// ==============================
+@mixin hover-rotate($name: null) {
+	.hover-rotate#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+
+		&::after {
+			@include position(absolute);
+			@include top(0);
+			@include left(0);
+			@include width(100%);
+			@include height(100%);
+			@include content(attr(data));
+			@include transform(rotateX(-360deg));
+			@include transition(all $hover-duration !important);
+			@include opacity(0);
+			@include display(-webkit-flex);
+			@include display(flex);
+			@include align-items(center);
+			@include justify-content(center);
+		}
+
+		span {
+			@include display(inline-block);
+			@include transition(all $hover-duration !important);
+		}
+
+		&:hover::after {
+			@include transform(rotateX(0));
+			@include opacity(1);
+		}
+
+		&:hover span {
+			@include transform(rotateX(-360deg));
+			@include opacity(0);
+		}
+	}
+}
+
+// ==============================
+// ホバー時に背景色を変更します
+// @param $name 				クラス名
+// @param $background-color 	背景色
+// ==============================
+@mixin hover-background($name: null, $background-color: $base-bg-color, $color: $base-font-color) {
+	.hover-background#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include transition(all $hover-duration !important);
+
+		&::before,
+		&::after {
+			@include position(absolute);
+			@include display(block);
+			@include content('');
+			@include width(100%);
+			@include height(100%);
+			@include transition(all $hover-duration !important);
+		}
+
+		&::before {
+			@include top(0);
+			@include left(0);
+		}
+
+		&::after {
+			@include right(0);
+			@include bottom(0);
+		}
+
+		&:hover {
+			@include background-color($background-color);
+			@include color($color);
+			@include transition(all $hover-duration !important);
+		}
+
+		&:hover::before,
+		&:hover::after {
+			@include width(0);
+			@include height(0);
+			@include opacity(0);
+			@include transition(all $hover-duration !important);
+		}
+	}
+}
+
+// ==============================
+// ホバー時にdataに設定されているテキストを1文字ずつ遅延表示します
+// data属性に設定されている文字がデフォルトで表示されるボタン名になります
+// （子要素にタイプ表示するテキストを<span>タグで一文字ずつ指定して下さい）
+// @param $name 				クラス名
+// @param $count 				遅延表示する文字数
+// -------------------------------------------------
+// ※example
+// <button class="btn btn-ghost hover-type-word6" data="ボタン">
+//     <span>s</span>
+//     <span>a</span>
+//     <span>m</span>
+//     <span>p</span>
+//     <span>l</span>
+//     <span>e</span>
+// </button>
+// -------------------------------------------------
+// ==============================
+@mixin hover-type-word($name: null, $count: $default-hover-type-word-count) {
+	@if type-of($count) == number and $count > 0 {
+		$tmp: "";
+		@for $i from 1 through $count {
+			@if $tmp != "" {
+				$tmp: $tmp + ", .hover-type-word#{$i}#{$name}";
+			}
+			@else {
+				$tmp: ".hover-type-word#{$i}#{$name}";
+			}
+		}
+		#{$tmp} {
+			@include overflow(hidden);
+		}
+
+		$tmp: "";
+		@for $i from 1 through $count {
+			@if $tmp != "" {
+				$tmp: $tmp + ", .hover-type-word#{$i}#{$name} span";
+			}
+			@else {
+				$tmp: ".hover-type-word#{$i}#{$name} span";
+			}
+		}
+		#{$tmp} {
+			@include display(inline-block);
+			@include transform(translate3d(0, -10px, 0));
+			@include transition(all $hover-type-word-duration !important);
+			@include transition-timing-function(cubic-bezier(0.75, 0, 0.125, 1));
+			@include opacity(0);
+		}
+
+		$tmp: "";
+		@for $i from 1 through $count {
+			@if $tmp != "" {
+				$tmp: $tmp + ", .hover-type-word#{$i}#{$name}::before";
+			}
+			@else {
+				$tmp: ".hover-type-word#{$i}#{$name}::before";
+			}
+		}
+		#{$tmp} {
+			@include position(absolute);
+			@include width(100%);
+			@include height(100%);
+			@include display(-webkit-flex);
+			@include display(flex);
+			@include align-items(center);
+			@include justify-content(center);
+			@include top(0);
+			@include left(0);
+			@include content(attr(data));
+			@include transition(all $hover-type-word-duration !important);
+			@include transition-timing-function(cubic-bezier(0.75, 0, 0.125, 1));
+			@include box-sizing(border-box);
+		}
+
+		$tmp: "";
+		@for $i from 1 through $count {
+			@if $tmp != "" {
+				$tmp: $tmp + ", .hover-type-word#{$i}#{$name}:hover::before";
+			}
+			@else {
+				$tmp: ".hover-type-word#{$i}#{$name}:hover::before";
+			}
+		}
+		#{$tmp} {
+			@include transform(translate3d(0, 50%, 0));
+			@include opacity(0);
+		}
+
+		$tmp: "";
+		@for $i from 1 through $count {
+			@if $tmp != "" {
+				$tmp: $tmp + ", .hover-type-word#{$i}#{$name}:hover span";
+			}
+			@else {
+				$tmp: ".hover-type-word#{$i}#{$name}:hover span";
+			}
+		}
+		#{$tmp} {
+			@include transform(translate3d(0, 0, 0));
+			@include opacity(1);
+		}
+
+		$tmp: "";
+		@for $i from 1 through $count {
+			$delay: ($hover-type-word-duration / $count);
+			$tmp: "";
+			@for $k from 1 through (($count + 1) - $i) {
+				@if $tmp != "" {
+					$tmp: $tmp + ", .hover-type-word#{(($count + 1) - $k)}#{$name}:hover span:nth-child(#{$i})";
+				}
+				@else {
+					$tmp: ".hover-type-word#{(($count + 1) - $k)}#{$name}:hover span:nth-child(#{$i})";
+				}
+			}
+			#{$tmp} {
+				@include transition-delay(#{$delay * $i} !important);
+			}
+		}
+	}
+}
+
+// ==============================
+// ホバー時にコンテンツを拡大する
+// @param $name 				クラス名
+// @param $scale 				倍率（初期値は設定ファイルの倍率）
+// ==============================
+@mixin hover-zoom($name: null, $scale: $hover-scale) {
+	.hover-zoom#{$name} {
+		@include position(relative);
+		@include overflow(hidden);
+		@include display(inline-block);
+
+		* {
+			@include transform(scale(1));
+			@include transition(transform $hover-duration !important);
+
+			&:hover {
+				@include transform(scale(#{$scale}));
+			}
+		}
+	}
+}
+
+// ==============================
+// ホバー時に画像を拡大し時間差でコンテンツをスライドさせます
+// @param $name 				クラス名
+// @param $scale 				倍率（初期値は設定ファイルの倍率）
+// @param $color 				テキストカラー
+// ==============================
+@mixin hover-zoom-slide-content($name: null, $scale: $hover-scale, $color: #fff) {
+	.hover-zoom-slide-content#{$name} {
+		@include position(relative);
+		@include overflow(hidden);
+		@include display(inline-block);
+
+		img {
+			@include transform(scale(1));
+			@include transition(transform $hover-duration !important);
+		}
+
+		dl {
+			@include position(absolute);
+			@include top(0);
+			@include left(0);
+			@include z-index(2);
+			@include width(100%);
+			@include height(100%);
+			@include background(rgba(0, 0, 0, 0.6));
+			@include transition(0.3s);
+			@include opacity(0);
+
+			dt,
+			dd {
+				@include position(absolute);
+				@include left(-200%);
+				@include width(90%);
+				@include transition(0.3s);
+				@include color($color);
+			}
+
+			dt {
+				@include top(30px);
+			}
+
+			dd {
+				@include top(75px);
+			}
+		}
+
+		&:hover {
+			img {
+				@include transform(scale(#{$scale}));
+			}
+
+			dl {
+				@include opacity(1);
+
+				dt,
+				dd {
+					@include left(0);
+					@include right(0);
+					@include margin(auto);
+				}
+
+				dt {
+					@include transition-delay(0.2s);
+				}
+
+				dd {
+					@include transition-delay(0.5s);
+				}
+			}
+		}
+	}
+}
+
+// ==============================
+// ホバー時にコンテンツを広げる
+// @param $name 				クラス名
+// @param $scale 				倍率（初期値は設定ファイルの倍率）
+// ==============================
+@mixin hover-wide-scale($name: null, $scale: $hover-scale) {
+	.hover-wide-scale#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include transition(all $hover-duration !important);
+
+		&:hover {
+			@include transform(scale($scale));
+		}
+	}
+}
+
+// ==============================
+// ホバー時に枠を表示する
+// @param $name 				クラス名
+// ==============================
+@mixin hover-brackets($name: null) {
+	.hover-brackets#{$name} {
+		@include position(relative);
+
+		&::before {
+			@include margin-right(10px);
+			@include content('[');
+			@include transform(translateX(20px));
+			@include display(inline-block);
+			@include opacity(0);
+			@include transition(transform 0.3s, opacity 0.2s !important);
+		}
+
+		&::after {
+			@include margin-left(10px);
+			@include content(']');
+			@include transform(translateX(-20px));
+			@include display(inline-block);
+			@include opacity(0);
+			@include transition(transform 0.3s, opacity 0.2s !important);
+		}
+
+		&:hover,
+		&:focus {
+			@include color($base-link-color-hover);
+
+			&::before,
+			&::after {
+				@include opacity(1);
+				@include transform(translateX(0));
+			}
+		}
+	}
+}
+
+// ==============================
+// ホバー時にボックスを縦に回転させる
+// @param $name 				クラス名
+// -------------------------------------------------
+// ※Example
+// <a href="#" class="hover-rotate-box">
+// 		<span data="hover-sample">sample</span>
+// </a>
+// -------------------------------------------------
+// ==============================
+@mixin hover-rotate-box-x($name: null, $background: transparent) {
+	.hover-rotate-box-x#{$name} {
+		@include perspective(1000px);
+		@include position(relative);
+		@include display(inline-block);
+		@include overflow(hidden);
+		@include vertical-align(middle);
+
+		span {
+			@include position(relative);
+			@include display(inline-block);
+			@include background($background);
+			@include transition(transform 0.3s !important);
+			@include transform-origin(50% 0);
+			@include transform-style(preserve-3d);
+			@include text-align(center);
+			@include padding(5px 20px);
+
+			&::before {
+				@include position(absolute);
+				@include top(100%);
+				@include left(0);
+				@include width(100%);
+				@include height(100%);
+				@include background(darken($background, 10%));
+				@include content(attr(data));
+				@include transition(background 0.3s !important);
+				@include transform(rotateX(-90deg));
+				@include transform-origin(50% 0);
+				@include padding(5px 20px);
+			}
+
+			&:hover,
+			&:focus {
+				@include transform(rotateX(90deg) translateY(-50%));
+				@include color($base-link-color-hover);
+
+				&::before {
+					@include background(lighten($background, 10%));
+				}
+			}
+		}
+	}
+}
+
+// ==============================
+// ホバー時にボックスを横に回転させる
+// @param $name 				クラス名
+// @param $background 			背景色
+// -------------------------------------------------
+// ※Example
+// <a href="#" class="hover-rotate-box">
+// 		<span data="hover-sample">sample</span>
+// </a>
+// -------------------------------------------------
+// ==============================
+@mixin hover-rotate-box-y($name: null, $background: transparent) {
+	.hover-rotate-box-y#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include line-height(2em);
+		@include margin(15px);
+		@include perspective(800px);
+		@include width(200px);
+
+		span {
+			@include position(relative);
+			@include display(inline-block);
+			@include width(100%);
+			@include padding(0 14px);
+			@include background($background);
+			@include transition(transform 0.4s, background 0.4s !important);
+			@include transform-style(preserve-3d);
+			@include transform-origin(50% 50% -100px);
+			@include text-align(center);
+
+			&::before {
+				@include position(absolute);
+				@include top(0);
+				@include left(100%);
+				@include width(100%);
+				@include height(100%);
+				@include background(darken($background, 10%));
+				@include content(attr(data));
+				@include transition(background 0.4s !important);
+				@include transform(rotateY(90deg));
+				@include transform-origin(0 50%);
+				@include pointer-events(none);
+				@include text-align(center);
+			}
+		}
+
+		&:hover,
+		&:focus {
+			span {
+				@include background(darken($background, 10%));
+				@include transform(rotateY(-90deg));
+
+				&::before {
+					@include background(lighten($background, 10%));
+				}
+			}
+		}
+	}
+}
+
+// ==============================
+// ホバー時に下線を下から表示する
+// @param $name 				クラス名
+// ==============================
+@mixin hover-bottom-popup-border($name: null) {
+	.hover-bottom-popup-border#{$name} {
+		@include position(relative);
+
+		&::after {
+			@include position(absolute);
+			@include top(100%);
+			@include left(0);
+			@include width(100%);
+			@include height(4px);
+			@include background(rgba(0, 0, 0, 0.1));
+			@include content("");
+			@include opacity(0);
+			@include transition(all 0.3s !important);
+			@include transform(translateY(10px));
+		}
+
+		&:hover,
+		&:focus {
+			@include color($base-link-color-hover);
+
+			&::after {
+				@include opacity(1);
+				@include transform(translateY(0));
+			}
+		}
+	}
+}
+
+// ==============================
+// ホバー時に下線を上から表示する
+// @param $name 				クラス名
+// ==============================
+@mixin hover-bottom-popdown-border($name: null) {
+	.hover-bottom-popdown-border#{$name} {
+		@include position(relative);
+
+		&::after {
+			@include position(absolute);
+			@include top(100%);
+			@include left(0);
+			@include width(100%);
+			@include height(4px);
+			@include background(rgba(0, 0, 0, 0.1));
+			@include content("");
+			@include opacity(0);
+			@include transition(all 0.3s !important);
+			@include transform(translateY(-10px));
+		}
+
+		&:hover,
+		&:focus {
+			@include color($base-link-color-hover);
+
+			&::after {
+				@include opacity(1);
+				@include transform(translateY(0));
+			}
+		}
+	}
+}
+
+// ==============================
+// ホバー時に下部からテキストを表示する
+// @param $name 				クラス名
+// -------------------------------------------------
+// ※Example
+// <a href="#" class="hover-popup-text">
+// 		<span data="hover-sample">sample</span>
+// </a>
+// -------------------------------------------------
+// ==============================
+@mixin hover-popup-text($name: null) {
+	.hover-popup-text#{$name} {
+		@include overflow(hidden);
+		@include height(1em);
+		@include display(inline-block);
+		@include vertical-align(middle);
+
+		span {
+			@include position(relative);
+			@include display(inline-block);
+			@include transition(transform 0.3s !important);
+
+			&::before {
+				@include position(absolute);
+				@include top(100%);
+				@include content(attr(data));
+				@include font-weight(700);
+				@include transform(translate3d(0, 0, 0));
+			}
+		}
+
+		&:hover,
+		&:focus {
+
+			span {
+				@include transform(translateY(-100%));
+			}
+		}
+	}
+}
+
+// ==============================
+// ホバー時に上部からテキストを表示する
+// @param $name 				クラス名
+// -------------------------------------------------
+// ※Example
+// <a href="#" class="hover-popdown-text">
+// 		<span>sample</span>
+// 		<span>hover-sample</span>
+// </a>
+// -------------------------------------------------
+// ==============================
+@mixin hover-popdown-text($name: null, $border-color: $base-border-color) {
+	.hover-popdown-text#{$name} {
+		@include position(relative);
+		@include margin(0 20px);
+		@include padding(18px 20px);
+		@include display(inline-block);
+		@include vertical-align(-1.35em);
+
+		&::before,
+		&::after {
+			@include position(absolute);
+			@include top(0);
+			@include left(0);
+			@include width(100%);
+			@include height(1px);
+			@include background($border-color);
+			@include content("");
+			@include opacity(0.2);
+			@include transition(opacity 0.3s, height 0.3s !important);
+		}
+
+		&::after {
+			@include top(100%);
+			@include opacity(0);
+			@include transition(transform 0.3s, opacity 0.3s !important);
+			@include transform(translateY(-10px));
+		}
+
+		span {
+
+			&:first-child {
+				@include z-index(2);
+				@include display(block);
+				@include font-weight(300);
+			}
+
+			&:last-child {
+				@include z-index(1);
+				@include display(block);
+				@include padding(8px 0 0 0);
+				@include color(rgba(0, 0, 0, 0.4));
+				@include text-shadow(none);
+				@include text-transform(none);
+				@include font-style(italic);
+				@include font-size(0.75rem);
+				@include font-family(#{"Palatino, quote(Palatino Linotype), quote(Palatino LT STD), quote(Book Antiqua), Georgia, serif"});
+				@include opacity(0);
+				@include transition(transform 0.3s, opacity 0.3s !important);
+				@include transform(translateY(-100%));
+			}
+		}
+
+		&:hover,
+		&:focus {
+			&::before {
+				@include height(6px);
+			}
+
+			&::before,
+			&::after {
+				@include opacity(1);
+				@include transform(translateY(0));
+			}
+
+			span {
+				&:last-child {
+					@include opacity(1);
+					@include transform(translateY(0));
+				}
+			}
+		}
+	}
+}
+
+// ==============================
+// ホバー時に上部からラインを下部に向かって表示する
+// @param $name 				クラス名
+// ==============================
+@mixin hover-line-down($name: null, $border-color: $base-border-color) {
+	.hover-line-down#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include padding(10px 20px);
+		@include margin(0 10px);
+		@include vertical-align(baseline);
+
+		&::before {
+			@include position(absolute);
+			@include top(0);
+			@include left(0);
+			@include width(100%);
+			@include height(2px);
+			@include background($border-color);
+			@include content("");
+			@include transition(top 0.3s !important);
+		}
+
+		&::after {
+			@include position(absolute);
+			@include top(0);
+			@include left(0);
+			@include width(2px);
+			@include height(2px);
+			@include background($border-color);
+			@include content("");
+			@include transition(height 0.3s !important);
+		}
+
+		&:hover,
+		&:focus {
+
+			&::before {
+				@include top(100%);
+				@include opacity(1);
+			}
+
+			&::after {
+				@include height(100%);
+			}
+		}
+	}
+}
+
+// ==============================
+// ホバー時に下部からラインを上部に向かって表示する
+// @param $name 				クラス名
+// ==============================
+@mixin hover-line-up($name: null, $border-color: $base-border-color) {
+	.hover-line-up#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include padding(12px 10px 10px);
+		@include text-shadow(none);
+		@include font-weight(700);
+
+		&::before,
+		&::after {
+			@include position(absolute);
+			@include top(100%);
+			@include left(0);
+			@include width(100%);
+			@include height(3px);
+			@include background($border-color);
+			@include content("");
+			@include transition(transform 0.3s !important);
+		}
+
+		&::after {
+			@include opacity(0);
+			@include transition(top 0.3s, opacity 0.3s, transform 0.3s !important);
+		}
+
+		&:hover,
+		&:focus {
+
+			&::before,
+			&::after {
+				@include transform(scale(1));
+			}
+
+			&::after {
+				@include top(0);
+				@include opacity(1);
+			}
+		}
+	}
+}
+
+// ==============================
+// ホバー時に上部と下部からラインを表示する
+// @param $name 				クラス名
+// ==============================
+@mixin hover-line-double($name: null, $border-color: $base-border-color, $color: #237546, $hover-color: #fff) {
+	.hover-line-double#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include padding(10px);
+		@include color($color);
+		@include font-weight(700);
+		@include text-shadow(none);
+		@include transition(color 0.3s !important);
+
+		&::before,
+		&::after {
+			@include position(absolute);
+			@include left(0);
+			@include width(100%);
+			@include height(2px);
+			@include background($hover-color);
+			@include content("");
+			@include opacity(0);
+			@include transition(opacity 0.3s, transform 0.3s !important);
+			@include transform(translateY(-10px));
+		}
+
+		&::before {
+			@include top(0);
+			@include transform(translateY(-10px));
+		}
+
+		&::after {
+			@include bottom(0);
+			@include transform(translateY(10px))
+		}
+
+		&:hover {
+			@include color($hover-color);
+
+			&::before,
+			&::after {
+				@include opacity(1);
+				@include transform(translateY(0));
+			}
+		}
+	}
+}
+
+// ==============================
+// ホバー時に二重線のサークルを表示する
+// @param $name 				クラス名
+// ==============================
+@mixin hover-double-circle($name: null, $border-color: $base-border-color) {
+	.hover-double-circle#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+
+		&::before,
+		&::after {
+			@include position(absolute);
+			@include top(50%);
+			@include left(50%);
+			@include width(100px);
+			@include height(100px);
+			@include border(2px solid rgba($border-color, 0.1));
+			@include border-radius(50%);
+			@include content("");
+			@include opacity(0);
+			@include transition(transform 0.3s, opacity 0.3s !important);
+		}
+
+		&::after {
+			@include width(90px);
+			@include height(90px);
+			@include border-width(6px);
+			@include transform(translateX(-50%) translateY(-50%) scale(0.8));
+		}
+
+		&:hover,
+		&:focus {
+			&::before,
+			&::after {
+				@include opacity(1);
+				@include transform(translateX(-50%) translateY(-50%) scale(1));
+			}
+		}
+	}
+}
+
+// ==============================
+// ホバー時に下部に点線を表示する
+// @param $name 				クラス名
+// @param $border-color 		線の色
+// @param $color 				テキストカラー
+// @param $hover-color 			ホバー後のテキストカラー
+// ==============================
+@mixin hover-bottom-dotted($name: null, $border-color: $base-border-color, $color: $base-link-color, $hover-color: $base-link-color-hover) {
+	.hover-bottom-dotted#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include transition(color 0.3s);
+
+		&::before {
+			@include position(absolute);
+			@include top(100%);
+			@include left(50%);
+			@include color(transparent);
+			@include content("•");
+			@include text-shadow(0 0 transparent);
+			@include font-size(1.2rem);
+			@include transition(text-shadow 0.3s, color 0.3s !important);
+			@include transform(translateX(-50%));
+			@include pointer-events(none);
+		}
+
+		&:hover,
+		&:focus {
+			@include color($hover-color);
+
+			&::before {
+				@include color($color);
+				@include text-shadow(10px 0 $color, -10px 0 $color);
+			}
+		}
+	}
+}
+
+// ==============================
+// ホバー時に横線の位置を上下に変更する
+// @param $name 				クラス名
+// @param $border-color 		線の色
+// @param $hover-border-color 	ホバー後の線の色
+// ==============================
+@mixin hover-side-border-change($name: null, $border-color: $base-border-color, $hover-border-color: $base-link-color-hover) {
+	.hover-side-border-change#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include padding(0 20px);
+		@include height(2em);
+		@include line-height(2em);
+
+		&::before,
+		&::after {
+			@include position(absolute);
+			@include width(2em);
+			@include height(2px);
+			@include background($hover-border-color);
+			@include content("");
+			@include opacity(0.2);
+			@include transition(all 0.3s !important);
+			@include pointer-events(none);
+		}
+
+		&::before {
+			@include top(0);
+			@include left(0);
+			@include transform(rotate(90deg));
+			@include transform-origin(0 0);
+		}
+
+		&::after {
+			@include right(0);
+			@include bottom(0);
+			@include transform(rotate(90deg));
+			@include transform-origin(100% 0);
+		}
+
+		&:hover,
+		&:focus {
+			&::before,
+			&::after {
+				@include opacity(1);
+			}
+
+			&::before {
+				@include left(50%);
+				@include transform(rotate(0deg) translateX(-50%));
+			}
+
+			&::after {
+				@include right(50%);
+				@include transform(rotate(0deg) translateX(50%));
+			}
+		}
+	}
+}
+
+// ==============================
+// ホバー時にテキストを被せて表示します
+// @param $name 				クラス名
+// @param $color 				テキストカラー
+// @param $hover-color 			ホバー後のテキストカラー
+// ==============================
+@mixin hover-cover-text($name: null, $color: #6f8686, $hover-color: #fff) {
+	.hover-cover-text#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include color($color);
+		@include text-shadow(0 0 1px rgba(lighten($color, 10%), 0.3));
+
+		&::before {
+			@include color($hover-color);
+			@include content(attr(data));
+			@include position(absolute);
+			@include opacity(0);
+			@include text-shadow(0 0 1px rgba($hover-color, 0.3));
+			@include transform(scale(1.1) translateX(10px) translateY(-10px) rotate(4deg));
+			@include transition(transform 0.3s, opacity 0.3s !important);
+			@include pointer-events(none);
+		}
+
+		&:hover,
+		&:focus {
+			&::before {
+				@include transform(scale(1) translateX(0) translateY(0) rotate(0deg));
+				@include opacity(1);
+			}
+		}
+	}
+}
+
+// ==============================
+// ホバー時に上下のボーダーをクロスして表示します
+// @param $name 				クラス名
+// @param $border-color 		線の色
+// @param $hover-color 			ホバー後のテキストカラー
+// ==============================
+@mixin hover-cross-border($name: null, $border-color: #b4770d, $hover-color: #fff) {
+	.hover-cross-border#{$name} {
+		@include position(relative);
+		@include display(inline-block);
+		@include z-index(1);
+		@include padding(0 5px);
+		@include color($border-color);
+		@include font-weight(bold);
+		@include transition(color 0.3s !important);
+
+		&::before,
+		&::after {
+			@include position(absolute);
+			@include width(100%);
+			@include left(0);
+			@include top(50%);
+			@include height(2px);
+			@include margin-top(-1px);
+			@include background($border-color);
+			@include content("");
+			@include z-index(-1);
+			@include transition(transform 0.3s, opacity 0.3s !important);
+			@include pointer-events(none);
+		}
+
+		&::before {
+			@include transform(translateY(-20px));
+		}
+
+		&::after {
+			@include transform(translateY(20px));
+		}
+
+		&:hover,
+		&:focus {
+			@include color($hover-color);
+
+			&::before,
+			&::after {
+				@include opacity(0.7);
+			}
+
+			&::before {
+				@include transform(rotate(45deg));
+			}
+
+			&::after {
+				@include transform(rotate(-45deg));
+			}
+		}
+	}
+}
+
+// ********************************************  I  **********************************************//
+
+// =============================
+// 要素を横並びに設定する
+// =============================
+@mixin inline-block() {
+	@include display(inline-block);
+	@include display(inline);
+	@include zoom(1);
+}
+
+// ********************************************  K  **********************************************//
+
+// =================================================
+// キーフレーム名を設定する
+// @param $name 				: キーフレーム名（初期値はnull）
+// -------------------------------------------------
+// @keyframes は、アニメーション中に到達すべきポイントであるキーフレーム (通過点) を明示することで、
+// CSS animation の流れの中間地点をページ作者が制御することを可能にします。
+// これにより、ブラウザにすべてを自動的に扱わせる場合よりも、アニメーションの流れの中間地点をより明確に制御することができます。
+// キーフレームを使うには、アニメーションとそのキーフレームを一致させるために、animation-name プロパティで指定したものと同じ名前がついた@keyframes 規則を作成します。
+// それぞれの @keyframes 規則は、キーフレームセレクタのスタイルリストを含んでいます。
+// またそれらは、キーフレームのスタイル情報が含まれているブロックと、アニメーションの途中でそのキーフレームの状態になるパーセント値で構成されています。
+// キーフレームは任意の順番で並べることができます。これらは、その状態になるときを示すパーセント値の順番に従って制御されます。
+// -------------------------------------------------
+// =================================================
+@mixin keyframes($name: null) {
+	@if $support-for-webkit {
+		@-webkit-keyframes #{$name} {
+			@content;
+		}
+	}
+
+	@if $support-for-mozilla {
+		@-moz-keyframes #{$name} {
+			@content;
+		}
+	}
+
+	@if $support-for-opera {
+		@-o-keyframes #{$name} {
+			@content;
+		}
+	}
+
+	@if $support-for-microsoft {
+		@-ms-keyframes #{$name} {
+			@content;
+		}
+	}
+
+	@keyframes #{$name} {
+		@content;
+	}
+}
+
+// ********************************************  M  **********************************************//
+
+// ==============================
+// ホバー時にカラーが変化するボタン
+// @param $border-color 		ボーダーカラー（初期値は設定ファイルの設定値）
+// @param $border-size 			ボーダーサイズ（初期値は設定ファイルの設定値）
+// @param $transition-speed 	変化時間（初期値は0.2s）
+// @param $hover-color 			ホバー時のカラー（初期値は設定ファイルの設定値）
+// ==============================
+@mixin make-ghost-button($border-color: $base-border-color, $border-size: 0, $transition-speed: $hover-duration, $hover-color: $base-link-color-hover){
+	@include text-transform(uppercase);
+	@if $border-size > 0 {
+		@include border($border-size solid $border-color);
+		@include color($border-color);
+	}
+	@include transition(transform 0.3 !important);
+}
+
+// =================================================
+// 要素が変化する時間を設定する
+// @param $transition-1 			: 時間間隔1(1sなど)
+// @param $transition-2 			: 時間間隔2(1sなど)
+// @param $transition-3 			: 時間間隔3(1sなど)
+// @param $transition-4 			: 時間間隔4(1sなど)
+// @param $transition-5 			: 時間間隔5(1sなど)
+// @param $transition-6 			: 時間間隔6(1sなど)
+// @param $transition-7 			: 時間間隔7(1sなど)
+// @param $transition-8 			: 時間間隔8(1sなど)
+// @param $transition-9 			: 時間間隔9(1sなど)
+// @param $transition-10 			: 時間間隔10(1sなど)
+// =================================================
+@mixin make-transition($transition-1: default, $transition-2: false, $transition-3: false, $transition-4: false, $transition-5: false, $transition-6: false, $transition-7: false, $transition-8: false, $transition-9: false, $transition-10: false) {
+	$legacy: type-of($transition-1) == string and type-of(if($transition-2, $transition-2, 0)) == number and type-of(if($transition-3, $transition-3, "")) == string and type-of(if($transition-4, $transition-4, 0)) == number and ($transition-2 or $transition-3 or $transition-4);
+	@if $legacy {
+		@warn "Passing separate arguments for a single transition to transition is deprecated. " + "Pass the values as a single space-separated list, or use the single-transition mixin.";
+		@include single-transition(if($transition-1, $transition-1, $default-transition-property), if($transition-2, $transition-2, $default-transition-duration), if($transition-3, $transition-3, $default-transition-function), if($transition-4, $transition-4, $default-transition-delay)); }
+	@else {
+		@if $transition-1 == default {
+			$transition-1: -compass-space-list(compact($default-transition-property, $default-transition-duration, $default-transition-function, $default-transition-delay)); }
+		$transition: compact($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10);
+		@include grantPrefix(transition
+							 , #{$transition}
+							 , -moz, -webkit, -o, -ms, official
+							);
+	}
+}
+
+// ==============================
+// グラデーションを生成する
+// @param $start-color 			開始する色
+// @param $end-color 			終了する色
+// @param $orientation 			方向
+// ---------------------------------------------------
+// ※方向一覧
+// vertical 					: 縦方向のグラデーション
+// horizontal 					: 横方向のグラデーション
+// radial 						: 円方向のグラデーション
+// ---------------------------------------------------
+// ==============================
+@mixin make-gradient($start-color, $end-color, $orientation) {
+	@include background($start-color);
+	@if $orientation == vertical {
+		// vertical
+		@if $support-for-webkit {
+			@include background(-webkit-gradient(linear, left top, left bottom, color-stop(0%,$start-color), color-stop(100%,$end-color)));
+			@include background(-webkit-linear-gradient(top, $start-color 0%,$end-color 100%));
+		}
+		@if $support-for-mozilla {
+			@include background(-moz-linear-gradient(top, $start-color 0%, $end-color 100%));
+		}
+		@if $support-for-opera {
+			@include background(-o-linear-gradient(top, $start-color 0%,$end-color 100%));
+		}
+		@if $support-for-microsoft {
+			@include background(-ms-linear-gradient(top, $start-color 0%,$end-color 100%));
+		}
+		@include background(linear-gradient(to bottom, $start-color 0%,$end-color 100%));
+		@if $support-for-microsoft {
+			@include filter(progid:DXImageTransform.Microsoft.gradient( startColorstr=#{$start-color}, endColorstr=#{$end-color},GradientType=0 ));
+		}
+	}
+	@else if $orientation == horizontal {
+		// horizontal
+		@if $support-for-webkit {
+			@include background(-webkit-gradient(linear, left top, right top, color-stop(0%,$start-color), color-stop(100%,$end-color)));
+			@include background(-webkit-linear-gradient(left, $start-color 0%,$end-color 100%));
+		}
+		@if $support-for-mozilla {
+			@include background(-moz-linear-gradient(left, $start-color 0%, $end-color 100%));
+		}
+		@if $support-for-opera {
+			@include background(-o-linear-gradient(left, $start-color 0%,$end-color 100%));
+		}
+		@if $support-for-microsoft {
+			@include background(-ms-linear-gradient(left, $start-color 0%,$end-color 100%));
+		}
+		@include background(linear-gradient(to right, $start-color 0%,$end-color 100%));
+		@if $support-for-microsoft {
+			@include filter(progid:DXImageTransform.Microsoft.gradient( startColorstr=#{$start-color}, endColorstr=#{$end-color},GradientType=1 ));
+		}
+	}
+	@else {
+		// radial
+		@if $support-for-webkit {
+			@include background(-webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,$start-color), color-stop(100%,$end-color)));
+			@include background(-webkit-radial-gradient(center, ellipse cover,	$start-color 0%,$end-color 100%));
+		}
+		@if $support-for-mozilla {
+			@include background(-moz-radial-gradient(center, ellipse cover, $start-color 0%, $end-color 100%));
+		}
+		@if $support-for-opera {
+			@include background(-o-radial-gradient(center, ellipse cover, $start-color 0%,$end-color 100%));
+		}
+		@if $support-for-microsoft {
+			@include background(-ms-radial-gradient(center, ellipse cover, $start-color 0%,$end-color 100%));
+		}
+		@include background(radial-gradient(ellipse at center,	$start-color 0%,$end-color 100%));
+		@if $support-for-microsoft {
+			@include filter(progid:DXImageTransform.Microsoft.gradient( startColorstr=#{$start-color}, endColorstr=#{$end-color},GradientType=1 ));
+		}
+	}
+}
+
+// ============================
+// 上下に明→暗のグラデーションを作成します。
+// @param $background-color 		: 背景色（初期値は設定ファイルの背景色）
+// @param $lighten 					: 明度（初期値は10）
+// ============================
+@mixin make-gradient-top-lighten($background-color: $base-bg-color, $lighten: 10){
+	@include background-color($background-color);
+	@include background-image(linear-gradient(lighten($background-color, $lighten) 0%, $background-color 100%));
+	@include filter-gradient(lighten($background-color, $lighten), $background-color, vertical);
+}
+
+// ============================
+// 上下に暗→明のグラデーションを作成します。
+// @param $background-color 		: 背景色（初期値は設定ファイルの背景色）
+// @param $darken 					: 明度（初期値は10）
+// ============================
+@mixin make-gradient-top-lighten($background-color: $base-bg-color, $darken: 10){
+	@include background-color($background-color);
+	@include background-image(linear-gradient(darken($background-color, $darken) 0%, $background-color 100%));
+	@include filter-gradient(darken($background-color, $darken), $background-color, vertical);
+}
+
+// ============================
+// text-shadowを設定する
+// (回数を重ねる事で色合いが強くなります)
+// @param $value 					値(横軸・縦軸・広がり・カラー)（初期値は0 0 1px rgba(0,0,0,0.3)）
+// @param $num 						リピート回数（初期値は1）
+// ============================
+$text-shadowList: ' ';
+@mixin make-text-shadow-repeat($value: 0 0 1px rgba(0,0,0,0.3), $num : 1) {
+	$text-shadowList : $value;
+	@for $i from 1 through $num - 1 {
+		$text-shadowList : unquote($text-shadowList + "," + $value);
+	}
+	@include text-shadow($text-shadowList);
+}
+
+// ============================
+// タブコンテンツを作成します。
+// @param $name 					CSS名
+// @param $count 					作成するタブ数
+// @param $min-height 				最小の高さ
+// -------------------------------------------------
+// ※example
+// <div style="margin-top: 20px;">
+//     <input type="radio" name="tab-switch" id="tab-1" checked>
+//     <input type="radio" name="tab-switch" id="tab-2">
+//     <input type="radio" name="tab-switch" id="tab-3">
+//     <input type="radio" name="tab-switch" id="tab-4">
+//     <input type="radio" name="tab-switch" id="tab-5">
+//     <ul class="tab-btn">
+//         <li><label for="tab-1">タブ1</label></li>
+//         <li><label for="tab-2">タブ2</label></li>
+//         <li><label for="tab-3">タブ3</label></li>
+//         <li><label for="tab-4">タブ4</label></li>
+//         <li><label for="tab-5">タブ5</label></li>
+//     </ul>
+//     <div class="tab-content">
+//         <section>タブコンテンツ1</section>
+//         <section>タブコンテンツ2</section>
+//         <section>タブコンテンツ3</section>
+//         <section>タブコンテンツ4</section>
+//         <section>タブコンテンツ5</section>
+//     </div>
+// </div>
+// -------------------------------------------------
+// ============================
+@mixin make-tab-content($name: null, $count: 1, $min-height: 1px) {
+	/* =============================================== */
+	/** TabContents */
+	/* =============================================== */
+
+	.tab-btn#{$name} {
+		@include display(table);
+		@include width(100%);
+		@include padding(0);
+
+		li {
+			@include display(table-cell);
+			@include width(#{100% / $count});
+			@include border-right(1px solid transparent);
+			@include background-color($tab-bg-color);
+			@include text-align(center);
+			@include vertical-align(middle);
+
+			&:last-child {
+				@include border-right(0);
+			}
+
+			label {
+				@include display(block);
+				@include cursor(pointer);
+				@include padding(10px 0);
+				@include color($tab-font-color);
+				@include transition(background-color 0.3s);
+
+				&:hover {
+					@include background-color(rgba(205, 92, 92, 0.5));
+				}
+			}
+		}
+	}
+
+	.tab-content#{$name} {
+		@include position(relative);
+		@include min-height($min-height);
+
+		section {
+			@include position(absolute);
+			@include top(0);
+			@include left(0);
+			@include right(0);
+			@include min-height($min-height);
+			@include opacity(0);
+			@include text-align(center);
+			@include transition(opacity $tab-duration);
+		}
+	}
+
+	$tmp: "";
+	@for $i from 1 through $count {
+		@if $tmp != "" {
+			$tmp: $tmp + ", "
+		}
+		$tmp: $tmp + "#tab#{$name}-#{$i}";
+	}
+	#{$tmp} {
+		@include display(none);
+	}
+
+	$tmp: "";
+	@for $i from 1 through $count {
+		@if $tmp != "" {
+			$tmp: $tmp + ", ";
+		}
+		$tmp: $tmp + '#tab#{$name}-#{$i}:checked ~ .tab-btn li [for="tab#{$name}-#{$i}"]';
+	}
+	#{$tmp} {
+		@include background-color($tab-active-color);
+	}
+
+	$tmp: "";
+	@for $i from 1 through $count {
+		@if $tmp != "" {
+			$tmp: $tmp + ",";
+		}
+		$tmp: $tmp + '#tab#{$name}-#{$i}:checked ~ .tab-content section:nth-child(#{$i})';
+	}
+	#{$tmp} {
+		@include opacity(1);
+		@include background-color($tab-section-color);
+	}
+}
+
+// ============================
+// 表示スタイル切り替えクラスを作成します。
+// @param $name 					CSS名
+// -------------------------------------------------
+// ※example
+// <div>
+//     <input type="radio" name="style-switch" id="normal-list" checked>
+//     <input type="radio" name="style-switch" id="image-list">
+//     <input type="radio" name="style-switch" id="text-list">
+//     <ul class="change-btn">
+//         <li><label for="normal-list"></label></li>
+//         <li><label for="image-list"></label></li>
+//         <li><label for="text-list"></label></li>
+//     </ul>
+//     <ul class="content-menu">
+//         <li>
+//             <a href="#">
+//                 <dl>
+//                     <dt class="date"><span class="year">2014</span><span class="day">1.30</span><span class="week">Thu</span></dt>
+//                     <dd class="img"><img src="http://lopan.jp/wp/wp-content/uploads/2014/01/icon_lovefont-300x300.png"></dd>
+//                     <dd class="ttl">なつかしくってあったかい、きりぎりす。 #LOVEFONT</dd>
+//                     <dd class="excerpt">フォント好きな人がフォントについて熱く語る「LOVEFONT」という企画にあと乗りで、僕の好きなフォント「きりぎりす」について、語るってほどは語れませんが、記事にさせていただきます。</dd>
+//                 </dl>
+//             </a>
+//         </li>
+//         <li>
+//             <a href="#">
+//                 <dl>
+//                     <dt class="date"><span class="year">2013</span><span class="day">9.15</span><span class="week">Sun</span></dt>
+//                     <dd class="img"><span><img src="http://lopan.jp/wp/wp-content/uploads/2013/09/icon_texture.jpg"></span></dd>
+//                     <dd class="ttl">透明ノイズと紙テクスチャ。</dd>
+//                     <dd class="excerpt">ちょっとざらざらした質感とか、手触りを感じるテクスチャって、背景にさりげなく敷くだけで、ほんのり暖かみが出ていいですよね。そんなざらざらノイズ画像を半透明にした「透明ノイズ」のつくり方についてまとめてみました。</dd>
+//                 </dl>
+//             </a>
+//         </li>
+//         <li>
+//             <a href="#">
+//                 <dl>
+//                     <dt class="date"><span class="year">2013</span><span class="day">6.17</span><span class="week">Mon</span></dt>
+//                     <dd class="img"><span><img src="http://lopan.jp/wp/wp-content/uploads/2013/09/icon_webdesign4.jpg"></span></dd>
+//                     <dd class="ttl">Webサイトの作り方のまとめ！ブラウザチェック。</dd>
+//                     <dd class="excerpt">トップページのコーディングがひと通り完了したので、下層ページのコーディングに移る前に、一旦ブラウザチェックしてみようと思います:)。ブラウザチェックからIEでの表示崩れを整えるまでのまとめです。</dd>
+//                 </dl>
+//             </a>
+//         </li>
+//         <li>
+//             <a href="#">
+//                 <dl>
+//                     <dt class="date"><span class="year">2013</span><span class="day">3.19</span><span class="week">Tue</span></dt>
+//                     <dd class="img"><span><img src="http://lopan.jp/wp/wp-content/uploads/2013/03/icon_photoshop_shape.jpg"></span></dd>
+//                     <dd class="ttl">Photoshopのシェイプでできること。</dd>
+//                     <dd class="excerpt">拡大しても劣化しないし、ダブルクリックでカンタンに色を変えられるし、もちろんIllustratorでも使い回せる、そんなPhotoshopの万能シェイプの機能や特長について、個人的なまとめです。</dd>
+//                 </dl>
+//             </a>
+//         </li>
+//     </ul>
+// </div>
+// -------------------------------------------------
+// ============================
+@mixin make-change-style-content($name: null) {
+	/* =============================================== */
+	/** ChangeStyleContent */
+	/* =============================================== */
+
+	.style-content input {
+		@include display(none);
+	}
+
+	/* :::::: button :::::: */
+
+	.change-btn#{$name} {
+		@include display(table);
+		@include width(100%);
+		@include margin(0 0 5px);
+		@include padding(0);
+		@include background-color($style-bg-color);
+		@include text-align(right);
+
+		li {
+			@include display(inline-block);
+			@include width(50px);
+			@include border-left($style-border);
+			@include background-color($style-bg-color);
+			@include text-align(center);
+			@include vertical-align(middle);
+			@include margin-right(-5px);
+
+			&:last-child {
+				@include margin-right(0);
+			}
+
+			label {
+				@include display(block);
+				@include cursor(pointer);
+				@include height(18px);
+				@include padding(9px 0);
+				@include color(#fff);
+				@include transition(background-color .3s);
+				@include height(35px);
+				@include text-align(center);
+
+				&::before {
+					@include content("");
+					@include display(inline-block);
+					@include overflow(hidden);
+					@include width(18px);
+					@include height(18px);
+					@include background(url(../images/ico_tabs.svg) no-repeat);
+				}
+
+				&[for="normal-list#{$name}"]::before {
+					@include background-position(0 0);
+				}
+
+				&[for="image-list#{$name}"]::before {
+					@include background-position(-30px 0);
+				}
+
+				&[for="text-list#{$name}"]::before {
+					@include background-position(-60px 0);
+				}
+
+				&:hover {
+					@include background-color(rgba(205,92,92,.5));
+				}
+			}
+		}
+	}
+
+	#normal-list#{$name},
+	#image-list#{$name},
+	#text-list#{$name} {
+		@include display(none);
+	}
+
+	/* :::::: contents :::::: */
+
+	.content-menu#{$name} {
+
+		li,
+		dl,
+		dt,
+		dd {
+			@include box-sizing(border-box);
+		}
+
+		&::after {
+			@include content("");
+			@include display(block);
+			@include clear(both);
+		}
+
+		li {
+			@include float(left);
+			@include width(25%);
+			@include padding(2px);
+
+			a {
+				@include display(block);
+				@include text-decoration(none);
+				@include background-color(#fff);
+				@include transition(color 0.6s, background-color 0.6s, opacity 0.6s);
+			}
+		}
+
+		dl {
+			@include position(relative);
+			@include overflow(hidden);
+			@include padding(10px);
+		}
+
+		dt,
+		dd {
+			@include font-size(0.8rem);
+			@include line-height(1.6);
+		}
+
+		img {
+			@include width(100%);
+			@include vertical-align(middle);
+		}
+
+		.date,
+		.excerpt {
+			@include color(#373039);
+		}
+
+		.ttl {
+			@include margin-bottom(0.3rem);
+			@include font-size(0.1rem);
+			@include line-height(1.4);
+		}
+
+		.excerpt {
+			@include font-size(0.7rem);
+		}
+	}
+
+	/* :::::: normal :::::: */
+
+	#normal-list#{$name}:checked ~ .content-menu#{$name} {
+		@include animation(fade-in 1s 0s 1);
+	}
+
+	#normal-list#{$name}:checked ~ .content-menu#{$name} li {
+		@include width(50%);
+	}
+
+	#normal-list#{$name}:checked ~ .content-menu#{$name} dl {
+		@include height(140px);
+	}
+
+	#normal-list#{$name}:checked ~ .content-menu#{$name} a:hover {
+		@include opacity(0.6);
+	}
+
+	#normal-list#{$name}:checked ~ .content-menu .date {
+		@include height(20px);
+	}
+
+	#normal-list#{$name}:checked ~ .content-menu#{$name} .img {
+		@include position(relative);
+		@include float(left);
+		@include overflow(hidden);
+		@include width(40%);
+		@include height(100px);
+		@include margin-right(20px);
+		@include margin-bottom(0.6em);
+	}
+
+	#normal-list#{$name}:checked ~ .content-menu#{$name} .img img {
+		@include position(absolute);
+		@include top(50%);
+		@include transform(translateY(-50%));
+	}
+
+	#normal-list#{$name}:checked ~ .content-menu#{$name} .img {
+		@include z-index(1);
+	}
+
+	#normal-list#{$name}:checked ~ .content-menu#{$name} dl::after {
+		@include content("");
+		@include display(block);
+		@include position(absolute);
+		@include bottom(0);
+		@include left(0);
+		@include width(100%);
+		@include height(3em);
+	}
+
+	/* :::::: image :::::: */
+
+	#image-list#{$name}:checked ~ .content-menu#{$name} {
+		@include animation(fade-in 1s 0s 1);
+	}
+
+	#image-list#{$name}:checked ~ .content-menu#{$name} .date,
+	#image-list#{$name}:checked ~ .content-menu#{$name} .ttl {
+		@include z-index(1);
+		@include position(absolute);
+		@include left(0);
+		@include line-height(1);
+		@include background-color(rgba(255,255,255,0.9));
+	}
+
+	#image-list#{$name}:checked ~ .content-menu#{$name} .date {
+		@include top(15px);
+		@include padding(0.3em 5px 0.15em 15px);
+	}
+
+	#image-list#{$name}:checked ~ .content-menu#{$name} .ttl {
+		@include bottom(0);
+		@include width(100%);
+		@include margin(0);
+		@include padding(0.5em 15px 15px);
+		@include font-size(0.8rem);
+	}
+
+	#image-list#{$name}:checked ~ .content-menu#{$name} .excerpt {
+		@include display(none);
+	}
+
+	#image-list#{$name}:checked ~ .content-menu#{$name} .date,
+	#image-list#{$name}:checked ~ .content-menu#{$name} .ttl {
+		@include opacity(0);
+		@include transition(opacity 0.3s, transform 0.6s);
+	}
+
+	#image-list#{$name}:checked ~ .content-menu#{$name} .date {
+		@include transform(translateY(-100%));
+	}
+
+	#image-list#{$name}:checked ~ .content-menu#{$name} .ttl {
+		@include transform(translateY(100%));
+	}
+
+	#image-list#{$name}:checked ~ .content-menu#{$name} a:hover {
+		@include background-color(rgba(255,255,255,0.3));
+	}
+
+	#image-list#{$name}:checked ~ .content-menu#{$name} a:hover .date,
+	#image-list#{$name}:checked ~ .content-menu#{$name} a:hover .ttl {
+		@include opacity(1);
+		@include transform(translateY(0));
+		@include transition-duration(1s);
+	}
+
+	#image-list#{$name}:checked ~ .content-menu#{$name} .img {
+		@include overflow(hidden);
+		@include background-color(#593869);
+		@include transition(background-color 0.6s 1s);
+	}
+
+	#image-list#{$name}:checked ~ .content-menu#{$name} dl .img img {
+		@include transition(opacity 1s, transform 0.3s);
+	}
+
+	#image-list#{$name}:checked ~ .content-menu#{$name}:hover dl .img img {
+		@include transition-duration(1s);
+	}
+
+	#image-list#{$name}:checked ~ .content-menu#{$name} a:hover .img img {
+		@include opacity(.6);
+		@include transform(scale(1.2));
+	}
+
+	/* :::::: text :::::: */
+
+	#text-list#{$name}:checked ~ .content-menu#{$name} {
+		@include animation(fade-in 1s 0s 1);
+	}
+
+	#text-list#{$name}:checked ~ .content-menu#{$name} li {
+		@include float(none);
+		@include width(100%);
+	}
+
+	#text-list#{$name}:checked ~ .content-menu#{$name} li a {
+		@include background-color(rgba(255,255,255,0.3));
+	}
+
+	#text-list#{$name}:checked ~ .content-menu#{$name} li a:hover {
+		@include background-color(#fff);
+	}
+
+	#text-list#{$name}:checked ~ .content-menu#{$name} dl {
+		@include padding(0);
+	}
+
+	#text-list#{$name}:checked ~ .content-menu#{$name} dl::after {
+		@include content("");
+		@include display(block);
+		@include clear(both);
+	}
+
+	#text-list#{$name}:checked ~ .content-menu#{$name} dt,
+	#text-list#{$name}:checked ~ .content-menu#{$name} dd {
+		@include box-sizing(border-box);
+		@include margin(0);
+		@include padding(10px);
+	}
+
+	#text-list#{$name}:checked ~ .content-menu#{$name} .date {
+		@include float(left);
+		@include width(12%);
+		@include margin-right(2px);
+		@include background-color(#fff);
+	}
+
+	#text-list#{$name}:checked ~ .content-menu#{$name} .date span {
+		@include display(block);
+		@include font-size(0.8rem);
+		@include line-height(1.2);
+		@include text-align(center);
+	}
+
+	#text-list#{$name}:checked ~ .content-menu#{$name} .date .day {
+		@include font-size(1.2rem);
+	}
+
+	#text-list#{$name}:checked ~ .content-menu#{$name} .date .week {
+		@include background-color(#f4f4f4);
+	}
+
+	#text-list#{$name}:checked ~ .content-menu#{$name} .img {
+		@include display(none);
+	}
+
+	#text-list#{$name}:checked ~ .content-menu#{$name} .ttl,
+	#text-list#{$name}:checked ~ .content-menu#{$name} .excerpt {
+		@include float(right);
+		@include width(calc(88% - 2px));
+		@include overflow(hidden);
+		@include text-overflow(ellipsis);
+		@include white-space(nowrap);
+	}
+
+	#text-list#{$name}:checked ~ .content-menu#{$name} .ttl {
+		@include padding-bottom(0.3em);
+	}
+
+	#text-list#{$name}:checked ~ .content-menu#{$name} .excerpt {
+		@include padding(0 10px);
+	}
+
+	/* :::::: media queries :::::: */
+
+	@media screen and (max-width: 480px) {
+		.content-menu#{$name} li {
+			@include width(50%);
+		}
+		#normal-list#{$name}:checked ~ .content-menu#{$name} li {
+			@include float(none);
+			@include width(100%);
+		}
+		#text-list#{$name}:checked ~ .content-menu#{$name} .date {
+			@include width(20%);
+		}
+		#text-list#{$name}:checked ~ .content-menu#{$name} .ttl,
+		#text-list#{$name}:checked ~ .content-menu#{$name} .excerpt {
+			@include width(calc(80% - 2px));
+		}
+	}
+
+	/* :::::: mechanism :::::: */
+
+	#normal-list#{$name}:checked ~ .change-btn#{$name} li [for="normal-list#{$name}"],
+	#image-list#{$name}:checked ~ .change-btn#{$name} li [for="image-list#{$name}"],
+	#text-list#{$name}:checked ~ .change-btn#{$name} li [for="text-list#{$name}"] {
+		@include background-color($style-active-bg-color);
+	}
+
+	#normal-list#{$name}:checked ~ .content-menu#{$name} .date .year::after,
+	#image-list#{$name}:checked ~ .content-menu#{$name} .date .year::after,
+	#normal-list#{$name}:checked ~ .content-menu#{$name} .date .day::after,
+	#image-list#{$name}:checked ~ .content-menu#{$name} .date .day::after {
+		@include content(".");
+	}
+
+	#normal-list#{$name}:checked ~ .content-menu#{$name} .date .day::after,
+	#image-list#{$name}:checked ~ .content-menu#{$name} .date .day::after {
+		@include margin-right(0.5em);
+	}
+}
+
+// ============================
+// スライドコンテンツを作成します。
+// @param $name 					CSS名
+// @param $count 					スライド数
+// -------------------------------------------------
+// ※example
+// <div id="slide-content-wrapper">
+//     <input type="radio" name="slideshow" id="slide-switch1" checked>
+//     <input type="radio" name="slideshow" id="slide-switch2">
+//     <input type="radio" name="slideshow" id="slide-switch3">
+//     <input type="radio" name="slideshow" id="slide-switch4">
+//     <input type="radio" name="slideshow" id="slide-switch5">
+//     <div id="slideshow">
+//         <div class="slide-content5">
+//             <section id="slide1">
+//                 <img src="http://placehold.it/600x200/fafafa/20b2aa/&text=slide_1">
+//             </section>
+//             <section id="slide2">
+//                 <img src="http://placehold.it/600x200/fafafa/20b2aa/&text=slide_2">
+//             </section>
+//             <section id="slide3">
+//                 <img src="http://placehold.it/600x200/fafafa/20b2aa/&text=slide_3">
+//             </section>
+//             <section id="slide4">
+//                 <img src="http://placehold.it/600x200/fafafa/20b2aa/&text=slide_4">
+//             </section>
+//             <section id="slide5">
+//                 <img src="http://placehold.it/600x200/fafafa/20b2aa/&text=slide_5">
+//             </section>
+//         </div>
+//         <p class="arrow prev">
+//             <i class="ico"></i>
+//             <label for="slide-switch1"></label>
+//             <label for="slide-switch2"></label>
+//             <label for="slide-switch3"></label>
+//             <label for="slide-switch4"></label>
+//             <label for="slide-switch5"></label>
+//         </p>
+//         <p class="arrow next">
+//             <i class="ico"></i>
+//             <label for="slide-switch1"></label>
+//             <label for="slide-switch2"></label>
+//             <label for="slide-switch3"></label>
+//             <label for="slide-switch4"></label>
+//             <label for="slide-switch5"></label>
+//         </p>
+//     </div>
+// </div>
+// -------------------------------------------------
+// ============================
+@mixin make-slide-content($name: null, $count: 1) {
+	/* =============================================== */
+	/** SlideContent */
+	/* =============================================== */
+	.slide#{$name}-content-wrapper {
+		@include overflow(hidden);
+		@include width(100%);
+		@include padding(0);
+		@include position(relative);
+
+		input[type="radio"] {
+			@include display(none);
+		}
+	}
+
+	.slideshow#{$name} {
+		@include position(relative);
+		@include width(100%);
+	}
+
+	.slide#{$name}-content {
+		@include position(relative);
+		@include background($slider-bg-color);
+		@include text-align(center);
+		@include user-select(none);
+		@include width(500%);
+		@include transition(transform 0.6s);
+
+		&::after {
+			@include content("");
+			@include display(block);
+			@include clear(both);
+		}
+
+		section {
+			@include float(left);
+			@include width(20%);
+			@include transition(opacity 0.6s);
+
+			img {
+				@include box-sizing(border-box);
+				@include max-width(100%);
+				@include height(auto);
+				@include padding(0 50px);
+				@include vertical-align(middle);
+			}
+		}
+	}
+
+	/* :::::: slideshow mechanism :::::: */
+
+	@for $i from 1 through $count {
+		#slide#{$name}-switch#{$i}:checked ~ #slideshow#{$name} .slide#{$name}-content {
+			@include transform(translateX(-#{(100% / $count) * ($i - 1)}));
+		}
+	}
+
+	/* :::::: arrows :::::: */
+
+	.arrow,
+	.arrow label,
+	.arrow .ico {
+		@include position(absolute);
+	}
+
+	.arrow {
+		@include top(0);
+		@include margin(0);
+		@include transition(background 0.3s);
+
+		@if $slide-arrow-always {
+			@include background(rgba(255, 255, 255, 0.2));
+			.ico {
+				@include opacity(0.6);
+			}
+		}
+		@else {
+			&:hover {
+				@include background(rgba(255, 255, 255, 0.2));
+
+				.ico {
+					@include opacity(0.6);
+					@include transition-duration(0.3s);
+				}
+			}
+		}
+
+		label {
+			@include top(0);
+			@include left(0);
+			@include z-index(1);
+		}
+
+		.ico {
+			@include top(50%);
+			@include width(12px);
+			@include height(12px);
+			@include margin-top(-6px);
+			@include border-top(3px solid #fff);
+			@include border-right(3px solid #fff);
+			@if $slide-arrow-always {
+				@include opacity(0.6);
+			}
+			@else{
+				@include opacity(0);
+			}
+			@include transition(right 0.6s, left 0.6s, opacity 0.6s);
+		}
+	}
+
+	.prev {
+		@include left(0);
+
+		.ico {
+			@if $slide-arrow-always {
+				@include left(30%);
+			}
+			@else {
+				@include left(60%)
+			}
+			@include transform(rotate(-135deg));
+		}
+
+		@if $slide-arrow-always == false {
+			&:hover .ico {
+				@include left(30%);
+			}
+		}
+	}
+
+	.next {
+		@include right(0);
+
+		.ico {
+			@if $slide-arrow-always {
+				@include right(30%);
+			}
+			@else {
+				@include right(60%)
+			}
+			@include transform(rotate(45deg));
+		}
+
+		@if $slide-arrow-always == false {
+			&:hover .ico {
+				@include right(30%);
+			}
+		}
+	}
+
+	.arrow,
+	.arrow label {
+		@include cursor(pointer);
+		@include width(50px);
+		@include height(100%);
+	}
+
+	/* :::::: arrows mechanism :::::: */
+
+	.arrow label {
+		@include pointer-events(none);
+	}
+
+	$tmp: "";
+	@for $i from 1 through $count {
+		@if $tmp != "" {
+			$tmp: $tmp + ", ";
+		}
+		$num: $i;
+		@if $i > 1 {
+			$num: $i - 1;
+		}
+		@else {
+			$num: $count;
+		}
+		$tmp: $tmp + '#slide#{$name}-switch#{$i}:checked ~ #slideshow#{$name} .prev label[for="slide#{$name}-switch#{$num}"]';
+	}
+	@for $i from 1 through $count {
+		@if $tmp != "" {
+			$tmp: $tmp + ", ";
+		}
+		$num: $i;
+		@if $i < $count {
+			$num: $num + 1;
+		}
+		@else {
+			$num: 1;
+		}
+		$tmp: $tmp + '#slide#{$name}-switch#{$i}:checked ~ #slideshow#{$name} .next label[for="slide#{$name}-switch#{$num}"]';
+	}
+	#{$tmp} {
+		@include pointer-events(auto);
+	}
+}
+
+// ============================
+// ハンバーガーメニューを作成します。
+// @param $name 					CSS名
+// @param $direction 				配置方向（left or right）
+// -------------------------------------------------
+// ※example
+// <div class="slide-menu-box">
+//     <input type="checkbox" id="navTgl">
+//     <label for="navTgl" class="open">≡</label>
+//     <label for="navTgl" class="close"></label>
+//     <nav class="menu">
+//         <h2>menu</h2>
+//         <ul>
+//             <li><a href="#">なつかしくってあったかい、きりぎりす。</a></li>
+//             <li><a href="#">透明ノイズと紙テクスチャ。</a></li>
+//             <li><a href="#">Webサイトの作り方のまとめ！ブラウザチェック。</a></li>
+//             <li><a href="#">Photoshopのシェイプでできること。</a></li>
+//             <li><a href="#">CSSだけでスライドショーはつくれるよ。</a></li>
+//         </ul>
+//     </nav>
+// </div>
+// -------------------------------------------------
+@mixin make-hamburger-menu($name: null, $direction: $hamburger-menu-direction) {
+	/* =============================================== */
+	/** HamburgerMenu */
+	/* =============================================== */
+
+	.hamburger-menu-box#{$name} {
+
+		#navTgl {
+			@include display(none);
+			@include overflow(hidden);
+		}
+
+		.open {
+			@include display(none);
+		}
+
+		.menu {
+
+			h2 {
+				@include display(none);
+			}
+
+			ul li {
+				@include display(inline-block);
+			}
+		}
+
+	}
+
+	@media #{$small-down} {
+		.hamburger-menu-box#{$name} {
+
+			@include height(50px);
+
+			.open {
+				@include display(block);
+				@include z-index(2);
+				@include width(50px);
+				@include height(50px);
+				@include color(white);
+				@include background-color(transparent);
+				@include font-size(2rem, false, false);
+				@include line-height(50px);
+				@include text-align(center);
+				@include transition(background-color 0.6s, transform 0.6s);
+				@include position(absolute);
+				@include cursor(pointer);
+				@if $direction == "right" {
+					@include right(0);
+				}
+				@else if $direction == "left" {
+					@include left(0);
+				}
+			}
+
+			.close {
+				@include pointer-events(none);
+				@include z-index(998);
+				@include width(100%);
+				@include height(100%);
+				@include position(fixed);
+				@include top(0);
+				@include transition(background-color 0.6s);
+			}
+
+			#navTgl:checked ~ .close {
+				@include pointer-events(auto);
+				@include background-color(rgba(0, 0, 0, 0.3));
+			}
+
+			/* :::::: menu :::::: */
+
+			.menu {
+				@include opacity(0);
+				@include z-index(999);
+				@include position(fixed);
+				@include overflow(auto);
+				@include top(0);
+				@if $direction == "right" {
+					@include right(0);
+				}
+				@else if $direction == "left" {
+					@include left(0);
+				}
+				@include width(250px);
+				@include height(100%);
+				@include padding(10px);
+				@include background-color(rgba(0, 0, 0, 0.6));
+				@if $direction == "right" {
+					@include transform(translateX(100%));
+				}
+				@else if $direction == "left" {
+					@include transform(translateX(-100%));
+				}
+				@include transition(transform 0.6s, opacity 0.3s);
+
+				h2,
+				li a {
+					@include color(white);
+				}
+
+				h2 {
+					@include display(block);
+					@include text-align(center);
+				}
+
+				ul,
+				header nav ul {
+					@include padding(0);
+				}
+
+				li {
+					@include border-bottom(1px solid rgba(255, 255, 255, 0.6));
+					@include font-size(0.8rem);
+					@include line-height(1.4);
+					@include width(100% !important);
+
+					&:first-child {
+						@include border-top(1px solid rgba(255, 255, 255, 0.6));
+					}
+
+					a {
+						@include display(block);
+						@include padding(1em 2em);
+						@include text-decoration(none);
+						@include transition(background-color 0.6s);
+
+						&:hover {
+							@include opacity(0.8);
+						}
+					}
+				}
+			}
+
+			#navTgl:checked ~ .menu {
+				@include opacity(1);
+				@include transform(translateX(0));
+			}
+		}
+	}
+}
+
+// ============================
+// 3Dハンバーガーメニューを作成します。
+// @param $name 					CSS名
+// @param $direction 				配置方向（left or right）
+// -------------------------------------------------
+// ※example
+// <input type="checkbox" id="3DnavTgl">
+// <label class="menu-btn" for="3DnavTgl">
+//     <span class="bar top"></span>
+//     <span class="bar middle"></span>
+//     <span class="bar bottom"></span>
+//     <span class="menu-btn__text">MENU</span>
+// </label>
+// <label class="close-menu" for="3DnavTgl"></label>
+// <nav class="drawer-menu">
+//     <ul>
+//         <li><a href="#">Side Menu Name</a></li>
+//         <li><a href="#">Side Menu Name</a></li>
+//         <li><a href="#">Side Menu Name</a></li>
+//         <li><a href="#">Side Menu Name</a></li>
+//         <li><a href="#">Side Menu Name</a></li>
+//     </ul>
+// </nav>
+// -------------------------------------------------
+@mixin make-3D-hamburger-menu($name: null, $direction: $hamburger-menu-direction) {
+	/* =============================================== */
+	/** 3DHamburgerMenu */
+	/* =============================================== */
+
+	/* 3DHamburger Menu Box */
+	.hamburger-menu-box-3D#{$name} {
+		ul li {
+			@include display(inline-block);
+		}
+
+		#navTgl3D {
+			@include display(none);
+		}
+
+		.menu-btn {
+			@include display(none);
+		}
+
+		@media #{$small-down} {
+			/* menu button - label tag */
+			.menu-btn {
+				@include position(fixed);
+				@include display(block);
+				@include top(15px);
+				@include display(block);
+				@include width(40px);
+				@include height(40px);
+				@include font-size(10px);
+				@include text-align(center);
+				@include cursor(pointer);
+				@include z-index(1000);
+
+				@if $direction == "right" {
+					@include right(40px);
+				}
+				@else if $direction == "left" {
+					@include left(40px);
+				}
+
+				&:hover .bar {
+					@include background(#999);
+				}
+
+				&:hover .menu-btn-text {
+					@include color(#999);
+				}
+			}
+
+			.bar {
+				@include position(absolute);
+				@include top(0);
+				@include left(0);
+				@include display(block);
+				@include width(40px);
+				@include height(5px);
+				@include background(#fff);
+				@include transition(all 0.5s);
+				@include transform-origin(left top);
+			}
+
+			.bar.middle {
+				@include top(15px);
+				@include opacity(1);
+			}
+
+			.bar.bottom {
+				@include top(30px);
+				@include transform-origin(left bottom);
+			}
+
+			.menu-btn-text {
+				@include position(absolute);
+				@include bottom(-15px);
+				@include left(0);
+				@include right(0);
+				@include margin(auto);
+				@include color(#fff);
+				@include transition(all 0.5s);
+				@include display(block);
+				@include visibility(visible);
+				@include opacity(1);
+			}
+
+			.close-menu {
+				@include position(fixed);
+				@include top(0);
+				@include width(100%);
+				@include height(100vh);
+				@include background(rgba(0,0,0,0));
+				@include cursor("url(http://theorthodoxworks.com/demo/images/cross.svg),auto");
+				@include transition-property(all);
+				@include transition-duration(0.3s);
+				@include transition-delay(0s);
+				@include visibility(hidden);
+				@include opacity(0);
+
+				@if $direction == "right" {
+					@include right(300px);
+				}
+				@else if $direction == "left" {
+					@include left(300px);
+				}
+			}
+
+			.menu {
+				@include box-sizing(border-box);
+				@include position(fixed);
+				@include top(0);
+				@include width(300px);
+				@include height(100%);
+				@include padding(120px 0);
+				@include background(#222);
+				@include transition-property(all);
+				@include transition-duration(0.5s);
+				@include transition-delay(0s);
+				@include opacity(0);
+				@include z-index(999);
+
+				@if $direction == "right" {
+					@include right(0);
+					@include transform(perspective(500px) rotateY(-90deg));
+					@include transform-origin(right center);
+				}
+				@else if $direction == "left" {
+					@include left(0);
+					@include transform(perspective(500px) rotateY(90deg));
+					@include transform-origin(left center);
+				}
+
+				li {
+					@include text-align(center);
+					@include display(block);
+					@include width(100% !important);
+
+					a {
+						@include display(block);
+						@include height(50px);
+						@include line-height(50px);
+						@include font-size(14px);
+						@include color(#fff);
+						@include transition(all 0.8s);
+
+						&:hover {
+							@include color(#1a1e24);
+							@include background(#fff);
+						}
+					}
+				}
+			}
+
+			/* checkbox */
+			#navTgl3D {
+				/* checked */
+				&:checked ~ .menu {
+					@include transition-delay(0.3s);
+					@include transform(none);
+					@include opacity(1);
+				}
+
+				&:checked ~ .menu-btn .menu-btn-text {
+					@include visibility(hidden);
+					@include opacity(0);
+				}
+
+				&:checked ~ .menu-btn .bar.top {
+					@include width(56px);
+					@include transform(rotate(45deg));
+				}
+
+				&:checked ~ .menu-btn .bar.middle {
+					@include opacity(0);
+				}
+
+				&:checked ~ .menu-btn .bar.bottom {
+					@include width(56px);
+					@include top(40px);
+					@include transform(rotate(-45deg));
+				}
+
+				&:checked ~ .close-menu {
+					@include transition-duration(1s);
+					@include transition-delay(0.3s);
+					@include background(rgba(0, 0, 0, 0.5));
+					@include visibility(visible);
+					@include opacity(1);
+					@include z-index(999);
+				}
+			}
+		}
+	}
+}
+
+// ============================
+// 跳ねるテキストを作成します。
+// @param $count 					文字数
+// -------------------------------------------------
+// ※example
+// <div class="bound-text">
+// 		<span>L</span>
+// 		<span>O</span>
+// 		<span>G</span>
+// 		<span>O</span>
+// 	</div>
+// -------------------------------------------------
+@mixin make-bound-text($count: 0){
+	.bound-text#{$count} {
+		@include position(relative);
+		@include height(500px);
+
+		span {
+
+			@for $i from 1 through $count {
+				&:nth-child(#{$i}) {
+					@include position(absolute);
+					@if $i > 1 {
+						@include left(#{($i - 1)}em);
+					}
+					@else {
+						@include left(0);
+					}
+					@include animation(bound #{2 + (1 / $count) * $i}s ease-in-out);
+
+					&.infinite {
+						@include animation(bound #{2 + (1 / $count) * $i}s ease-in-out infinite);
+					}
+				}
+			}
+		}
+	}
+}
+
+// ============================
+// 一文字ずつ現れては消えていくテキストを作成します。
+// @param $count 					文字数
+// -------------------------------------------------
+// ※example
+// <div class="shrink-text">
+// 		<span>L</span>
+// 		<span>O</span>
+// 		<span>W</span>
+// 		<span>D</span>
+//		<span>I</span>
+//		<span>N</span>
+//		<span>G</span>
+// 	</div>
+// -------------------------------------------------
+@mixin make-shrink-text($count: 0){
+	.shrink-text#{$count} span {
+		@include display(inline-block);
+
+		@for $i from 1 through $count {
+			&:nth-child(#{$i}) {
+				@include animation(shrinkgrow 1.75s ease-in-out infinite);
+				@if $i > 1 {
+					@include animation-delay(#{(1 / $count) * ($i - 1)}s);
+				}
+				@else {
+					@include animation-delay(0);
+				}
+			}
+		}
+	}
+}
+
+// ********************************************  S  **********************************************//
+
+// ********************************************  T  **********************************************//
+
+// ============================
+// 文字に1pxの黒いシャドウを掛けます
+// (回数を重ねる事で色合いが強くなります)
+// @param $opacity 					: 透明度（初期値は0.4）
+// ============================
+@mixin text-shadow-black($opacity: 0.4){
+	@include text-shadow(0 1px 0 rgba(#000, $opacity));
+}
+
+// ============================
+// 文字に1pxの白いシャドウを掛けます
+// (回数を重ねる事で色合いが強くなります)
+// @param $opacity 					: 透明度（初期値は0.4）
+// ============================
+@mixin text-shadow-white($opacity: 0.4){
+	@include text-shadow(0 1px 0 rgba(#FFF, $opacity));
+}
+
+// ********************************************  V  **********************************************//
+
+// ============================
+// Y軸の中央に配置する
+// ============================
+@mixin vertical-align-center() {
+	@include position(absolute);
+	@include top(50%);
+	@include grantPrefix(transform
+						 , #{translateY(-50%)}
+						 , -moz, -webkit, -o, -ms, official
+						);
+}
+
+// ********************************************  X  **********************************************//
+
+// ============================
+// 要素を移動させる座標(X軸)を設定する
+// (keyframeやtransitionなどと併用して使用します)
+// @param $x 						X軸座標
+// ============================
+@mixin xPos($x) {
+	@include grantPrefix(transform
+						 , #{translateX($x)}
+						 , -moz, -webkit, -o, -ms, official
+						);
+}
+
+// ============================
+// 要素を移動させる座標(Y軸)を設定する
+// (keyframeやtransitionなどと併用して使用します)
+// @param $y 						Y軸座標
+// ============================
+@mixin yPos($y) {
+	@include grantPrefix(transform
+						 , #{translateY($y)}
+						 , -moz, -webkit, -o, -ms, official
+						);
+}

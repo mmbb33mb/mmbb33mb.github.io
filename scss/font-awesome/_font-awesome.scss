@@ -1,0 +1,19 @@
+@if $use-fontawesome {
+	/*!
+	 *  Font Awesome 4.6.3 by @davegandy - http://fontawesome.io - @fontawesome
+	 *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
+	 */
+}
+@import "variables",
+"mixins",
+"path",
+"core",
+"larger",
+"fixed-width",
+"list",
+"bordered-pulled",
+"animated",
+"rotated-flipped",
+"stacked",
+"icons",
+"screen-reader";

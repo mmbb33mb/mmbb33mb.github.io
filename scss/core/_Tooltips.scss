@@ -1,0 +1,491 @@
+@charset 'utf-8';
+//----------------------------------------------------
+//  SimpTip v1.0.4\\
+//  A simple CSS tooltip made with Sass\\
+//-----------------------------------------------------
+// source: https://github.com/arashmanteghi/simptip/
+// ducoment: http://arashm.net/lab/simptip/
+// by @ArashManteghi - http://arashm.net
+//-----------------------------------------------------
+
+// ******************************** Mixins *****************************/
+//generate custom colors for tooltip's box and the texts. we use it without argumant for default color
+@mixin applyColor($color:$tooltipColor, $textColor:$tooltipTextColor) {
+	@each $position in top, right, bottom, left {
+		&.tooltips-position-#{$position} {
+			&:before{
+				@if $position == "top" {
+					@include border-top-color($color);
+				}
+				@else if $position == "right" {
+					@include border-right-color($color);
+				}
+				@else if $position == "bottom" {
+					@include border-bottom-color($color);
+				}
+				@else if $position == "left" {
+					@include border-left-color($color);
+				}
+			}
+			&::after{
+				@include background-color($color);
+				@include color($textColor);
+			}
+		}
+	}
+	@each $position in top, bottom {
+		&.tooltips-position-#{$position} {
+			&.half-arrow {
+				&:before {
+					@include border-right(#{$arrowSize + 1px} solid $color);
+				}
+			}
+		}
+	}
+}
+
+//generate multiline tooltips
+@mixin multiline ($width: null, $align: left) {
+	@include height(auto);
+	@if $width != null {
+		@include width($width);
+	}
+	@include padding(#{$tooltipHeight / 2});
+	@include line-height(#{$tooltipHeight - 3px});
+	@include white-space(pre);
+	@include text-align($align);
+}
+
+@if$use-tooltips {
+	/* =============================================== */
+	/** ToolTips */
+	/* =============================================== */
+	// ******************* Customize CSS Output *********************/
+
+	// No need to delete or comment out code.
+	// Simply set any features you don't want to compile to false to
+	// reduce the CSS output to only what you need.
+
+	// Positioning
+	$left-positioning 		: true!default;
+	$right-positioning 		: true!default;
+	$top-positioning 		: true!default;
+	$bottom-positioning 	: true!default;
+
+	// Half Arrows
+	$half-arrows 			: true!default;
+
+	// Extra Features
+	$movable 				: true!default;
+	$soft-edge 				: true!default;
+	$fade-effect 			: true!default;
+	$multiline 				: true!default;
+
+
+	// Diverse Colors
+	$coloring 				: true!default;
+
+	/********************************* Core ******************************/
+	[tooltips] {
+		@include position(relative);
+		@include box-sizing(content-box);
+		&:before, &::after {
+			@include position(absolute);
+			@include visibility(hidden);
+			@include opacity(0);
+			@include z-index(999999);
+			@include box-sizing(content-box);
+			// Force Hardware Acceleration in WebKit with translate3d - Refrence: http://davidwalsh.name/translate3d
+			@include transform(translate3d(0, 0, 0));
+		}
+		// tooltip arrow
+		&:before {
+			@include content("");
+			@include border($arrowSize solid transparent);
+		}
+		// tooltip box
+		&::after {
+			@include height($tooltipHeight);
+			@include padding(#{$tooltipHeight / 2} #{$tooltipHeight / 2} 0 #{$tooltipHeight / 2});
+			@include font-size($tooltipFontSize);
+			@include line-height(#{$tooltipHeight / 2});
+			@include content(attr(tooltips));
+			@include white-space(pre);
+			@include text-align(left);
+			@include overflow-x(hidden);
+			@include overflow-y(auto);
+			@include max-height(300px);
+		}
+		@include applyColor();
+		&:hover, &:focus{
+			@include background-color(transparent);
+			@include cursor(help);
+			&:before, &::after {
+				@include visibility(visible);
+				@include opacity(0.7);
+			}
+		}
+	}
+
+
+	/******************************* Position ****************************/
+
+	//------------------- Left & Right Silent Classes -------------------/
+	%shared--left-and-right {
+		&:before,
+		&::after {
+			@include bottom(50%);
+		}
+		&:before {
+			@include margin-bottom(#{$arrowSize * -1 + 1}); // -5px
+			}
+		&::after {
+			@include margin-bottom(#{$tooltipHeight / -1.5});
+		}
+
+		@if $half-arrows == true {
+			&.half-arrow{
+				&:before {
+					@include bottom(16px);
+					@include border-style(none);
+					@include border-top(#{$arrowSize + 1px} solid transparent);
+				}
+			}
+		}
+
+		@if $multiline == true {
+			&.tooltips-multiline {
+				&:before, &::after {
+					@include transform(translateY(50%));
+					@include margin-bottom(0);
+
+				}
+				&:before{
+					@include margin-bottom(0);
+				}
+
+				@if $half-arrows == true {
+					&.half-arrow {
+						&:before {
+							@include margin-bottom(-2px);
+						}
+					}
+				}
+			}
+		}
+
+	}
+	//--------------------- End: Silent Classes -----------------------/
+
+	// Right Position Styling
+	@if $right-positioning == true {
+		.tooltips-position-right {
+			@extend %shared--left-and-right;
+			&:before,
+			&::after {
+				@include left(100%);
+			}
+			&:before {
+				@include margin-left(-2px);
+			}
+			&::after {
+				@include margin-left(10px);
+			}
+
+			@if $movable == true {
+				&.tooltips-movable {
+					&:before {
+						@include margin-left(-10px);
+					}
+					&::after {
+						@include margin-left(2px);
+					}
+					&:hover{
+						&:before,
+						&::after {
+							@include transform(translateX(10px));
+						}
+					}
+					@if $half-arrows == true {
+						&.half-arrow:before {
+							@include margin-left(-5px);
+						}
+					}
+					@if $multiline == true {		//here here here
+						&.tooltips-multiline {
+							&:hover {
+								&:before,
+								&::after {
+									@include transform(translate(10px, 50%));
+								}
+
+							}
+						}
+					}
+				}
+			}
+
+			@if $half-arrows == true {
+				&.half-arrow{
+					&:before {
+						@include margin-left(3px);
+						@include border-right(#{$arrowSize + 1px} solid $tooltipColor);
+					}
+				}
+			}
+		}
+	}
+
+	// Left Position Styling
+	@if $left-positioning == true {
+		.tooltips-position-left {
+			@extend %shared--left-and-right;
+			&:before,
+			&::after {
+				@include right(100%);
+			}
+			&:before{
+				@include margin-right(-2px);
+			}
+			&::after{
+				@include margin-right(10px);
+			}
+
+			@if $movable == true {
+				&.tooltips-movable {
+					&:before {
+						@include margin-right(-10px);
+					}
+					&::after {
+						@include margin-right(2px);
+					}
+					&:hover{
+						&:before,
+						&::after {
+							@include transform(translateX(-10px));
+						}
+					}
+					@if $half-arrows == true {
+						&.half-arrow:before{
+							@include margin-right(-5px);
+						}
+					}
+					@if $multiline == true {		//here here here
+						&.tooltips-multiline {
+							&:hover {
+								&:before,
+								&::after {
+									@include transform(translate(-10px, 50%));
+								}
+							}
+						}
+					}
+				}
+			}
+
+			@if $half-arrows == true {
+				&.half-arrow{
+					&:before {
+						@include margin-right(3px);
+						@include border-left(#{$arrowSize + 1px} solid $tooltipColor);
+					}
+				}
+			}
+		}
+	}
+
+	//----------------- Top & Bottom Silent Classes -----------------/
+	%shared--top-and-bottom {
+		&:before, &::after {
+			@include left(50%);
+			@include transform(translateX(-50%));
+		}
+
+		&::after {
+			@include width(auto);
+		}
+
+		@if $half-arrows == true {
+			&.half-arrow{
+				&:before {
+					@include border-style(none);
+					@include border-right(#{$arrowSize + 1px} solid $tooltipColor);
+				}
+			}
+		}
+	}
+	//--------------------- End: Silent Classes -----------------------/
+
+	// Bottom Position Styling
+	@if $bottom-positioning == true {
+		.tooltips-position-bottom {
+			@extend %shared--top-and-bottom;
+			&:before,
+			&::after {
+				@include top(100%);
+			}
+			&:before {
+				@include margin-top(#{$arrowSize * -1 + 1}); // -5px
+			}
+			&::after {
+				@include margin-top(7px);
+			}
+			&:hover{
+				&:before,
+				&::after {
+					@include transform(translate(-50%, 0));
+				}
+			}
+
+			@if $movable == true {
+				&.tooltips-movable {
+					&:before {
+						@include margin-top(-15px);
+					}
+					&::after {
+						@include margin-top(-3px);
+					}
+					&:hover{
+						&:before,
+						&::after {
+							@include transform(translate(-50%, 10px));
+						}
+					}
+
+					@if $half-arrows == true {
+						&.half-arrow {
+							&:before {
+								@include margin-top(-10px);
+							}
+						}
+					}
+				}
+			}
+
+			@if $half-arrows == true {
+				&.half-arrow{
+					&:before {
+						@include margin-top(0);
+						@include border-top(#{$arrowSize + 1px} solid transparent);
+					}
+				}
+			}
+		}
+	}
+
+	// Top Position Styling
+	@if $top-positioning == true {
+		.tooltips-position-top {
+			@extend %shared--top-and-bottom;
+			&:before,
+			&::after {
+				@include bottom(100%);
+			}
+			&:before {
+				@include margin-bottom(#{$arrowSize * -1 + 1}); // -5px
+			}
+			&::after {
+				@include margin-bottom(7px);
+			}
+			&:hover{
+				&:before,
+				&::after {
+					@include transform(translate(-50%, 0px));
+				}
+			}
+
+			@if $movable == true {
+				&.tooltips-movable {
+					&:before {
+						@include margin-bottom(-15px);
+					}
+					&::after {
+						@include margin-bottom(-3px);
+					}
+					&:hover{
+						&:before,
+						&::after {
+							@include transform(translate(-50%, -10px));
+						}
+					}
+
+					@if $half-arrows == true {
+						&.half-arrow {
+							&:before {
+								@include margin-bottom(-10px);
+							}
+						}
+					}
+				}
+			}
+
+			@if $half-arrows == true {
+				&.half-arrow{
+					&:before {
+						@include margin-bottom(0);
+						@include border-bottom(#{$arrowSize + 1px} solid transparent);
+					}
+				}
+			}
+		}
+	}
+
+
+	/******************************* Features ****************************/
+	// animate movement on hover
+	@if $movable == true {
+		.tooltips-movable {
+			&:before,
+			&::after {
+				@include transition(all 0.1s linear);
+			}
+		}
+	}
+
+	//soft edge
+	@if $soft-edge == true {
+		.tooltips-smooth {
+			&::after{
+				@include border-radius();
+			}
+		}
+	}
+
+	//fade effect
+	@if $fade-effect == true {
+		.tooltips-fade {
+			&:before,
+			&::after{
+				@include fade();
+			}
+		}
+	}
+
+	//multiline tooltip
+	@if $multiline == true {
+		.tooltips-multiline {
+			&::after {
+				@include multiline();
+			}
+		}
+	}
+
+	/**************************** Diverse Colors *************************/
+	@if $coloring == true {
+		.tooltips-success {
+			@include applyColor($c-success);
+		}
+
+		.tooltips-info {
+			@include applyColor($c-info);
+		}
+
+		.tooltips-danger {
+			@include applyColor($c-danger);
+		}
+
+		.tooltips-warning {
+			@include applyColor($c-warning);
+		}
+	}
+}

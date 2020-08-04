@@ -1,0 +1,22 @@
+@if $use-fontawesome {
+	// Stacked Icons
+	// -------------------------
+
+	.#{$fa-css-prefix}-stack {
+		@include position(relative);
+		@include display(inline-block);
+		@include width(2em);
+		@include height(2em);
+		@include line-height(2em);
+		@include vertical-align(middle);
+	}
+	.#{$fa-css-prefix}-stack-1x, .#{$fa-css-prefix}-stack-2x {
+		@include position(absolute);
+		@include left(0);
+		@include width(100%);
+		@include text-align(center);
+	}
+	.#{$fa-css-prefix}-stack-1x { @include line-height(inherit); }
+	.#{$fa-css-prefix}-stack-2x { @include font-size(2rem); }
+	.#{$fa-css-prefix}-inverse { @include color($fa-inverse); }
+}

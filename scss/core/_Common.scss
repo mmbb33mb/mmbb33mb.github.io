@@ -1,0 +1,45 @@
+@charset 'utf-8';
+
+@if $use-common {
+	/* =============================================== */
+	/** Common */
+	/* =============================================== */
+	#{s(header)},
+	div#content,
+	#{s(footer)} {
+		@include margin(0 auto);
+		@include text-align(left);
+		@include width($base-width);
+		@include position(relative);
+		@include background(#f1f1f1);
+
+		@media screen and (max-width : 479px) {
+			@include width(320px);
+		}
+
+		@media screen and (min-width : 480px) {
+		}
+	}
+
+	/*----------------------------------------
+	  header
+	----------------------------------------*/
+	#{s(header)} {
+		background : #fff;
+	}
+
+	/*----------------------------------------
+	  content
+	----------------------------------------*/
+	div#content {
+	}
+
+	/*----------------------------------------
+	  footer
+	----------------------------------------*/
+	#{s(footer)} {
+	}
+
+	@include clearfix();
+	@include clearText();
+}

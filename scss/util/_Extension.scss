@@ -1,0 +1,540 @@
+@charset 'utf-8';
+
+// ============================================================
+// ベース関数
+// ============================================================
+
+// ==============================
+// ベンダープリフィックスを付与した属性を設定する関数
+// @param $property			属性名
+// @param $value			値
+// @param $moz				ファイアーフォックスを対象とするか
+// @param $webkit			ウェブキットを対象とするか
+// @param $o				サファリを対象とするか
+// @param $khtml			サファリ1.xを対象とするか
+// @param $ms				IEを対象とするか
+// @param $official			ベンダープレフィックスなしの設定値の出力
+// @param $targetBrowser	設定値の置換対象のブラウザ
+// @param $targetValue		置換対象の文字列
+// @param $replaceValue	 	置換文字列
+// ==============================
+@mixin grantPrefix($property, $value, $moz: $support-for-mozilla, $webkit: $support-for-webkit, $o: $support-for-opera, $khtml: $support-for-khtml, $ms: $support-for-microsoft, $official: true, $targetBrowser: "", $targetValue: "", $replaceValue: "") {
+	$setValue: $value;
+	@if $webkit and $support-for-webkit {
+		$setValue: $value;
+		@if $targetBrowser != "" {
+			@if str-index("-webkit-", $targetBrowser) != null {
+				$setValue: str-replace($value, $targetValue, $replaceValue);
+			}
+		}
+		-webkit-#{$property}: $setValue;
+	}
+	@if $moz and $support-for-mozilla {
+		$setValue: $value;
+		@if $targetBrowser != "" {
+			@if str-index("-moz-", $targetBrowser) != null {
+				$setValue: str-replace($value, $targetValue, $replaceValue);
+			}
+		}
+		-moz-#{$property}: $setValue;
+	}
+	@if $o and $support-for-opera {
+		$setValue: $value;
+		@if $targetBrowser != "" {
+			@if str-index("-o-", $targetBrowser) != null {
+				$setValue: str-replace($value, $targetValue, $replaceValue);
+			}
+		}
+		-o-#{$property}: $setValue;
+	}
+	@if $khtml and $support-for-khtml {
+		$setValue: $value;
+		@if $targetBrowser != "" {
+			@if str-index("-khtml-", $targetBrowser) != null {
+				$setValue: str-replace($value, $targetValue, $replaceValue);
+			}
+		}
+		-khtml-#{$property}: $setValue;
+	}
+	@if $ms and $support-for-microsoft {
+		$setValue: $value;
+		@if $targetBrowser != "" {
+			@if str-index("-ms-", $targetBrowser) != null {
+				$setValue: str-replace($value, $targetValue, $replaceValue);
+			}
+		}
+		-ms-#{$property}: $setValue;
+	}
+	@if $official {
+		#{$property}: $value;
+	}
+}
+
+// ==============================
+// ベンダープリフィックスを付与した値を設定する関数
+// @param $property			属性名
+// @param $value			値
+// @param $moz				ファイアーフォックスを対象とするか
+// @param $webkit			ウェブキットを対象とするか
+// @param $o				サファリを対象とするか
+// @param $khtml			サファリ1.xを対象とするか
+// @param $ms				IEを対象とするか
+// @param $official			ベンダープレフィックスなしの設定値の出力
+// @param $targetBrowser	設定値の置換対象のブラウザ
+// @param $targetValue		置換対象の文字列
+// @param $replaceValue	 	置換文字列
+// ==============================
+@mixin grantPrefixValue($property, $value, $moz: $support-for-mozilla, $webkit: $support-for-webkit, $o: $support-for-opera, $khtml: $support-for-khtml, $ms: $support-for-microsoft, $official: true, $targetBrowser: "", $targetValue: "", $replaceValue: "") {
+	$setValue: $value;
+	@if $webkit and $support-for-webkit {
+		$setValue: $value;
+		@if $targetBrowser != "" {
+			@if str-index("-webkit-", $targetBrowser) != null {
+				$setValue: str-replace($value, $targetValue, $replaceValue);
+			}
+		}
+		#{$property}: -webkit-#{$setValue};
+	}
+	@if $moz and $support-for-mozilla {
+		$setValue: $value;
+		@if $targetBrowser != "" {
+			@if str-index("-moz-", $targetBrowser) != null {
+				$setValue: str-replace($value, $targetValue, $replaceValue);
+			}
+		}
+		#{$property}: -moz-#{$setValue};
+	}
+	@if $o and $support-for-opera {
+		$setValue: $value;
+		@if $targetBrowser != "" {
+			@if str-index("-o-", $targetBrowser) != null {
+				$setValue: str-replace($value, $targetValue, $replaceValue);
+			}
+		}
+		#{$property}: -o-#{$setValue};
+	}
+	@if $khtml and $support-for-khtml {
+		$setValue: $value;
+		@if $targetBrowser != "" {
+			@if str-index("-khtml-", $targetBrowser) != null {
+				$setValue: str-replace($value, $targetValue, $replaceValue);
+			}
+		}
+		#{$property}: -khtml-#{$setValue};
+	}
+	@if $ms and $support-for-microsoft {
+		$setValue: $value;
+		@if $targetBrowser != "" {
+			@if str-index("-ms-", $targetBrowser) != null {
+				$setValue: str-replace($value, $targetValue, $replaceValue);
+			}
+		}
+		#{$property}: -ms-#{$setValue};
+	}
+	@if $official {
+		#{$property}: #{$value};
+	}
+}
+
+
+// ==============================
+// ベンダープリフィックスを付与した属性と値を設定する関数
+// @param $property			属性名
+// @param $value			値
+// @param $moz				ファイアーフォックスを対象とするか
+// @param $webkit			ウェブキットを対象とするか
+// @param $o				サファリを対象とするか
+// @param $khtml			サファリ1.xを対象とするか
+// @param $ms				IEを対象とするか
+// @param $official			ベンダープレフィックスなしの設定値の出力
+// @param $targetBrowser	設定値の置換対象のブラウザ
+// @param $targetValue		置換対象の文字列
+// @param $replaceValue	 	置換文字列
+// ==============================
+@mixin grantPrefixPropValue($property, $value, $moz: $support-for-mozilla, $webkit: $support-for-webkit, $o: $support-for-opera, $khtml: $support-for-khtml, $ms: $support-for-microsoft, $official: true, $targetBrowser: "", $targetValue: "", $replaceValue: "") {
+	$setValue: $value;
+	@if $webkit and $support-for-webkit {
+		$setValue: $value;
+		@if $targetBrowser != "" {
+			@if str-index("-webkit-", $targetBrowser) != null {
+				$setValue: str-replace($value, $targetValue, $replaceValue);
+			}
+		}
+		-webkit-#{$property}: -webkit-#{$setValue};
+	}
+	@if $moz and $support-for-mozilla {
+		$setValue: $value;
+		@if $targetBrowser != "" {
+			@if str-index("-moz-", $targetBrowser) != null {
+				$setValue: str-replace($value, $targetValue, $replaceValue);
+			}
+		}
+		-moz-#{$property}: -moz-#{$setValue};
+	}
+	@if $o and $support-for-opera {
+		$setValue: $value;
+		@if $targetBrowser != "" {
+			@if str-index("-o-", $targetBrowser) != null {
+				$setValue: str-replace($value, $targetValue, $replaceValue);
+			}
+		}
+		-o-#{$property}: -o-#{$setValue};
+	}
+	@if $khtml and $support-for-khtml {
+		$setValue: $value;
+		@if $targetBrowser != "" {
+			@if str-index("-khtml-", $targetBrowser) != null {
+				$setValue: str-replace($value, $targetValue, $replaceValue);
+			}
+		}
+		-khtml-#{$property}: -khtml-#{$setValue};
+	}
+	@if $ms and $support-for-microsoft {
+		$setValue: $value;
+		@if $targetBrowser != "" {
+			@if str-index("-ms-", $targetBrowser) != null {
+				$setValue: str-replace($value, $targetValue, $replaceValue);
+			}
+		}
+		-ms-#{$property}: -ms-#{$setValue};
+	}
+	@if $official {
+		#{$property}: $value;
+	}
+}
+
+// ==============================
+// REMに対応した設定値を返却する関数
+// @param $property			属性名
+// @param $value			値
+// @param $defaultUnit		デフォルト単位
+// ==============================
+@mixin grantRem($property, $value, $defaultUnit: em){
+	@if type-of($value) == number {
+		@if unitless($value) != "" {
+			@if unit($value) == "rem" {
+				#{$property}: #{convertUnit($value, $defaultUnit)};
+				#{$property}: #{$value};
+			}
+			@else {
+				#{$property}: #{$value};
+			}
+		}
+		@else {
+			#{$property}: #{$value};
+		}
+	}
+	@else {
+		#{$property}: #{$value};
+	}
+}
+
+// ==============================
+// IE9に対応したクラス(クラス名)を返却する関数
+// @param $name				 クラス名
+// ==============================
+@mixin class($name) {
+	@if $legacy-support-for-ie9 {
+		.#{$name},
+		.#{$name}:not(:target) {
+			@content;
+		}
+	}
+	@else {
+		.#{$name} {
+			@content;
+		}
+	}
+}
+
+// ==============================
+// IE9に対応したクラス(ID)を返却する関数
+// @param $name				 クラス名
+// ==============================
+@mixin id($ID) {
+	@if $legacy-support-for-ie9 {
+		##{$ID},
+		##{$ID}:not(:target) {
+			@content;
+		}
+	}
+	@else {
+		##{$ID} {
+			@content;
+		}
+	}
+}
+
+// ==============================
+// html5に対応したクラス名を返却する関数
+// @param $value			 設定名
+// ==============================
+@function s($value) {
+	@if $html5 {
+		@return $value
+	}
+	@else if $value == header or $value == footer {
+		@return unquote("div#" + $value)
+	}
+	@else {
+		@return unquote("div." + $value)
+	}
+}
+
+// ==============================
+// font-size一覧コメントを出力する関数
+// ==============================
+@mixin font-size-comment() {
+  /*----------------------------------------
+  	font-size
+  ------------------------------------------
+  Font-size list (base: 10px)
+
+  0.7rem =  7px
+  0.8rem =  8px
+  0.9rem =  9px
+    1rem = 10px
+  1.1rem = 11px        2.1rem = 21px        3.1rem = 31px        4.1rem = 41px        5.1rem = 51px        6.1rem = 61px        7.1rem = 71px
+  1.2rem = 12px        2.2rem = 22px        3.2rem = 32px        4.2rem = 42px        5.2rem = 52px        6.2rem = 62px        7.2rem = 72px
+  1.3rem = 13px        2.3rem = 23px        3.3rem = 33px        4.3rem = 43px        5.3rem = 53px        6.3rem = 63px        7.3rem = 73px
+  1.4rem = 14px        2.4rem = 24px        3.4rem = 34px        4.4rem = 44px        5.4rem = 54px        6.4rem = 64px        7.4rem = 74px
+  1.5rem = 15px        2.5rem = 25px        3.5rem = 35px        4.5rem = 45px        5.5rem = 55px        6.5rem = 65px        7.5rem = 75px
+  1.6rem = 16px        2.6rem = 26px        3.6rem = 36px        4.6rem = 46px        5.6rem = 56px        6.6rem = 66px        7.6rem = 76px
+  1.7rem = 17px        2.7rem = 27px        3.7rem = 37px        4.7rem = 47px        5.7rem = 57px        6.7rem = 67px        7.7rem = 77px
+  1.8rem = 18px        2.8rem = 28px        3.8rem = 38px        4.8rem = 48px        5.8rem = 58px        6.8rem = 68px        7.8rem = 78px
+  1.9rem = 19px        2.9rem = 29px        3.9rem = 39px        4.9rem = 49px        5.9rem = 59px        6.9rem = 69px        7.9rem = 79px
+    2rem = 20px          3rem = 30px        4.0rem = 40px          5rem = 50px          6rem = 60px          7rem = 70px          8rem = 80px
+  */
+}
+
+// ==============================
+// フォントサイズを設定する関数(7px以上80px以内の値を返します)
+// @param $size    			フォントサイズ
+// @return					フォントサイズ(単位:rem)
+// ==============================
+$fontSizeList: 0.7rem, 0.8rem, 0.9rem, 1rem, 1.1rem, 1.2rem, 1.3rem, 1.4rem, 1.5rem, 1.6rem, 1.7rem, 1.8rem, 1.9rem, 2rem, 2.1rem, 2.2rem, 2.3rem, 2.4rem, 2.5rem, 2.6rem, 2.7rem, 2.8rem, 2.9rem, 3rem, 3.1rem, 3.2rem, 3.3rem, 3.4rem, 3.5rem, 3.6rem, 3.7rem, 3.8rem, 3.9rem, 4rem, 4.1rem, 4.2rem, 4.3rem, 4.4rem, 4.5rem, 4.6rem, 4.7rem, 4.8rem, 4.9rem, 5rem, 5.1rem, 5.2rem, 5.3rem, 5.4rem, 5.5rem, 5.6rem, 5.7rem, 5.8rem, 5.9rem, 6rem, 6.1rem, 6.2rem, 6.3rem, 6.4rem, 6.5rem, 6.6rem, 6.7rem, 6.8rem, 6.9rem, 7rem, 7.1rem, 7.2rem, 7.3rem, 7.4rem, 7.5rem, 7.6rem, 7.7rem, 7.8rem, 7.9rem, 8rem;
+@function font-size($size, $unit: null) {
+	$ret: $size;
+	@if $unit == null {
+		$unit: unit($size);
+	}
+	// ユニットがパーセント指定の場合はそのまま呼び出し側に返す
+	@if unit($size) == "%" {
+		@return $ret;
+	}
+	@if type-of($ret) == number {
+		$ret: removeUnit($ret);
+		@if $ret < 7 {
+			$ret: 7;
+		}
+		@if $ret > 80 {
+			$ret: 80;
+		}
+		$ret: removeUnit((nth($fontSizeList, round($ret - 6))));
+		@if $unit == "rem" {
+			$ret: ($ret / 10) + $unit;
+		}
+		@else{
+			$ret: round($ret) + $unit;
+		}
+	}
+	@return $ret;
+}
+
+// ==============================
+// 継承したフォントサイズを元に目的のフォントサイズを取得する関数
+// @param $size				目的のフォントサイズ
+// @param $context			継承したフォントサイズ
+// @param $unit				単位(デフォルト:rem)
+// @return					計算したフォントサイズ
+// ==============================
+@function calc-font-size($size, $context, $unit:rem){
+	@if $unit == '%' {
+		@return #{($size / $context * 100) + $unit};
+	} @else {
+		@return #{($size / $context) + $unit};
+	}
+}
+
+// ==============================
+// 配列から1番目の値を取得する関数
+// (配列が0以下なら0を返します)
+// @param $array			配列
+// @return					1番目の値
+// ==============================
+@function lower-bound($array){
+	@if length($array) <= 0 {
+		@return 0;
+	}
+	@return nth($array,1);
+}
+
+// ==============================
+// 配列から2番目の値を取得する関数
+// (配列が2以下なら999999999999を返します)
+// @param $array			配列
+// @return					2番目の値
+// ==============================
+@function upper-bound($array) {
+	@if length($array) < 2 {
+		@return 999999999999;
+	}
+	@return nth($array, 2);
+}
+
+// ==============================
+// 文字列を置換する関数
+// @param $string		文字列
+// @param $substr		置換対象文字列
+// @param $newsubstr	置換文字列
+// @param $all			全置換を行うか(する:1 / しない:0[デフォルト])
+// @return				置換された文字列
+// ==============================
+@function str-replace($string, $substr, $newsubstr, $all: 0) {
+	$ret: $string;
+
+	@if $ret != null {
+		$position-found: str-index($ret, $substr);
+
+		@while ($position-found > 0) {
+			$length-substr: str-length($substr);
+			$tmp: '';
+			@if ($position-found - 1) > 0 {
+				$tmp: str-slice($ret, 0, $position-found - 1);
+			}
+			$string-pre: $tmp;
+			$string-post: str-slice($ret, $position-found + $length-substr);
+			$string: $string-pre + $newsubstr + $string-post;
+
+			$position-found: 0;
+
+			@if $all > 0 {
+				$position-found: str-index($ret, $substr);
+			}
+		}
+	}
+
+	@return #{$ret};
+}
+
+// ==============================
+// 文字列を分割する関数
+// @param $string		文字列
+// @param $delimiter	区切り文字
+// @return			  置換された文字列
+// ==============================
+@function str-split($string, $delimiter: "") {
+	$result: ();
+	$running: true;
+	$remaining: null;
+
+	@if $string != null {
+		$remaining: $string;
+		$length: str-length($string);
+
+		@if str-length($delimiter) == 0 {
+			@for $i from 1 through $length {
+				$result: append($result, str-slice($string, $i, $i));
+			}
+
+			@return $result;
+		}
+
+		@while $running {
+			$index: str-index($remaining, $delimiter);
+
+			@if $index {
+				$slice: str-slice($remaining, 1, $index - 1);
+				$result: append($result, $slice);
+				$remaining: str-slice($remaining, $index + str-length($delimiter));
+			} @else {
+				$running: false;
+			}
+		}
+	}
+
+	@return append($result, $remaining);
+}
+
+// ==============================
+// 数値から単位を取り除く関数
+// @param $value		設定値
+// @return				単位を取り除いた数値
+// ==============================
+@function removeUnit($value) {
+	$ret: $value;
+	$_units:
+		"%",					// percentage
+		em, ex, ch, rem,		// font
+		vw, vh, vmin, vmax,	 	// viewport
+		cm, mm, in, pt, pc, px, // absolute
+		deg, grad, rad, trun,	// angle
+		s, ms,				  	// time
+		Hz, kHz,				// frequency
+		dpi, dpcm, dppx;		// resolution
+
+	// 割る数のリスト
+	$_divisors:
+		1%,
+		1em, 1ex, 1ch, 1rem,
+		1vw, 1vh, 1vmin, 1vmax,
+		1cm, 1mm, 1in, 1pt, 1pc, 1px,
+		1deg, 1grad, 1rad, 1trun,
+		1s, 1ms,
+		1Hz, 1kHz,
+		1dpi, 1dpcm, 1dppx;
+
+	@if unitless($ret) != "" {
+		// 単位取得
+		$_unit: unit($ret);
+
+		// 単位のインデックス番号を取得
+		$_index-num: index($_units, $_unit);
+		// 割る数を取得
+		$_divisor: nth($_divisors, $_index-num);
+		$ret: $ret / $_divisor;
+		$_nounit_divisor: (floor($ret) * 2) % 2 + 1;
+		$ret: ($ret / $_nounit_divisor);
+		@if $_unit == "%" {
+			$ret: ($ret / 100) * $base-font-size;
+		}
+		@if $_unit == "rem" or $_unit == "em" {
+			$ret: $ret * 10;
+		}
+	}
+	@return $ret;
+}
+
+// ==============================
+// 数値を割り算する関数
+// @param $baseNum		ベースの数値
+// @param $divisionNum	ベースから割る数値
+// @return				ベースの数値から割った数値
+// ==============================
+@function division($baseNum, $divisionNum) {
+	$ret: $baseNum;
+	@if type-of($baseNum) == number {
+		$ret: ($baseNum * $divisionNum);
+	}
+	@return $ret;
+}
+
+// ==============================
+// 単位を変換する関数
+// @param $value		値
+// @param $targetUnit	変換する単位
+// @return				対象単位に変換された値
+// ==============================
+@function convertUnit($value, $targetUnit) {
+	$ret: $value;
+	@if type-of($value) == number {
+		@if unitless($value) != "" {
+			@if unit($value) == "rem" or unit($value) == "em" {
+				@if $targetUnit != "rem" or $targetUnit != "em" {
+					$ret: (removeUnit($ret) * 0.1) + $targetUnit;
+				}
+			}
+		}
+	}
+	@return $ret;
+}

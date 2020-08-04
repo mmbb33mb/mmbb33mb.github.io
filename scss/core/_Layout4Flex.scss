@@ -1,0 +1,908 @@
+@charset 'utf-8';
+
+/*----------------------------------------
+	visibility
+----------------------------------------*/
+.visible-xs,
+.visible-sm,
+.visible-md,
+.visible-lg {
+	@include display(none !important);
+}
+
+@media #{$small-down} {
+	.visible-xs {
+		@include display(block !important);
+	}
+	table.visible-xs {
+		@include display(table !important);
+	}
+	tr.visible-xs {
+		@include display(table-row !important);
+	}
+	th.visible-xs,
+	td.visible-xs {
+		@include display(table-cell !important);
+	}
+}
+
+@media #{$small-only} {
+	.visible-sm {
+		@include display(block !important);
+	}
+	table.visible-sm {
+		@include display(table !important);
+	}
+	tr.visible-sm {
+		@include display(table-row !important);
+	}
+	th.visible-sm,
+	td.visible-sm {
+		@include display(table-cell !important);
+	}
+}
+
+@media #{$medium-only} {
+	.visible-md {
+		@include display(block !important);
+	}
+	table.visible-md {
+		@include display(table !important);
+	}
+	tr.visible-md {
+		@include display(table-row !important);
+	}
+	th.visible-md,
+	td.visible-md {
+		@include display(table-cell !important);
+	}
+}
+
+@media #{$large-up} {
+	.visible-lg {
+		@include display(block !important);
+	}
+	table.visible-lg {
+		@include display(table !important);
+	}
+	tr.visible-lg {
+		@include display(table-row !important);
+	}
+	th.visible-lg,
+	td.visible-lg {
+		@include display(table-cell !important);
+	}
+}
+
+@media #{$small-down} {
+	.hidden-xs {
+		@include display(none !important);
+	}
+}
+
+@media #{$small-only} {
+	.hidden-sm {
+		@include display(none !important);
+	}
+}
+
+@media #{$medium-only} {
+	.hidden-md {
+		@include display(none !important);
+	}
+}
+
+@media #{$large-up} {
+	.hidden-lg {
+		@include display(none !important);
+	}
+}
+
+.visible-print {
+	@include display(none !important);
+}
+
+@media print {
+	.visible-print {
+		@include display(block !important);
+	}
+	table.visible-print {
+		@include display(table !important);
+	}
+	tr.visible-print {
+		@include display(table-row !important);
+	}
+	th.visible-print,
+	td.visible-print {
+		@include display(table-cell !important);
+	}
+}
+
+@media print {
+	.hidden-print {
+		@include display(none !important);
+	}
+}
+
+@if $use-liquid-layout or $use-fixed-layout {
+	.row {
+		@include display(flex);
+		@include flex-wrap(wrap);
+	}
+
+	.no-flexbox .row {
+		@extend .clearfix;
+	}
+
+	.v-center {
+		@include align-self(center);
+	}
+
+	.no-flexbox .v-center {
+		@include vertical-align-center();
+	}
+
+	.center {
+		@include text-align(center);
+	}
+}
+
+// =================================================
+// 渡されたベースの横幅からカラム数分の固定レイアウト設定値を返します。
+// @param $width			: ベースの横幅
+// @param $colum			: カラム数
+// -------------------------------------------------
+@mixin getFixedLayout($width: $main-width, $colum: $fixed-colum-number){
+	/* =============================================== */
+	/** Fixed-Layout */
+	/* =============================================== */
+
+	// --------------------- xs ----------------------------
+	$tmp: "";
+	$old: "";
+	@for $i from 1 through $colum {
+		@if $tmp != "" {
+			$tmp: $tmp + ", .col-fix-#{$width}-xs-#{$i}";
+			$old: $old + ", .no-flexbox .col-fix-#{$width}-xs-#{$i}";
+		}
+		@else{
+			$tmp: ".col-fix-#{$width}-xs-#{$i}";
+			$old: ".no-flexbox .col-fix-#{$width}-xs-#{$i}";
+		}
+	}
+	#{$tmp} {
+		@include position(relative);
+		@include display(flex);
+		@include align-items(left);
+		@include flex-direction(column);
+
+		& > * {
+			@include width(100%);
+		}
+	}
+
+	#{$old} {
+		@include position(relative);
+		@include float(left);
+	}
+
+	@for $i from 1 through $colum {
+		.row .col-fix:nth-child(#{$i}) {
+			@include order($i);
+		}
+	}
+
+	@media #{$small-down} {
+		@for $i from 1 through $colum {
+			.col-fix-#{$width}-xs-order-#{$i} {
+				@include order($i !important);
+			}
+		}
+	}
+
+	.col-fix-#{$width}-xs-inline {
+		@include flex-direction(row !important);
+	}
+
+	@for $i from 1 through $colum {
+		.col-fix-#{$width}-xs-#{$i} {
+			@include width(#{$width / $colum * $i});
+		}
+	}
+
+	@for $i from 0 through $colum {
+		@if $i == 0 {
+			.col-fix-#{$width}-xs-offset-#{$i} {
+				@include margin-left(0);
+			}
+		}
+		@else {
+			.col-fix-#{$width}-xs-offset-#{$i} {
+				@include margin-left(#{$width / $colum * $i});
+			}
+		}
+	}
+
+	// --------------------- sm ----------------------------
+	@media #{$small-up} {
+		$tmp: "";
+		$old: "";
+		@for $i from 1 through $colum {
+			@if $tmp != "" {
+				$tmp: $tmp + ", .col-#{$width}-sm-#{$i}";
+				$old: $old + ", .no-flexbox .col-fix-#{$width}-sm-#{$i}";
+			}
+			@else{
+				$tmp: ".col-#{$width}-sm-#{$i}";
+				$old: ".no-flexbox .col-fix-#{$width}-sm-#{$i}";
+			}
+		}
+		#{$tmp} {
+			@include display(flex);
+			@include align-items(left);
+			@include flex-direction(column);
+
+			& > * {
+				@include width(100%);
+			}
+		}
+
+		#{$old} {
+			@include position(relative);
+			@include float(left);
+		}
+
+		@for $i from 1 through $colum {
+			.col-fix-#{$width}-sm-order-#{$i} {
+				@include order($i !important);
+			}
+		}
+
+		.col-fix-#{$width}-sm-inline {
+			@include flex-direction(row !important);
+		}
+
+		@for $i from 1 through $colum {
+			.col-fix-#{$width}-sm-#{$i} {
+				@include width(#{$width / $colum * $i});
+			}
+		}
+
+		@for $i from 0 through $colum {
+			@if $i == 0 {
+				.col-fix-#{$width}-sm-offset-#{$i} {
+					@include margin-left(0);
+				}
+			}
+			@else {
+				.col-fix-#{$width}-sm-offset-#{$i} {
+					@include margin-left(#{$width / $colum * $i});
+				}
+			}
+		}
+	}
+
+	// --------------------- md ----------------------------
+	@media #{$medium-up} {
+		$tmp: "";
+		$old: "";
+		@for $i from 1 through $colum {
+			@if $tmp != "" {
+				$tmp: $tmp + ", .col-#{$width}-md-#{$i}";
+				$old: $old + ", .no-flexbox .col-fix-#{$width}-md-#{$i}";
+			}
+			@else{
+				$tmp: ".col-#{$width}-md-#{$i}";
+				$old: ".no-flexbox .col-fix-#{$width}-md-#{$i}";
+			}
+		}
+		#{$tmp} {
+			@include display(flex);
+			@include align-items(left);
+			@include flex-direction(column);
+
+			& > * {
+				@include width(100%);
+			}
+		}
+
+		#{$old} {
+			@include position(relative);
+			@include float(left);
+		}
+
+		@for $i from 1 through $colum {
+			.col-fix-#{$width}-md-order-#{$i} {
+				@include order($i !important);
+			}
+		}
+
+		.col-fix-#{$width}-md-inline {
+			@include flex-direction(row !important);
+		}
+
+		@for $i from 1 through $colum {
+			.col-fix-#{$width}-md-#{$i} {
+				@include width(#{$width / $colum * $i});
+			}
+		}
+
+		@for $i from 0 through $colum {
+			@if $i == 0 {
+				.col-fix-#{$width}-md-offset-#{$i} {
+					@include margin-left(0);
+				}
+			}
+			@else {
+				.col-fix-#{$width}-md-offset-#{$i} {
+					@include margin-left(#{$width / $colum * $i});
+				}
+			}
+		}
+	}
+
+	// --------------------- lg ----------------------------
+	@media #{$large-up} {
+		$tmp: "";
+		$old: "";
+		@for $i from 1 through $colum {
+			@if $tmp != "" {
+				$tmp: $tmp + ", .col-#{$width}-lg-#{$i}";
+				$old: $old + ", .no-flexbox .col-fix-#{$width}-lg-#{$i}";
+			}
+			@else{
+				$tmp: ".col-#{$width}-lg-#{$i}";
+				$old: ".no-flexbox .col-fix-#{$width}-lg-#{$i}";
+			}
+		}
+		#{$tmp} {
+			@include display(flex);
+			@include align-items(left);
+			@include flex-direction(column);
+
+			& > * {
+				@include width(100%);
+			}
+		}
+
+		#{$old} {
+			@include position(relative);
+			@include float(left);
+		}
+
+		@for $i from 1 through $colum {
+			.col-fix-#{$width}-lg-order-#{$i} {
+				@include order($i !important);
+			}
+		}
+
+		.col-fix-#{$width}-lg-inline {
+			@include flex-direction(row !important);
+		}
+
+		@for $i from 1 through $colum {
+			.col-fix-#{$width}-lg-#{$i} {
+				@include width(#{$width / $colum * $i});
+			}
+		}
+
+		@for $i from 0 through $colum {
+			@if $i == 0 {
+				.col-fix-#{$width}-lg-offset-#{$i} {
+					@include margin-left(0);
+				}
+			}
+			@else{
+				.col-fix-#{$width}-lg-offset-#{$i} {
+					@include margin-left(#{$width / $colum * $i});
+				}
+			}
+		}
+	}
+
+	// ------------------ visibility -----------------------
+	.visible-col-#{$width}-xs,
+	.visible-col-#{$width}-sm,
+	.visible-col-#{$width}-md,
+	.visible-col-#{$width}-lg {
+		@include display(none !important);
+	}
+
+	@media #{$small-down} {
+		.visible-col-#{$width}-xs {
+			@include display(flex !important);
+		}
+
+		table.visible-col-#{$width}-xs {
+			@include display(table !important);
+		}
+
+		tr.visible-col-#{$width}-xs {
+			@include display(table-row !important);
+		}
+
+		th.visible-col-#{$width}-xs,
+		td.visible-col-#{$width}-xs {
+			@include display(table-cell !important);
+		}
+	}
+
+	@media #{$small-only} {
+		.visible-col-#{$width}-sm {
+			@include display(flex !important);
+		}
+
+		table.visible-col-#{$width}-sm {
+			@include display(table !important);
+		}
+
+		tr.visible-col-#{$width}-sm {
+			@include display(table-row !important);
+		}
+
+		th.visible-col-#{$width}-sm,
+		td.visible-col-#{$width}-sm {
+			@include display(table-cell !important);
+		}
+	}
+
+	@media #{$medium-only} {
+		.visible-col-#{$width}-md {
+			@include display(flex !important);
+		}
+
+		table.visible-col-#{$width}-md {
+			@include display(table !important);
+		}
+
+		tr.visible-col-#{$width}-md {
+			@include display(table-row !important);
+		}
+
+		th.visible-col-#{$width}-md,
+		td.visible-col-#{$width}-md {
+			@include display(table-cell !important);
+		}
+	}
+
+	@media #{$large-up} {
+		.visible-col-#{$width}-lg {
+			@include display(flex !important);
+		}
+
+		table.visible-col-#{$width}-lg {
+			@include display(table !important);
+		}
+
+		tr.visible-col-#{$width}-lg {
+			@include display(table-row !important);
+		}
+
+		th.visible-col-#{$width}-lg,
+		td.visible-col-#{$width}-lg {
+			@include display(table-cell !important);
+		}
+	}
+
+	@media #{$small-down} {
+		.hidden-col-#{$width}-xs {
+			@include display(none !important);
+		}
+	}
+
+	@media #{$small-only} {
+		.hidden-col-#{$width}-sm {
+			@include display(none !important);
+		}
+	}
+
+	@media #{$medium-only} {
+		.hidden-col-#{$width}-md {
+			@include display(none !important);
+		}
+	}
+
+	@media #{$large-up} {
+		.hidden-col-#{$width}-lg {
+			@include display(none !important);
+		}
+	}
+
+	.visible-col-#{$width}-print {
+		@include display(none !important);
+	}
+
+	@media print {
+		.visible-col-#{$width}-print {
+			@include display(flex !important);
+		}
+
+		table.visible-col-#{$width}-print {
+			@include display(table !important);
+		}
+
+		tr.visible-col-#{$width}-print {
+			@include display(table-row !important);
+		}
+
+		th.visible-col-#{$width}-print,
+		td.visible-col-#{$width}-print {
+			@include display(table-cell !important);
+		}
+	}
+
+	@media print {
+		.hidden-col-#{$width}-print {
+			@include display(none !important);
+		}
+	}
+}
+
+@if $use-liquid-layout {
+	/* =============================================== */
+	/** Liquid-Layout */
+	/* =============================================== */
+
+	// --------------------- xs ----------------------------
+	$tmp: "";
+	$old: "";
+	@for $i from 1 through $liquid-colum-number {
+		@if $tmp != "" {
+			$tmp: $tmp + ", .col-xs-#{$i}";
+			$old: $old + ", .no-flexbox .col-xs-#{$i}";
+		}
+		@else{
+			$tmp: ".col-xs-#{$i}";
+			$old: ".no-flexbox .col-xs-#{$i}";
+		}
+	}
+	#{$tmp} {
+		@include position(relative);
+		@include display(flex);
+		@include align-items(left);
+		@include flex-direction(column);
+
+		& > * {
+			@include width(100%);
+		}
+	}
+
+	#{$old} {
+		@include position(relative);
+		@include float(left);
+	}
+
+	@for $i from 1 through $liquid-colum-number {
+		.row .col:nth-child(#{$i}) {
+			@include order($i);
+		}
+	}
+
+	@media #{$small-down} {
+		@for $i from 1 through $liquid-colum-number {
+			.col-xs-order-#{$i} {
+				@include order($i !important);
+			}
+		}
+	}
+
+	.col-xs-inline {
+		@include flex-direction(row !important);
+	}
+
+	@for $i from 1 through $liquid-colum-number {
+		.col-xs-#{$i} {
+			@include width(percentage(1 / $liquid-colum-number * $i));
+		}
+	}
+
+	@for $i from 0 through $liquid-colum-number {
+		@if $i == 0 {
+			.col-xs-offset-#{$i} {
+				@include margin-left(0);
+			}
+		}
+		@else{
+			.col-xs-offset-#{$i} {
+				@include margin-left(percentage(1 / $liquid-colum-number * $i));
+			}
+		}
+	}
+
+	// --------------------- sm ----------------------------
+	@media #{$small-up} {
+		$tmp: "";
+		$old: "";
+		@for $i from 1 through $liquid-colum-number {
+			@if $tmp != "" {
+				$tmp: $tmp + ", .col-sm-#{$i}";
+				$old: $old + ", .no-flexbox .col-sm-#{$i}";
+			}
+			@else{
+				$tmp: ".col-sm-#{$i}";
+				$old: ".no-flexbox .col-sm-#{$i}";
+			}
+		}
+		#{$tmp} {
+			@include position(relative);
+			@include display(flex);
+			@include align-items(left);
+			@include flex-direction(column);
+
+			& > * {
+				@include width(100%);
+			}
+		}
+
+		#{$old} {
+			@include position(relative);
+			@include float(left);
+		}
+
+		@for $i from 1 through $liquid-colum-number {
+			.col-sm-order-#{$i} {
+				@include order($i !important);
+			}
+		}
+
+		.col-sm-inline {
+			@include flex-direction(row !important);
+		}
+
+		@for $i from 1 through $liquid-colum-number {
+			.col-sm-#{$i} {
+				@include width(percentage(1 / $liquid-colum-number * $i));
+			}
+		}
+
+		@for $i from 0 through $liquid-colum-number {
+			@if $i == 0 {
+				.col-sm-offset-#{$i} {
+					@include margin-left(0);
+				}
+			}
+			@else{
+				.col-sm-offset-#{$i} {
+					@include margin-left(percentage(1 / $liquid-colum-number * $i));
+				}
+			}
+		}
+	}
+
+	// --------------------- md ----------------------------
+	@media #{$medium-up} {
+		$tmp: "";
+		$old: "";
+		@for $i from 1 through $liquid-colum-number {
+			@if $tmp != "" {
+				$tmp: $tmp + ", .col-md-#{$i}";
+				$old: $old + ", .no-flexbox .col-md-#{$i}";
+			}
+			@else{
+				$tmp: ".col-md-#{$i}";
+				$old: ".no-flexbox .col-md-#{$i}";
+			}
+		}
+		#{$tmp} {
+			@include position(relative);
+			@include display(flex);
+			@include align-items(left);
+			@include flex-direction(column);
+
+			& > * {
+				@include width(100%);
+			}
+		}
+
+		#{$old} {
+			@include position(relative);
+			@include float(left);
+		}
+
+		@for $i from 1 through $liquid-colum-number {
+			.col-md-order-#{$i} {
+				@include order($i !important);
+			}
+		}
+
+		.col-md-inline {
+			@include flex-direction(row !important);
+		}
+
+		@for $i from 1 through $liquid-colum-number {
+			.col-md-#{$i} {
+				@include width(percentage(1 / $liquid-colum-number * $i));
+			}
+		}
+
+		@for $i from 0 through $liquid-colum-number {
+			@if $i == 0 {
+				.col-md-offset-#{$i} {
+					@include margin-left(0);
+				}
+			}
+			@else{
+				.col-md-offset-#{$i} {
+					@include margin-left(percentage(1 / $liquid-colum-number * $i));
+				}
+			}
+		}
+	}
+
+	// --------------------- lg ----------------------------
+	@media #{$large-up} {
+		$tmp: "";
+		$old: "";
+		@for $i from 1 through $liquid-colum-number {
+			@if $tmp != "" {
+				$tmp: $tmp + ", .col-lg-#{$i}";
+				$old: $old + ", .no-flexbox .col-lg-#{$i}";
+			}
+			@else{
+				$tmp: ".col-lg-#{$i}";
+				$old: ".no-flexbox .col-lg-#{$i}";
+			}
+		}
+		#{$tmp} {
+			@include position(relative);
+			@include display(flex);
+			@include align-items(left);
+			@include flex-direction(column);
+
+			& > * {
+				@include width(100%);
+			}
+		}
+
+		#{$old} {
+			@include position(relative);
+			@include float(left);
+		}
+
+		@for $i from 1 through $liquid-colum-number {
+			.col-lg-order-#{$i} {
+				@include order($i !important);
+			}
+		}
+
+		.col-lg-inline {
+			@include flex-direction(row !important);
+		}
+
+		@for $i from 1 through $liquid-colum-number {
+			.col-lg-#{$i} {
+				@include width(percentage(1 / $liquid-colum-number * $i));
+			}
+		}
+
+		@for $i from 0 through $liquid-colum-number {
+			@if $i == 0 {
+				.col-lg-offset-#{$i} {
+					@include margin-left(0);
+				}
+			}
+			@else{
+				.col-lg-offset-#{$i} {
+					@include margin-left(percentage(1 / $liquid-colum-number * $i));
+				}
+			}
+		}
+	}
+
+	// ------------------ visibility -----------------------
+	.visible-col-xs,
+	.visible-col-sm,
+	.visible-col-md,
+	.visible-col-lg {
+		@include display(none !important);
+	}
+
+	@media #{$small-down} {
+		.visible-col-xs {
+			@include display(flex !important);
+		}
+		table.visible-col-xs {
+			@include display(table !important);
+		}
+		tr.visible-col-xs {
+			@include display(table-row !important);
+		}
+		th.visible-col-xs,
+		td.visible-col-xs {
+			@include display(table-cell !important);
+		}
+	}
+
+	@media #{$small-only} {
+		.visible-col-sm {
+			@include display(flex !important);
+		}
+		table.visible-col-sm {
+			@include display(table !important);
+		}
+		tr.visible-col-sm {
+			@include display(table-row !important);
+		}
+		th.visible-col-sm,
+		td.visible-col-sm {
+			@include display(table-cell !important);
+		}
+	}
+	@media #{$medium-only} {
+		.visible-col-md {
+			@include display(flex !important);
+		}
+		table.visible-col-md {
+			@include display(table !important);
+		}
+		tr.visible-col-md {
+			@include display(table-row !important);
+		}
+		th.visible-col-md,
+		td.visible-col-md {
+			@include display(table-cell !important);
+		}
+	}
+	@media #{$large-up} {
+		.visible-col-lg {
+			@include display(flex !important);
+		}
+		table.visible-col-lg {
+			@include display(table !important);
+		}
+		tr.visible-col-lg {
+			@include display(table-row !important);
+		}
+		th.visible-col-lg,
+		td.visible-col-lg {
+			@include display(table-cell !important);
+		}
+	}
+	@media #{$small-down} {
+		.hidden-col-xs {
+			@include display(none !important);
+		}
+	}
+	@media #{$small-only} {
+		.hidden-col-sm {
+			@include display(none !important);
+		}
+	}
+	@media #{$medium-only} {
+		.hidden-col-md {
+			@include display(none !important);
+		}
+	}
+	@media #{$large-up} {
+		.hidden-col-lg {
+			@include display(none !important);
+		}
+	}
+	.visible-col-print {
+		@include display(none !important);
+	}
+	@media print {
+		.visible-col-print {
+			@include display(flex !important);
+		}
+		table.visible-col-print {
+			@include display(table !important);
+		}
+		tr.visible-col-print {
+			@include display(table-row !important);
+		}
+		th.visible-col-print,
+		td.visible-col-print {
+			@include display(table-cell !important);
+		}
+	}
+	@media print {
+		.hidden-col-print {
+			@include display(none !important);
+		}
+	}
+}
+
+@if $use-fixed-layout {
+	@include getFixedLayout($main-width, $fixed-colum-number);
+}

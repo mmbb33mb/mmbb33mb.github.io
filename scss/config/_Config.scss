@@ -1,0 +1,428 @@
+@charset "UTF-8";
+
+// ============================================================
+// 設定
+// ============================================================
+
+// ----------------------------------
+// 読み込み設定
+// ----------------------------------
+
+// HTML5の場合は値を「false」から「true」にする
+$use-html5 							: true;
+// リセットクラスを使用するか
+$use-reset 							: true;
+// デフォルトクラスを使用するか
+$use-default 							: false;
+// 見出しクラスを使用するか
+$use-header-styling 					: false;
+// アニメーションクラスを使用するか
+$use-animation 						: false;
+// 汎用クラスを使用するか
+$use-extend-object 					: false;
+// 余白調整用のクラスを使用するか
+$use-spacing-classes 				: false;
+// 印刷用クラスを使用するか
+$use-print 							: false;
+// 共通クラスを使用するか
+$use-common							: false;
+// ツールチプスを使用するか
+$use-tooltips 						: true;
+// フォントアイコンの読み込み
+$use-fontawesome						: true;
+
+// ----------------------------------
+// ブラウザサポート
+// ----------------------------------
+
+// HTML5の場合は「true」
+$html5 								: true;
+
+// compass ブラウザサポート
+$legacy-support-for-ie6 				: true;
+$legacy-support-for-ie7 				: true;
+$legacy-support-for-ie8				: true;
+$legacy-support-for-ie9				: true;
+
+// クロスブラウザサポート
+$support-for-webkit 					: true;		// ウェブキット
+$support-for-old-android			    : true;		// 旧アンドロイド
+$support-for-mozilla 				: true;		// FireFox
+$support-for-opera 					: true;		// Safari
+$support-for-khtml 					: true;		// Safari1.x
+$support-for-microsoft 				: true;		// IE
+
+//ie9用 svg
+$support-for-svg 						: true;
+
+// ----------------------------------
+// 可変レイアウト
+// ----------------------------------
+
+// リキッドレイアウトの読み込み
+$use-liquid-layout 					: false;
+// カラム数
+$liquid-colum-number 				: 20;
+
+// ----------------------------------
+// 可変レイアウト
+// ----------------------------------
+
+// 固定レイアウトの読み込み
+$use-fixed-layout 					: false;
+// カラム数
+$fixed-colum-number					: 2;
+
+//--------------------------------------------------------
+// メディアクエリ変数
+//--------------------------------------------------------
+$landscape 							: "only screen and (orientation: landscape)";
+$portrait 								: "only screen and (orientation: portrait)";
+$sp-down 								: "(max-width: 599px)";
+$sp-up 									: "(min-width: 600px)";
+$small-only 							: "(min-width: 280px) and (max-width: 399px)";
+$small-down 							: "(max-width: 959px)";
+$small-up 								: "(min-width: 960px)";
+$medium-only 							: "(min-width: 600px) and (max-width: 959px)";
+$medium-up 							: "(min-width: 960px)";
+$medium-only 							: "(min-width: 960px) and (max-width: 1400px)";
+$large-up 								: "(min-width: 1400px)";
+
+//--------------------------------------------------------
+// custom変数
+//--------------------------------------------------------
+
+// width_common
+$innerWidth : 1260px;
+
+
+
+
+
+// 以下使用無し＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊
+// ----------------------------------
+// 基本設定
+// ----------------------------------
+
+// リンクの下線を表示するか
+$link-text-decoration 				: false;
+
+// 簡易ロールオーバーの値
+$opacity-value 						: 0.7;
+
+// アウトラインの線の幅
+$base-outline-width 					: 2px;
+
+// ボーダー設定
+$base-border 							: 2px solid #000;
+// ボーダーの線の太さ
+$base-border-width 					: 2px;
+
+// 付与するベンダープレフィックス
+$set-prefix 							: -webkit-, -moz-, -ms-, -o-, -khtml-, '';
+
+// ベースレイアウト
+$base-width 							: 980px;
+$side-width 							: 240px;
+$main-width 							: $base-width - $side-width;
+
+// 画像パス
+$base-image-path 						: "../img/";
+// commonフォルダ内の画像のパス
+$common-image-path 					: "../common/images/";
+
+// 基本マージン
+$base-margin 							: 30px;
+$base-radius 							: 5px;
+$base-margin-top 						: 20px;
+$base-margin-right 					: 20px;
+$base-margin-bottom 					: 20px;
+$base-margin-left 					: 20px;
+
+// 標準font-family
+$base-font-family 					: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "ＭＳ Ｐゴシック", "MS PGothic", Sans-Serif;
+
+// Font一覧
+$font-gothic 							: Verdana, "游ゴシック体", "Yu Gothic", YuGothic, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, sans-serif;
+$font-mincho 							: "Times New Roman", "游明朝", "Yu Mincho", YuMincho, "ヒラギノ明朝 Pro W3", "Hiragino Mincho Pro", "メイリオ", Meiryo, serif;
+$font-code 							: monospace, "ＭＳ Ｐ ゴシック","MS PGothic", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", sans-serif;
+$font-icon 							: 'FontAwesome';
+
+// ベースラインヘイト
+$base-line-height 					: 1;
+// ベースフォントサイズ
+$base-font-size 						: 1.4rem;
+// ベースフォントサイズアジャスト
+$base-font-size-adjust 				: #{$base-font-size / $base-font-size};
+
+// モバイル時のフォントサイズの縮小度(掛ける数を指定【例:50%なら0.5】)
+$font-size-mobile						: 1;
+
+// タイトルのフォントサイズ
+$font-size-h1							: 3.2rem;
+$font-size-h2							: 2.4rem;
+$font-size-h3							: 1.8rem;
+$font-size-h4							: 1.6rem;
+$font-size-h5							: 1.2rem;
+$font-size-h6							: 1rem;
+
+// ---------------------------------
+// カラー
+// ---------------------------------
+// メインカラー（ベースカラー）
+$main-color 							: #fff;
+
+// サブカラー
+$sub-color 							: #eee;
+
+$white 								: #fff;
+$black 								: #000;
+$base-color 							: #576568;
+$primary-color 						: #f3ba0c;
+$secondary-color 						: #999;
+$alert-color 							: #e74c3c;
+$success-color 						: #23b1a7;
+$warning-color 						: #eb7a14;
+$info-color 							: #3498db;
+
+// ベースカラー
+$base-font-color 						: #222;
+$base-bg-color 						: $white;
+$base-link-color 						: #20b2aa;
+$base-link-color-visited 			: #20b2aa;
+$base-link-color-hover 				: #cd5c5c;
+$base-link-color-active 				: #00faaa;
+$base-border-color 					: #ddd;
+$base-border-color-hover 			: #ddd;
+$base-outline-color 					: #000;
+$base-shadow-color 					: #000;
+
+// ---------------------------------
+// 見出し
+// ---------------------------------
+
+// 見出しの背景色
+$header-style-bg-color 				: transparent;
+// 見出しのベースボーダーの色
+$header-style-border-base-color 	: #D7605E;
+// 見出しのサブボーダーの色
+$header-style-border-sub-color 	: #B7DBF2;
+
+// ---------------------------------
+// ハンバーガーメニュー
+// ---------------------------------
+
+// ハンバーガーメニューの配置方向（left or right）
+$hamburger-menu-direction			: left;
+
+// ---------------------------------
+// スライドコンテンツ
+// ---------------------------------
+// スライダーの背景色
+$slider-bg-color 						: transparent;
+// スライダーの矢印を常に表示するか（表示しない場合はホバー時に表示）
+$slide-arrow-always 					: true;
+
+// ---------------------------------
+// タブ
+// ---------------------------------
+// タブ変更アニメーション時間
+$tab-duration 						: 1s;
+// タブカラー
+$tab-bg-color 						: #0078D7;
+// タブホバーカラー
+$tab-hover-color 						: darken(#0078D7, 20%);
+// タブアクティブカラー
+$tab-active-color 					: #e3e3e3;
+// タブフォントカラー
+$tab-font-color 						: #fff;
+// タブセクションカラー
+$tab-section-color 					: #fff;
+
+// ---------------------------------
+// 表示スタイル
+// ---------------------------------
+// スタイルタグの背景色
+$style-bg-color 						: #0078D7;
+// アクティブタグの背景色
+$style-active-bg-color 				: #e3e3e3;
+// 区切り線のスタイル
+$style-border 						: 1px solid #fff;
+
+// ----------------------------------
+// ツールチプス
+// ----------------------------------
+
+// ツールチプスの高さ
+$tooltipHeight 						: 12px;
+// ツールチプスの矢印のサイズ
+$arrowSize 							: 6px;
+// ツールチプスのフォントサイズ
+$tooltipFontSize					: 13px;
+// ツールチプスのデフォルト背景色
+$tooltipColor 						: #fff;
+// ツールチプスのテキストカラー
+$tooltipTextColor 					: #000;
+
+// 各ツールチプスクラスの背景色
+$c-success 							: #62c462;
+$c-info 								: #5bc0de;
+$c-danger 								: #e74c3c;
+$c-warning 							: #e67e22;
+
+// ----------------------------------
+// ボタン
+// ----------------------------------
+
+// ボタンクラスの読み込み
+$use-button 							: false;
+// リッチボタンの表示可否
+$button-type-rich 					: false;
+// ゴーストボタンの表示可否
+$button-type-ghost					: false;
+// ホバー時のエフェクト
+$button-hover-effect 				: false;
+
+// ボタン padding
+$button-padding-small 				: 3px;
+$button-padding-medium 				: 5px;
+$button-padding-large 				: 8px;
+$button-padding-xlarge 				: 14px;
+
+$button-margin-bottom 				: 0;
+
+$button-font-color 					: #fff;
+$button-font-color-alt 				: textColor;
+
+$button-font-small 					: 11px;
+$button-font-medium 					: 13px;
+$button-font-large 					: 15px;
+$button-font-xlarge 					: 17px;
+
+// ボタンの表示形式
+$button-display 						: inline-block;
+// ボタンの配置間隔
+$button-margin 						: 10px;
+// ボタンの線のスタイル
+$button-border-style 				: solid;
+// ボタンの幅
+$button-min-width 					: 130px;
+// ボタンの高さ
+$button-min-height 					: 40px;
+// ボタンの余白
+$button-padding 						: 10px 20px;
+// ボタンフォントウェイト
+$button-font-weight 					: bold;
+// ボタンの角丸
+$button-radius 						: 5px;
+// ボタンの線の太さ
+$button-border-width 				: 1px;
+
+// ボタンのテキスト
+$button-font-family					: $base-font-family;
+$button-font-weight 					: bold;
+$button-font-color 					: $white;
+$button-font-color-alt 				: textColor;
+$button-font-tny 						: 11px;
+$button-font-align 					: center;
+
+// ボタンのカーソル
+$cursor-default-value 				: pointer;
+$cursor-pointer-value 				: pointer;
+$button-disabled-cursor 				: not-allowed;
+
+// 使用不可ボタンの透過率
+$button-disabled-opacity 			: $opacity-value;
+
+// ボタンの背景色
+$button-bg-color 						: $primary-color;
+// ボタンのホバー時の背景色
+$button-bg-hover 						: $primary-color;
+// ボタンの線の色
+$button-border-color 				: $primary-color;
+
+// 各ボタンカラークラスの設定
+$primary-button-bg-hover 			: $primary-color;
+$primary-button-border-color 		: $primary-color;
+$primary-button-hover-color			: #fff;
+$secondary-button-bg-hover 			: $secondary-color;
+$secondary-button-border-color 	: $secondary-color;
+$secondary-button-hover-color		: #fff;
+$success-button-bg-hover 			: $success-color;
+$success-button-border-color 		: $success-color;
+$success-button-hover-color			: #fff;
+$alert-button-bg-hover 				: $alert-color;
+$alert-button-border-color 			: $alert-color;
+$alert-button-hover-color			: #fff;
+$warning-button-bg-hover 			: $warning-color;
+$warning-button-border-color 		: $warning-color;
+$warning-button-hover-color			: #fff;
+$info-button-bg-hover 				: $info-color;
+$info-button-border-color 			: $info-color;
+$info-button-hover-color			: #fff;
+
+// デフォルトの線の角丸
+$button-round 						: 1000px;
+
+// ----------------------------------
+// テーブルのプロパティ
+// ----------------------------------
+
+// テーブルのフォントカラー
+$table-font-color 					: #000;
+// テーブルの線の色
+$table-border-color 					: #aaa;
+// テーブルのテキストの影の色
+$table-text-shadow-color 			: #fff;
+// テーブルのボックスの影の色
+$table-box-shadow-color1 			: #000;
+$table-box-shadow-color2 			: #fff;
+// テーブル行ホバー時の色
+$table-hover-color 					: #eee;
+// テーブル行の色(ベース)
+$table-tr-color 						: #fff;
+// テーブル行の色(セカンダリー)
+$table-tr-color-secondary 			: #f5f5f5;
+// テーブルの見出しのグラデーションの設定色
+$table-th-top-color 					: #eee;
+$table-th-bottom-color 				: #ddd;
+
+// ----------------------------------
+// アニメーションのプロパティ
+// ----------------------------------
+
+// アニメーションラインの線の太さ
+$anime-line-width 					: 3px;
+// アニメーションラインの線の色
+$anime-line-color 					: indianRed;
+// アニメーションラインの線の揺れ幅
+$anime-line-swinging-width 			: 60px;
+
+// ----------------------------------
+// ホバーアニメーションのプロパティ
+// ----------------------------------
+
+// ホバーアニメーションの読み込み
+$use-hover-animation					: false;
+// ホバー時のアニメーション時間
+$hover-duration 						: 0.5s;
+// リンクホバー時のテキストカラー変更アニメーション時間
+$hover-link-duration 				: 0.5s;
+// ホバー時の背景色
+$hover-bg-color 						: #fff;
+// ライトエフェクトの背景色
+$hover-light-background 				: indianRed;
+// ホバー時の倍率
+$hover-scale 							: 1.2;
+// ホバー時のタイプアニメーション時間
+$hover-type-word-duration 			: 1s;
+// ホバー時のタイプアニメーションのデフォルト設定数
+$default-hover-type-word-count 	: 5;
+
+// ----------------------------------
+// トランジションプロパティ
+// ----------------------------------
+$default-transition-property 		: 0.3s;
+$default-transition-delay 			: 0;
+$default-transition-duration 		: 0;
+$default-transition-function 		: ease-in-out;

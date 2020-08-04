@@ -1,0 +1,482 @@
+@charset 'utf-8';
+@if $use-animation {
+	/* =============================================== */
+	/** Animation */
+	/* =============================================== */
+	@include keyframes(circle) {
+		50% {
+			@include opacity(1);
+		}
+		100% {
+			@include width(300px);
+			@include height(300px);
+		}
+	}
+
+	.anime-circle {
+		@include animation(circle 0.5s);
+	}
+
+	@include keyframes(fade-in) {
+		0% {
+			@include opacity(0);
+		}
+		30% {
+			@include opacity(0);
+		}
+		100% {
+			@include opacity(1);
+		}
+	}
+
+	.anime-fade-in {
+		@include animation(fade-in 1s);
+	}
+
+	@include keyframes(blink) {
+		0%, 100% {
+			@include opacity(0);
+		}
+		50% {
+			@include opacity(1);
+		}
+	}
+
+	.anime-blink {
+		@include animation(blink 1.5s infinite);
+	}
+
+	.anime-line {
+		@include position(relative);
+		@include width(100%);
+		@include height($anime-line-swinging-width);
+		@include background-color(transparent);
+		@include overflow(hidden);
+
+		&:before {
+			@include content('');
+			@include transform(translateY(-50%));
+			@include position(absolute);
+			@include top(50%);
+			@include left(-10%);
+			@include width(120%);
+			@include height(0px);
+			@include display(block);
+			@include border-top($anime-line-width solid);
+			@include border-bottom($anime-line-width solid);
+			@include animation(anime-line 2.5s linear infinite);
+		}
+	}
+
+	@include keyframes(anime-line) {
+		0%, 9%, 20%, 29%, 40%, 49%, 60%, 69%, 80%, 100% {
+			@include border-bottom(none);
+			@include border-top($anime-line-width solid $anime-line-color);
+			@include border-radius(0%);
+			@include padding(0 0);
+		}
+		10%, 18%, 30%, 39%, 50%, 59%, 70%, 79% {
+			@include border-top(none);
+			@include border-bottom($anime-line-width solid $anime-line-color);
+			@include border-radius(0%);
+			@include padding(0 0);
+		}
+		5% {
+			@include border-bottom(none);
+			@include border-top($anime-line-width solid $anime-line-color);
+			@include border-radius(100%);
+			@include padding($anime-line-swinging-width*0.55 0);
+		}
+		15% {
+			@include border-top(none);
+			@include border-bottom($anime-line-width solid $anime-line-color);
+			@include border-radius(100%);
+			@include padding($anime-line-swinging-width*0.55 0);
+		}
+		25% {
+			@include border-bottom(none);
+			@include border-top($anime-line-width solid $anime-line-color);
+			@include border-radius(100%);
+			@include padding($anime-line-swinging-width*0.35 0);
+		}
+		35% {
+			@include border-top(none);
+			@include border-bottom($anime-line-width solid $anime-line-color);
+			@include border-radius(100%);
+			@include padding($anime-line-swinging-width*0.35 0);
+		}
+		45% {
+			@include border-bottom(none);
+			@include border-top($anime-line-width solid $anime-line-color);
+			@include border-radius(100%);
+			@include padding($anime-line-swinging-width*0.2 0);
+		}
+		55% {
+			@include border-top(none);
+			@include border-bottom($anime-line-width solid $anime-line-color);
+			@include border-radius(100%);
+			@include padding($anime-line-swinging-width*0.2 0);
+		}
+		65% {
+			@include border-bottom(none);
+			@include border-top($anime-line-width solid $anime-line-color);
+			@include border-radius(100%);
+			@include padding($anime-line-swinging-width*0.1 0);
+		}
+		75% {
+			@include border-top(none);
+			@include border-bottom($anime-line-width solid $anime-line-color);
+			@include border-radius(100%);
+			@include padding($anime-line-swinging-width*0.1 0);
+		}
+	}
+
+	@include keyframes(reduction) {
+		0% {
+			@include transform(scale(1));
+		}
+		100% {
+			@include transform(scale(0.9));
+		}
+	}
+
+	.anime-reduction {
+		@include animation(reduction 0.3s);
+	}
+
+	@include keyframes(expansion) {
+		0% {
+			@include transform(scale(1));
+		}
+		100% {
+			@include transform(scale(1.1));
+		}
+	}
+
+	.anime-expansion {
+		@include animation(expansion 0.3s);
+	}
+
+	@include keyframes(change-text) {
+		0%, 12%, 100% {
+			@include transform(translateY(0));
+		}
+		17%, 29% {
+			@include transform(translateY(-25%));
+		}
+		34%, 46% {
+			@include transform(translateY(-50%));
+		}
+		51%, 63% {
+			@include transform(translateY(-75%));
+		}
+		68%, 80% {
+			@include transform(translateY(-50%));
+		}
+		85%, 97% {
+			@include transform(translateY(-25%));
+		}
+	}
+
+	.anime-change-text {
+		@include animation(change-text 1s);
+	}
+
+	.change-text {
+		@include overflow(hidden);
+		@include height(1em);
+
+		span {
+			@include display(inline);
+			@include float(left);
+			@include margin(0);
+		}
+
+		ul {
+			@include margin-top(0);
+			@include padding-left(110px);
+			@include text-align(left);
+			@include list-style(none);
+			@include animation(6s linear 0s normal none infinite change-text);
+		}
+
+		ul li {
+			@include margin(0);
+		}
+	}
+
+	.telop-text-wrapper {
+		@include perspective(500px);
+		@include height(200px);
+		@include overflow(hidden);
+
+		.telop-text-inner {
+			@include text-align(justify);
+			@include padding(5%);
+			@include animation(telop-text linear 15s infinite);
+			@include letter-spacing(1px);
+		}
+	}
+
+	@include keyframes(telop-text) {
+		0% {
+			@include transform(rotateX(45deg) translate(0, 0));
+		}
+		100% {
+			@include transform(rotateX(45deg) translate(0, -200px));
+		}
+	}
+
+	.anime-telop-text {
+		@include animation(anime-telop-text 6s);
+	}
+
+	@include keyframes(bound) {
+		0% {
+			@include transform(scale(0) translate(0, -500px));
+		}
+		50% {
+			@include transform(scaleX(2) translate(0, 200px));
+		}
+		70% {
+			@include transform(scaleY(0.5) translate(0, -100px));
+		}
+		90% {
+			@include transform(scaleX(1.5) translate(0, 50px));
+		}
+		100% {
+			@include transform(scale(1) translate(0, 0));
+		}
+	}
+
+	.anime-bound {
+		@include animation(anime-bound 3s);
+	}
+
+	@include keyframes(shrinkgrow) {
+		0% {
+			@include transform(scale(0));
+		}
+		12.5% {
+			@include transform(scale(1));
+		}
+		25% {
+			@include transform(scale(1));
+		}
+		33% {
+			@include transform(scale(0));
+		}
+		100% {
+			@include transform(scale(0));
+		}
+	}
+
+	.anime-shrinkgrow {
+		@include animation(shrinkgrow);
+	}
+
+	@include keyframes(marquee) {
+		0% {
+			@include transform(translate(0%));
+		}
+		100% {
+			@include transform(translate(-100%));
+		}
+	}
+
+	.anime-electric-scoreboard {
+		@include width(100%);
+		@include margin(0 auto 20px auto);
+		@include padding(0.5em 0);
+		@include overflow(hidden);
+		@include background-color(#333);
+		@include font-size(5rem);
+		@include font-weight(bold);
+		@include position(relative);
+		@include box-sizing(padding-box);
+
+		&::after {
+			@include content(' ');
+			@include display(block);
+			@include position(absolute);
+			@include top(0);
+			@include right(0);
+			@include bottom(0);
+			@include left(0);
+			@include background(url("../img/bg-led.png") repeat scroll 0 0 rgba(0, 0, 0, 0));
+			@include background-size(4px 4px);
+			@include z-index(10);
+		}
+
+		p {
+			@include margin(0);
+			@include padding(0);
+			@include padding-left(99%);
+			@include display(inline-block);
+			@include white-space(nowrap);
+			@include animation-name(marquee);
+			@include animation-timing-function(linear);
+			@include animation-duration(15s);
+			@include animation-iteration-count(infinite);
+			@include color(#FFB400);
+			@include font-family(serif);
+			@include font-size(5rem);
+
+			&::after {
+				@include content("");
+				@include white-space(nowrap);
+				@include padding-right(50px);
+			}
+		}
+	}
+}
+
+// ホバーアニメーション使用時
+@if $use-hover-animation {
+	/* =============================================== */
+	/** HoverAnimation */
+	/* =============================================== */
+	@include keyframes(jelly) {
+		0%{
+			@include transform(scale(1, 1));
+		}
+		25%{
+			@include transform(scale(0.9, 1.1));
+		}
+		50%{
+			@include transform(scale(1.1, 0.9));
+		}
+		75%{
+			@include transform(scale(0.95, 1.05));
+		}
+		from,to{
+			@include transform(scale(1, 1));
+		}
+		25%{
+			@include transform(scale(0.9, 1.1));
+		}
+		50%{
+			@include transform(scale(1.1, 0.9));
+		}75%{
+			 @include transform(scale(0.95, 1.05));
+		}
+	}
+
+	.anime-jelly {
+		@include animation(jelly 1.5s);
+	}
+
+	@include keyframes(pop) {
+		0% {
+			@include transform(scale(1));
+		}
+		50% {
+			@include transform(scale(1.2));
+		}
+		90% {
+			@include transform(scale(0.9));
+		}
+		100% {
+			@include transform(scale(1));
+		}
+	}
+
+	.anime-pop {
+		@include animation(pop 1s);
+	}
+
+	@include keyframes(pulse) {
+		50% {
+			@include transform(scale(1.2));
+			@include opacity(1);
+		}
+		70% {
+			@include transform(scale(0.9));
+			@include opacity(1);
+		}
+		100% {
+			@include transform(scale(1));
+			@include opacity(1);
+		}
+	}
+
+	.anime-pulse {
+		@include animation(pulse 1s);
+	}
+
+	.hover-jelly:hover {
+		@include animation(jelly 1.5s);
+	}
+
+	.hover-pulse:hover {
+		@include animation(pulse 1s);
+	}
+
+	.hover-pop:hover {
+		@include animation(pop 0.5s);
+	}
+
+	@include hover-change-color();
+	@include hover-change-color-and-border();
+	@include hover-border-width();
+	@include hover-shadow();
+	@include hover-inline-shadow();
+	@include hover-outline();
+	@include hover-radius();
+	@include hover-slide();
+	@include hover-in-out();
+	@include hover-in-out-color();
+	@include hover-in-out-lost();
+	@include hover-in-out-lost-dotted();
+	@include hover-in-out-lost-double();
+	@include hover-in-out-lost-double-background();
+	@include hover-in-out-square();
+	@include hover-out-in();
+	@include hover-out-in-side-content();
+	@include hover-top-bottom();
+	@include hover-top-bottom-color();
+	@include hover-bottom-top();
+	@include hover-bottom-top-color();
+	@include hover-right-left();
+	@include hover-right-left-color();
+	@include hover-left-right();
+	@include hover-left-right-color();
+	@include hover-rotate-top-left();
+	@include hover-rotate-top-left-color();
+	@include hover-rotate-top-right();
+	@include hover-rotate-top-right-color();
+	@include hover-rotate-bottom-left();
+	@include hover-rotate-bottom-left-color();
+	@include hover-rotate-bottom-right();
+	@include hover-rotate-bottom-right-color();
+	@include hover-rotate-content();
+	@include hover-turn-content();
+	@include hover-turn-over();
+	@include hover-popup();
+	@include hover-popup-content();
+	@include hover-fade-out-in();
+	@include hover-rotate();
+	@include hover-background();
+	@include hover-type-word();
+	@include hover-zoom();
+	@include hover-zoom-slide-content();
+	@include hover-wide-scale();
+	@include hover-light-background();
+	@include hover-brackets();
+	@include hover-rotate-box-x(null, #2195de);
+	@include hover-rotate-box-y(null, #e35041);
+	@include hover-bottom-popup-border();
+	@include hover-bottom-popdown-border();
+	@include hover-popup-text();
+	@include hover-line-down();
+	@include hover-line-up();
+	@include hover-line-double();
+	@include hover-popdown-text();
+	@include hover-switch-content(null, #0f7c67);
+	@include hover-left-right-color-border(null, #0972b4, #fff);
+	@include hover-double-circle();
+	@include hover-bottom-dotted();
+	@include hover-side-border-change();
+	@include hover-cover-text();
+	@include hover-cross-border();
+}

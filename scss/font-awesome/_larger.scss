@@ -1,0 +1,15 @@
+@if $use-fontawesome {
+	// Icon Sizes
+	// -------------------------
+
+	/* makes the font 33% larger relative to the icon container */
+	.#{$fa-css-prefix}-lg {
+		@include font-size(4rem / 3);
+		@include line-height((3rem / 4));
+		@include vertical-align(-15%);
+	}
+	.#{$fa-css-prefix}-2x { @include font-size(2rem); }
+	.#{$fa-css-prefix}-3x { @include font-size(3rem); }
+	.#{$fa-css-prefix}-4x { @include font-size(4rem); }
+	.#{$fa-css-prefix}-5x { @include font-size(5rem); }
+}

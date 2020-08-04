@@ -1,0 +1,628 @@
+@charset 'utf-8';
+
+@if $use-default {
+	/* =============================================== */
+	/** Default */
+	/* =============================================== */
+	@include font-size-comment();
+
+	/* Don't Edit */
+	html {
+		@include font-size(62.5%);
+	}
+	body {
+		@include font('#{$base-font-size}/1.231 $base-font-family');
+		@include font-size(small, true);
+		@include font(x-small, true);
+	}
+
+	pre,code,kbd,samp,tt{
+		@include font-family(monospace);
+		@include font-size(1.1rem, true);
+		@include line-height($base-line-height);
+	}
+
+	html > body {
+		@include font-size(small);
+	}
+
+	*, *::before, *::after {
+		@include box-sizing(border-box);
+	}
+
+	* {
+		@include margin(0);
+		@include padding(0);
+
+		@include font(font-size($base-font-size) normal normal $base-font-family);
+	}
+
+	body {
+		@include line-height($base-line-height);
+		@include background-color(#fff);
+	}
+
+	@if $html5 {
+		/*----------------------------------------
+		  HTML5
+		----------------------------------------*/
+		article,aside,details,figcaption,figure,
+		footer,header,hgroup,menu,nav,section {
+			@include display(block);
+		}
+	}
+
+	@if $use-extend-object {
+		/*----------------------------------------
+		  extends
+		----------------------------------------*/
+		/* 汎用クラス */
+
+		// inline
+		@include class(inline) {
+			@include display(flex);
+			@include justify-content(space-between);
+			@include flex-wrap(wrap);
+
+			* {
+				@include flex-direction(row);
+				@include align-items(stretch);
+			}
+
+			&.column {
+				@include display(flex);
+				@include flex-direction(column);
+			}
+
+			&.row-reverse {
+				@include display(flex);
+				@include flex-direction(row-reverse);
+			}
+
+			&.column-reverse {
+				@include display(flex);
+				@include flex-direction(column-reverse);
+			}
+
+			&.nowrap {
+				@include display(flex);
+				@include flex-direction(row);
+				@include flex-wrap(nowrap);
+			}
+
+			&.wrap-reverse {
+				@include display(flex);
+				@include flex-direction(row);
+				@include flex-wrap(wrap-reverse);
+			}
+
+			&.-right {
+				@include justify-content(flex-end);
+			}
+
+			&.-center {
+				@include justify-content(center);
+			}
+
+			&.-between {
+				@include justify-content(space-between);
+			}
+
+			&.-around {
+				@include justify-content(space-around);
+			}
+		}
+
+		// inline-block
+		.inline-block {
+			@include display(inline-block);
+			@include display(inline);
+			@include zoom(1);
+		}
+
+		// block
+		.block {
+			@include display(block);
+			@include zoom(1);
+		}
+
+		// table
+		.table {
+			@include display(table);
+		}
+
+		// table-cell
+		.table-cell {
+			@include display(table-cell);
+			@include display(inline);
+			@include zoom(1);
+			@include vertical-align(middle);
+		}
+
+		// float: right
+		.fr,
+		.imgR {
+			@include float(right);
+			@include margin-left(10px);
+		}
+
+		// float: left
+		.fl,
+		.imgL {
+			@include float(left);
+			@include margin-right(10px);
+		}
+
+		// text-align: center
+		.imgC,
+		.tC,
+		.btn {
+			@include text-align(center);
+		}
+
+		// img Centering
+		.imgC {
+			@include display(block);
+			@include margin-left(auto);
+			@include margin-right(auto);
+		}
+
+		// text-align: right
+		.tR,
+		.sign {
+			@include text-align(right);
+		}
+
+		// box-sizing
+		.box-size {
+			@include box-sizing(border-box);
+		}
+
+		// text-shadow none
+		.ts-none {
+			@include text-shadow(none !important);
+		}
+
+		// box-shadow none
+		.bs-none {
+			@include box-shadow(none !important);
+		}
+	}
+
+	// 余白調整用のクラス
+	@if $use-spacing-classes {
+		@for $i from 0 through 10 {
+			.mt#{$i * 10} { @include margin-top(10px * $i); }
+		}
+		@for $i from 0 through 10 {
+			.mr#{$i * 10} { @include margin-right(10px * $i); }
+		}
+		@for $i from 0 through 10 {
+			.mb#{$i * 10} { @include margin-bottom(10px * $i); }
+		}
+		@for $i from 0 through 10 {
+			.ml#{$i * 10} { @include margin-left(10px * $i); }
+		}
+		@for $i from 0 through 10 {
+			.ms#{$i * 10} { @include margin(0 (10px * $i)); }
+		}
+		@for $i from 0 through 10 {
+			.pt#{$i * 10} { @include padding-top(10px * $i); }
+		}
+		@for $i from 0 through 10 {
+			.pr#{$i * 10} { @include padding-right(10px * $i); }
+		}
+		@for $i from 0 through 10 {
+			.pb#{$i * 10} { @include padding-bottom(10px * $i); }
+		}
+		@for $i from 0 through 10 {
+			.pl#{$i * 10} { @include padding-left(10px * $i); }
+		}
+		@for $i from 0 through 10 {
+			.ps#{$i * 10} { @include padding(0 10px * $i); }
+		}
+	}
+
+	/*----------------------------------------
+		Text
+	----------------------------------------*/
+
+	p,
+	pre,
+	address {
+		@include color($base-font-color);
+		@include font-size($base-font-size);
+	}
+
+	h1 {
+		@include font-size($font-size-h1);
+	}
+
+	h2 {
+		@include font-size($font-size-h2);
+	}
+
+	h3 {
+		@include font-size($font-size-h3);
+	}
+
+	h4 {
+		@include font-size($font-size-h4);
+	}
+
+	h5 {
+		@include font-size($font-size-h5);
+	}
+
+	h6 {
+		@include font-size($font-size-h6);
+	}
+
+	pre {
+		@include margin(1.5em 25px);
+		@include padding(1em);
+		@include overflow(scroll);
+		@include font-family('"ＭＳ-Ｐ ゴシック" , Osaka, Arial, Helvetica, sans-serif');
+		@include line-height(1.9);
+	}
+
+	blockquote {
+		@include margin(1.5em 1px);
+		@include border(5px solid #9f998f);
+		@include color(#77471c);
+		@include background-color(#f5f5f5);
+		@include background-repeat(repeat-x);
+		@include background-position(left bottom);
+	}
+
+	blockquote[title]::before {
+		@include padding(0.2em 10px 0.4em 10px);
+		@include content(attr(title));
+		@include display(block);
+		@include color(#fff);
+		@include background-color(#9f998f);
+		@include font-weight(bold);
+	}
+
+	blockquote[cite]::after {
+		@include margin(0.5em 10px);
+		@include content(attr(cite));
+		@include display(block);
+		@include text-align(right);
+		@include font-size(1.1rem);
+	}
+
+	blockquote * {
+		@include color(#333 !important);
+	}
+
+	em {
+		@include color(#000);
+	}
+
+	h2 em {
+	}
+
+	pre em {
+		@include font-weight(bold);
+		@include background-image(none);
+	}
+
+	strong {
+		@include font-weight(bold);
+	}
+
+	q {
+		@include text-decoration(underline);
+	}
+
+	cite {
+		@include display(block);
+		@include text-align(right);
+	}
+
+	address {
+	}
+
+	code {
+	}
+
+	kbd {
+		@include background-color(#f5f5f5);
+		@include font-family('"Osaka|", monospace');
+		@include text-transform(uppercase);
+		@include padding(0 0.4em);
+		@include border(1px solid #6a8eaa);
+	}
+
+	del {
+		@include text-decoration(line-through);
+	}
+
+	ins {
+		@include border-top(10px solid #3cadd6);
+		@include border-bottom(10px solid #3cadd6);
+		@include border(7px solid #3cadd6);
+		@include margin(2em 1px);
+		@include padding(1px 0);
+		@include display(block);
+		@include text-decoration(none);
+	}
+
+	ins * {
+		@include color(#666 !important);
+	}
+
+	abbr,
+	acronym {
+		@include border-bottom(1px dotted #aaa);
+		@include cursor(help);
+	}
+
+	/*----------------------------------------
+		List
+	----------------------------------------*/
+
+	ul,
+	ol,
+	dl {
+		@include color(#333);
+	}
+
+	li,
+	dt,
+	dd {
+		@include font-size(100%);
+		@include list-style-type(none);
+		@include list-style-position(outside);
+	}
+
+	li {
+	}
+
+	ol li {
+		@include list-style(decimal);
+	}
+
+	/* Opera Hack */
+	html:first-child li,
+	html:first-child dt,
+	html:first-child dd {
+		@include font-size(1rem);
+	}
+
+	dt {
+		@include font-weight(bold);
+	}
+
+	dd {
+	}
+
+	li li,
+	li p,
+	li pre,
+	li dt,
+	li dd,
+	dd li,
+	dd p,
+	dd pre,
+	dd dt,
+	dd dd {
+		@include font-size(100% !important);
+	}
+
+	li ul,
+	li ol,
+	li dl,
+	li p,
+	dd ul,
+	dd ol,
+	dd dl,
+	dd p {
+
+	}
+
+	/*----------------------------------------
+		Anchor
+	----------------------------------------*/
+
+	a {
+		@include transition(color $hover-link-duration);
+		@include color($base-link-color);
+		@if $link-text-decoration == false {
+			@include text-decoration(none);
+		}
+
+		&:hover,
+		&:focus {
+			@include color($base-link-color-hover);
+
+			* {
+				@include color($base-link-color-hover);
+			}
+		}
+
+		&:visited {
+			@include color($base-link-color-visited);
+		}
+
+		&:active {
+			@include color($base-link-color-active);
+		}
+	}
+
+	/*----------------------------------------
+		Table
+	----------------------------------------*/
+
+	table {
+		@include font-size(inherit);
+		@include font(font-size($base-font-size));
+		@include width(auto);
+		@include border-spacing(0);
+		@include font-size(1.4rem);
+
+		thead {
+			tr {
+				@include background(transparent);
+			}
+
+			th {
+				@include color($table-font-color);
+				@include padding(8px 15px);
+				@include background($table-th-top-color);
+				@include make-gradient($table-th-top-color, $table-th-bottom-color, vertical);
+				@include font-weight(bold);
+				@include border-left(1px solid $table-border-color);
+				@include border-top(1px solid $table-border-color);
+				@include border-bottom(1px solid $table-border-color);
+				@include line-height(120%);
+				@include text-align(center);
+				@include text-shadow(0 -1px 0 rgba($table-text-shadow-color, 0.9));
+				@include box-shadow(2px 2px 1px rgba($table-box-shadow-color1, 0.1), 0px 1px 1px rgba($table-box-shadow-color2, 0.3) inset);
+
+				&:first-child {
+					@include border-radius(5px 0 0 0);
+				}
+
+				&:last-child {
+					@include border-radius(0 5px 0 0);
+					@include border-right(1px solid $table-border-color);
+					@include box-shadow(2px 2px 1px rgba($table-box-shadow-color1, 0.1), 0px 1px 1px rgba($table-box-shadow-color2, 0.3) inset);
+				}
+			}
+		}
+
+		tbody {
+			tr {
+				@include background(transparent);
+
+				&:nth-child(2n + 1) {
+					@include background($table-tr-color-secondary);
+				}
+
+				&:last-child {
+					td {
+						@include box-shadow(2px 2px 1px rgba($table-box-shadow-color1, 0.1), 0px 1px 1px rgba($table-box-shadow-color2, 0.3) inset);
+
+						&:first-child {
+							@include border-radius(0 0 0 5px);
+						}
+
+						&:last-child {
+							@include border-radius(0 0 5px 0);
+						}
+					}
+				}
+
+				&:hover {
+					@include background($table-hover-color);
+					@include cursor(pointer);
+				}
+
+				td {
+					@include padding(8px 15px);
+					@include border-bottom(1px solid $table-border-color);
+					@include border-left(1px solid $table-border-color);
+					@include background($table-tr-color);
+					@include text-align(center);
+
+					&:last-child {
+						@include border-right(1px solid $table-border-color);
+						@include box-shadow(2px 2px 1px rgba($table-box-shadow-color1, 0.1), 0px 1px 1px rgba($table-box-shadow-color2, 0.3) inset);
+					}
+				}
+			}
+		}
+	}
+
+	/*----------------------------------------
+		Form
+	----------------------------------------*/
+
+	form {
+		@include font-family('Arial, Helvetica, sans-serif');
+	}
+
+	fieldset,
+	legend {
+		@include border(none);
+	}
+
+	legend {
+		@include display(none);
+	}
+
+	input,
+	textarea {
+		@include padding(0.2em);
+		@include border(1px solid #d1d1d1);
+		@include background-color(#fff);
+		@include font-family('Arial, Helvetica, sans-serif');
+	}
+
+	input {
+		@include line-height(1.2);
+	}
+
+	input:hover,
+	textarea:hover {
+		@include border(1px solid #a5d2da);
+	}
+
+	input:focus,
+	textarea:focus {
+		@include border(1px solid #069);
+		@include background-color(#fff);
+	}
+
+	input.button {
+		@include padding(0);
+		@include border(none);
+		@include background-image(none);
+		@include vertical-align(top);
+	}
+
+	/*----------------------------------------
+		Others
+	----------------------------------------*/
+
+	.breadcrumb {
+		@include padding(0.5rem 0.8em);
+
+		li,
+		a {
+			@include display(inline-block);
+			@include overflow(hidden);
+
+			&::after {
+				@include content(">");
+				@include margin(0 0.5em);
+			}
+
+			&:last-child{
+				&::after {
+					@include content("");
+				}
+			}
+		}
+	}
+
+	.writing-vertical {
+		@include writing-mode(vertical-rl);
+
+		.lr {
+			@include writing-mode(horizontal-lr);
+		}
+	}
+
+	img {
+		@include border(none);
+		@include vertical-align(bottom);
+	}
+
+	hr {
+		@include border(none);
+		@include border-top(1px dotted #ccc);
+	}
+}

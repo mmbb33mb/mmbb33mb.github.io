@@ -1,0 +1,987 @@
+@charset "UTF-8";
+@import "import";
+
+
+/* ==========================================================================
+  変数定義
+========================================================================== */
+
+/*
+
+$innerWidth : 1260px;
+
+*/
+/* Config.scssに格納 */
+
+/* ==========================================================================
+   @keyframes
+========================================================================== */
+
+/********************** show_fade ************************/
+@keyframes fadeIn {
+    0% {opacity: 0}
+    100% {opacity: 1}
+}
+@-webkit-keyframes fadeIn {
+    0% {opacity: 0}
+    100% {opacity: 1}
+}
+
+
+/********************** ○○ ************************/
+
+/* normalize.css 2012-07-07T09:50 UTC - http://github.com/necolas/normalize.css */
+/* ==========================================================================
+   HTML5 display definitions
+   ========================================================================== */
+/**
+ * Correct `block` display not defined in IE 8/9.
+ */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
+	display : block;
+}
+
+/**
+ * Correct `inline-block` display not defined in IE 8/9.
+ */
+audio, canvas, video {
+	display : inline-block;
+}
+
+/**
+ * Prevent modern browsers from displaying `audio` without controls.
+ * Remove excess height in iOS 5 devices.
+ */
+audio:not([controls]) {
+	display : none;
+	height  : 0;
+}
+
+/**
+ * Address `[hidden]` styling not present in IE 8/9.
+ * Hide the `template` element in IE, Safari, and Firefox < 22.
+ */
+[hidden], template {
+	display : none;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+/**
+ * 1. Set default font family to sans-serif.
+ * 2. Prevent iOS text size adjust after orientation change, without disabling
+ *    user zoom.
+ */
+html {
+	-webkit-text-size-adjust : 100%;
+	/* 1 */
+	-ms-text-size-adjust     : 100%;
+	/* 2 */
+}
+
+/**
+ * Remove default margin.
+ */
+body {
+	margin : 0;
+}
+
+
+/* ==========================================================================
+   Links
+   ========================================================================== */
+/**
+ * Remove the gray background color from active links in IE 10.
+ */
+a {
+	background : transparent;
+}
+
+/**
+ * Address `outline` inconsistency between Chrome and other browsers.
+ */
+a:focus {
+	outline : thin dotted;
+}
+
+/**
+ * Improve readability when focused and also mouse hovered in all browsers.
+ */
+a:active, a:hover {
+	outline : 0;
+}
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+/**
+ * Address variable `h1` font-size and margin within `section` and `article`
+ * contexts in Firefox 4+, Safari 5, and Chrome.
+ */
+h1, h2, h3, h4, p {
+	font-weight : normal;
+	margin      : 0;
+}
+
+/**
+ * Address styling not present in IE 8/9, Safari 5, and Chrome.
+ */
+abbr[title] {
+	border-bottom : 1px dotted;
+}
+
+/**
+ * Address style set to `bolder` in Firefox 4+, Safari 5, and Chrome.
+ */
+b, strong, .strong {
+	font-weight : bold;
+}
+
+/**
+ * Address styling not present in Safari 5 and Chrome.
+ */
+dfn, em, .em {
+	font-style : italic;
+}
+
+/**
+ * Address differences between Firefox and other browsers.
+ */
+hr {
+	box-sizing : content-box;
+	height     : 0;
+}
+
+/*
+ * proper formatting (http://blog.fontdeck.com/post/9037028497/hyphens)
+*/
+p {
+	-webkit-hyphens : auto;
+	-ms-hyphens     : auto;
+	hyphens         : auto;
+
+	-epub-hyphens   : auto;
+}
+
+/*
+ * Addresses margins set differently in IE6/7.
+ */
+pre {
+	margin : 0;
+}
+
+/**
+ * Improve readability of pre-formatted text in all browsers.
+ */
+pre {
+	white-space : pre-wrap;
+}
+
+/**
+ * Set consistent quote types.
+ */
+q {
+	quotes : '\201C' '\201D' '\2018' '\2019';
+}
+
+/**
+ * Address inconsistent and variable font size in all browsers.
+ */
+q:before, q:after {
+	content : '';
+	content : none;
+}
+
+small, .small {
+	font-size : 75%;
+}
+
+/**
+ * Prevent `sub` and `sup` affecting `line-height` in all browsers.
+ */
+sub, sup {
+	font-size      : 75%;
+	line-height    : 0;
+	position       : relative;
+	vertical-align : baseline;
+}
+
+sup {
+	top : -.5em;
+}
+
+sub {
+	bottom : -.25em;
+}
+
+/* ==========================================================================
+  Lists
+========================================================================== */
+/*
+ * Addresses margins set differently in IE6/7.
+ */
+dl, menu, ol, ul {
+	margin : 0;
+}
+
+dd {
+	margin : 0;
+}
+
+/*
+ * Addresses paddings set differently in IE6/7.
+ */
+menu {
+	padding : 0 0 0 40px;
+}
+
+ol, ul {
+	padding         : 0;
+	list-style-type : none;
+}
+
+/*
+ * Corrects list images handled incorrectly in IE7.
+ */
+nav ul, nav ol {
+	list-style       : none;
+	list-style-image : none;
+}
+
+/* ==========================================================================
+  Embedded content
+========================================================================== */
+/**
+ * Remove border when inside `a` element in IE 8/9.
+ */
+img {
+	border : 0;
+}
+
+/**
+ * Correct overflow displayed oddly in IE 9.
+ */
+svg:not(:root) {
+	overflow : hidden;
+	width: 100%;
+}
+
+/* ==========================================================================
+   Figures
+   ========================================================================== */
+/**
+ * Address margin not present in IE 8/9 and Safari 5.
+ */
+figure {
+	margin : 0;
+}
+
+/* ==========================================================================
+   Forms
+   ========================================================================== */
+/**
+ * Define consistent border, margin, and padding.
+ */
+fieldset {
+	margin  : 0 2px;
+	padding : .35em .625em .75em;
+	border  : 1px solid #c0c0c0;
+}
+
+/**
+ * 1. Correct `color` not being inherited in IE 8/9.
+ * 2. Remove padding so people aren't caught out if they zero out fieldsets.
+ */
+legend {
+	/* 1 */
+	padding : 0;
+	border  : 0;
+	/* 2 */
+}
+
+/**
+ * 1. Correct font family not being inherited in all browsers.
+ * 2. Correct font size not being inherited in all browsers.
+ * 3. Address margins set differently in Firefox 4+, Safari 5, and Chrome.
+ */
+button, input, select, textarea {
+	font-family : inherit;
+	/* 1 */
+	font-size   : 100%;
+	/* 2 */
+	margin      : 0;
+	/* 3 */
+}
+
+/**
+ * Address Firefox 4+ setting `line-height` on `input` using `!important` in
+ * the UA stylesheet.
+ */
+button, input {
+	line-height : normal;
+}
+
+/**
+ * Address inconsistent `text-transform` inheritance for `button` and `select`.
+ * All other form control elements do not inherit `text-transform` values.
+ * Correct `button` style inheritance in Chrome, Safari 5+, and IE 8+.
+ * Correct `select` style inheritance in Firefox 4+ and Opera.
+ */
+button, select {
+	text-transform : none;
+}
+
+/**
+ * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+ *    and `video` controls.
+ * 2. Correct inability to style clickable `input` types in iOS.
+ * 3. Improve usability and consistency of cursor style between image-type
+ *    `input` and others.
+ */
+button, html input[type='button'], input[type='reset'], input[type='submit'] {
+	/* 2 */
+	cursor             : pointer;
+
+	-webkit-appearance : button;
+	/* 3 */
+}
+
+/**
+ * Re-set default cursor for disabled elements.
+ */
+button[disabled], html input[disabled] {
+	cursor : default;
+}
+
+/**
+ * 1. Address box sizing set to `content-box` in IE 8/9/10.
+ * 2. Remove excess padding in IE 8/9/10.
+ */
+input[type='checkbox'], input[type='radio'] {
+	box-sizing : border-box;
+	/* 1 */
+	padding    : 0;
+	/* 2 */
+}
+
+/**
+ * 1. Address `appearance` set to `searchfield` in Safari 5 and Chrome.
+ * 2. Address `box-sizing` set to `border-box` in Safari 5 and Chrome
+ *    (include `-moz` to future-proof).
+ */
+input[type='search'] {
+	/* 1 */
+	/* 2 */
+	box-sizing         : content-box;
+
+	-webkit-appearance : textfield;
+}
+
+
+/**
+ * Remove inner padding and search cancel button in Safari 5 and Chrome
+ * on OS X.
+ */
+input[type='search']::-webkit-search-cancel-button, input[type='search']::-webkit-search-decoration {
+	-webkit-appearance : none;
+}
+
+/**
+ * Remove inner padding and border in Firefox 4+.
+ */
+button::-moz-focus-inner, input::-moz-focus-inner {
+	padding : 0;
+	border  : 0;
+}
+
+/**
+ * 1. Remove default vertical scrollbar in IE 8/9.
+ * 2. Improve readability and alignment in all browsers.
+ */
+textarea {
+	overflow       : auto;
+	/* 1 */
+	vertical-align : top;
+	/* 2 */
+}
+
+/* ==========================================================================
+   Tables
+   ========================================================================== */
+/**
+ * Remove most spacing between table cells.
+ */
+table {
+	border-spacing  : 0;
+	border-collapse : collapse;
+}
+
+* {
+	box-sizing : border-box;
+}
+
+.image-replacement, .ir {
+	overflow    : hidden;
+	white-space : nowrap;
+	text-indent : 100%;
+}
+
+.clearfix, .cf {
+	zoom : 1;
+}
+
+.clearfix:before, .clearfix:after, .cf:before, .cf:after {
+	display : table;
+	content : '';
+}
+
+.clearfix:after, .cf:after {
+	clear : both;
+}
+
+/* ==========================================================================
+   共通設定
+========================================================================== */
+
+html {
+	font-size                : 62.5%; /* 10px */
+	overflow-x               : hidden;
+	-webkit-text-size-adjust : 100%;
+	-ms-text-size-adjust     : 100%;
+	@media #{$sp_down} {
+	    /* 12px */
+	    font-size: 75%;
+	}
+	@media #{$small_down} {
+	    /* 10px */
+	    font-size: 62.5%;
+	}
+	@media #{$large-up} {
+	     /* 10px */
+	    font-size: 62.5%;
+	}
+}
+
+body {
+	line-height: 2.35rem;
+	color: #6b6b6b;
+	letter-spacing: 0.095rem;
+}
+
+img {
+	max-width      : 100%;
+	height         : auto;
+	vertical-align : bottom;
+}
+
+a {
+	text-decoration : none;
+	color           : #00001F;
+	-webkit-transition: all .5s ease;
+	transition: all .5s ease;
+	&:hover {
+		color: #8BC34A;
+	}
+	img {
+		&:hover {
+			text-decoration : none;
+			opacity         : .7;
+		}
+	}
+}
+
+button {
+	text-decoration : none;
+	color           : #00001F;
+	-webkit-transition: all .5s ease;
+	transition: all .5s ease;
+}
+
+h1, h2, h3, h4 {
+	font-size   : 1em;
+	font-weight : normal;
+	margin      : 0;
+	font-family : 'Montserrat','Varela Round','Open Sans', 'Noto Sans Japanese', Meiryo, メイリオ, Osaka, 'MS PGothic', arial, helvetica, sans-serif;
+}
+
+p, a, li, span {
+	font-family: 'Varela Round', 'Open Sans', sans-serif;
+}
+
+/* ==========================================================================
+  page_top
+========================================================================== */
+
+.page_top {
+    width: 60px;
+	height: 60px;
+	padding: 14px 12px;
+	color: #1c2855;
+	font-size: 44px;
+	position: absolute;
+	left: 0;
+	top: 13%;
+	text-align: center;
+	right: 0;
+	margin: 0 auto;
+	-webkit-transition: none;
+	transition: none;
+	&:hover {
+		color: #1c2855;
+	}
+	&.blog {
+		padding: 7px 12px;
+		color: #FFF;
+		position: fixed;
+		top: initial;
+		left: initial;
+		bottom: 3%;
+		right: 37px;
+		z-index: 9999;
+		background-color: #1c2855;
+		border-radius: 30px;
+		&:hover {
+			color: #FFF;
+		}
+	}
+}
+
+/* ==========================================================================
+  Wrapper
+========================================================================== */
+
+#barba-wrapper {
+	background-color: #1c2855;
+	position: relative;
+}
+
+.baseContainer {
+    width: 100%;
+    overflow: hidden;
+    padding : 0;
+	margin : 0;
+	background-color: #fff7de;
+	position: relative;
+}
+
+.baseContainerInner {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.mainContainer {
+	float: right;
+	width: calc(100% - 314px);
+	@media #{$small-down} {
+		float: none;
+		width: 100%;
+		padding: 0 1rem;
+	}
+	.mainContainerInner {
+		width: 100%;
+		overflow: hidden;
+	    position: relative;
+	    @media #{$small-down} {
+	    	z-index: 0;
+		}
+	    .-section {
+	    	width: 100%;
+			padding: 6.66% 3.66% 4.66% 5.66%;
+			@media #{$small-down} {
+				padding: 3.2rem 0;
+				margin-top: 3.2rem;
+				border-bottom: 1px solid #8BC34A;
+			}
+		}
+	}
+	h1, h2, h3 {
+		color: #8BC34A;
+		font-size: 2rem;
+	}
+	p, a, li, span {
+		font-size: 1.466rem;
+	}
+	p {
+		margin-top: 3.5rem;
+	}
+}
+
+.l_wrap {
+    max-width: 1060px;
+    padding: 0 10px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.box {
+	@extend .clearfix;
+	.left {
+		float : left;
+	}
+	.right {
+		float : right;
+	}
+}
+
+/* ==========================================================================
+  animation-hover
+========================================================================== */
+
+.border-hover {
+	span {
+	    display: inline-block;
+	    position: absolute;
+	    top: 40px;
+	    right: 0;
+	    margin: 0 auto;
+	    width: 0%;
+	    height: 3px;
+	    margin-top: -10px;
+	    transition: all .35s ease;
+	    opacity: .5;
+	}
+    &:hover {
+		span {
+			background: #2e57ec;
+	    	border-radius: 6px;
+	    	width: 60%;
+	    	height: 3px;
+	    	opacity: 1;
+	    }
+	}
+}
+
+/* ==========================================================================
+  animate
+========================================================================== */
+
+.show_fade {
+    animation: fadeIn 5s ease 0s 1 normal;
+    -webkit-animation: fadeIn 5s ease 0s 1 normal;
+}
+
+.pulse {
+    animation: pulse 2s ease 0s 1 normal;
+    -webkit-animation: pulse 2s ease 0s 1 normal;
+}
+
+.bounceInUp {
+	animation: bounceInUp 2s ease 0s 1 normal;
+    -webkit-animation: bounceInUp 2s ease 0s 1 normal;
+}
+/* ==========================================================================
+  Pallax
+========================================================================== */
+@include clearfix();
+
+$duration : 1500ms;
+$small_down : 'screen and (max-width: 959px)';
+
+.fade {
+
+	&.-right,
+	&.-bottom,
+	&.-left {
+		opacity    : 0.1;
+		transition : all $duration;
+	}
+	&.-right {
+		transform : translate(80px, 0);
+
+		@media #{$small_down} {
+			transform : translate(1vw, 0);
+		}
+	}
+	&.-bottom {
+		transform : translate(0, 120px);
+
+		@media #{$small_down} {
+			transform : translate(0, 1vw);
+		}
+	}
+	&.-left {
+		transform : translate(-80px, 0);
+
+		@media #{$small_down} {
+			transform : translate(-1vw, 0);
+		}
+	}
+	&.fadein {
+		opacity   : 1;
+		transform : translate(0, 0);
+	}
+}
+
+/* ==========================================================================
+  btn
+========================================================================== */
+
+.btn {
+   		display: inline-block;
+   		margin-top: 4.066rem;
+		a {
+			color: #8BC34A;
+			font-size: 1.65rem;
+			display: block;
+			padding: 10px 30px;
+			background-color: #fff7de;
+			border: 1px solid #8BC34A;
+			border-radius: 3px;
+			width: 240px;
+			margin: 0 1.966rem 0 0;
+			i {
+				margin-right: 5px;
+			}
+			&:hover {
+				background-color: #8BC34A;
+				border: 1px solid #fff7de;
+				color: #fff7de;
+			}
+		}
+   	}
+
+/* ==========================================================================
+  打ち消し
+========================================================================== */
+a {
+	outline : none;
+}
+
+a:focus {
+	outline : none;
+}
+
+.none {
+	display: none;
+	visibility: hidden;
+	@media #{$small-down} {
+        display: none !important;
+    }
+}
+
+.pc {
+	display: block;
+    @media #{$small-down} {
+        display: none !important;
+    }
+}
+
+.sp {
+    display: none;
+    @media #{$small-down} {
+        display: block;
+    }
+}
+
+.scroll-fix {
+	position: fixed;
+	z-index: -1;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+/* ==========================================================================
+   模様
+========================================================================== */
+
+.dotted_wh {
+	background-image: url(../img/common/dotted2.png);
+	background-position: center;
+	background-size: 4px;
+	background-repeat: repeat;
+}
+
+.dotted_bl {
+	background-image: url(../img/common/dotted.png);
+	background-position: center;
+	background-size: 12px;
+	background-repeat: repeat;
+}
+
+/* ==========================================================================
+   ヘッダー
+========================================================================== */
+
+#header {
+	width: 314px;
+	background-color: #8BC34A;
+	height: 100%;
+	height: 100vw;
+	position: fixed;
+	padding: 1.66% 0 12%;
+	color: #fff7de;
+	@media #{$small-down} {
+		height: auto;
+		width: 100%;
+	    z-index: 99;
+		height: calc(100% - 0px);
+		height: 100vh;
+		overflow-y: scroll;
+		overflow-x: hidden;
+		position: absolute;
+		left: 0;
+		top: 0;
+		overflow-scrolling: touch;
+	}
+	a {
+		color: #fff7de;
+	}
+	.headerContainer {
+		position: relative;
+		.mainSection {
+			.image_box  {
+				.profile_img {
+					padding-top: 192px;
+					background-image: url('../images/top/profile.png');
+					background-repeat: no-repeat;
+					background-size: contain;
+					background-position: center center;
+				}
+			}
+			.txt_box {
+				margin-top: 24px;
+				text-align: center;
+			    h2 {
+					font-size: 2.6rem;
+				}
+				.title {
+					font-size: 1.466rem;
+					margin-top: 10.66px;
+				}
+			}
+		}
+		.aboutSection {
+		    margin-top: 25px;
+			h2 {
+				font-size: 1.8rem;
+				padding: 3.6% 0 3.6% 11.66%;
+				background-color: #7BB33A;
+				&:before {
+					padding: 10px;
+					background-repeat: no-repeat;
+					background-position: center center;
+					margin-right: 12px;
+				}
+			}
+			p, a, li {
+				font-size: 1.266rem;
+				font-family: 'Varela Round','Noto Sans Japanese', arial, helvetica, sans-serif;
+			}
+			.txt_box {
+
+			    padding: 3% 1.66% 3% 12%;
+			}
+			.contact {
+				h2 {
+					&:before {
+						content: "";
+						background-image: url("../images/top/icon_01.svg");
+					}
+				}
+			}
+			.hobbies {
+				h2 {
+					&:before {
+						content: "";
+						background-image: url("../images/top/icon_02.svg");
+					}
+				}
+			}
+		}
+		.buttonSection {
+			@media #{$small-down} {
+				visibility: hidden;
+			}
+			ul.button {
+				width: 100%;
+				margin: 0 auto;
+				max-width: 230px;
+				font-size: 0;
+				letter-spacing: 0;
+				li {
+					display: inline-block;
+					width: 25%;
+					padding: 0 8px;
+					vertical-align: top;
+					&:nth-child(1) {
+						a {
+							background-color: #ffba5a;
+						}
+					}
+					&:nth-child(2) {
+						a {
+							background-color: #ffa952;
+						}
+					}
+					&:nth-child(3) {
+						a {
+							background-color: #ef5a5a;
+						}
+					}
+					&:nth-child(4) {
+						a {
+							background-color: #a6cb12;
+						}
+					}
+					a {
+						font-size: 0.766rem;
+						padding: 16px 0px;
+						border-radius: 50%;
+						cursor: pointer;
+						width: 40px;
+						height: 38px;
+						display: block;
+						word-break: break-all;
+						line-height: 0.8rem;
+						text-align: center;
+						letter-spacing: 0;
+					}
+				}
+			}
+		}
+	}
+}
+
+/* ==========================================================================
+   グローバルナビゲーション
+========================================================================== */
+
+.Nav_wrap {
+	.gnav {
+		ul {
+		}
+	}
+
+	.top_bar {
+	    margin-top: 40px;
+	    text-align: right;
+	    font-size: 15px;
+
+	    h1 {
+	    	position: relative;
+			text-transform: uppercase;
+			padding: 0;
+			color: #18355B;
+			font-size: 22px;
+			transition: all 300ms ease;
+			&:hover {
+				color: #FFF;
+			}
+	    }
+	}
+}
+
+/* ==========================================================================
+   フッター
+========================================================================== */
+
+footer {
+    padding: 1.6rem 0;
+	   .copyRight {
+	    text-align: center;
+	}
+}
+

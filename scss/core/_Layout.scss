@@ -1,0 +1,734 @@
+
+// =================================================
+// 渡されたベースの横幅からカラム数分の固定レイアウト設定値を返します。
+// @param $width			: ベースの横幅
+// @param $colum			: カラム数
+// -------------------------------------------------
+@mixin getFixedLayout($width: $main-width, $colum: $fixed-colum-number){
+	/* =============================================== */
+	/** Fixed-Layout */
+	/* =============================================== */
+
+	// ------------------- common --------------------------
+	$tmp: "";
+	@for $i from 1 through $colum {
+		@if $tmp != "" {
+			$tmp: $tmp + ", .col-fix-#{$width}-xs-#{$i}, .col-fix-#{$width}-sm-#{$i}, .col-fix-#{$width}-md-#{$i}, .col-fix-#{$width}-lg-#{$i}";
+		}
+		@else{
+			$tmp: ".col-fix-#{$width}-xs-#{$i}, .col-fix-#{$width}-sm-#{$i}, .col-fix-#{$width}-md-#{$i}, .col-fix-#{$width}-lg-#{$i}";
+		}
+	}
+	#{$tmp} {
+		@include position(relative);
+		@include min-height(1px);
+	}
+
+	// --------------------- xs ----------------------------
+	$tmp: "";
+	@for $i from 1 through $colum {
+		@if $tmp != "" {
+			$tmp: $tmp + ", .col-fix-#{$width}-xs-#{$i}";
+		}
+		@else{
+			$tmp: ".col-fix-#{$width}-xs-#{$i}";
+		}
+	}
+	#{$tmp} {
+		@include float(left);
+	}
+
+	// width
+	@for $i from 1 through $colum {
+		$num: $colum - ($i - 1);
+		.col-fix-#{$width}-xs-#{$num} {
+			@include width(#{$width / $colum * $num});
+		}
+	}
+
+	// pull
+	@for $i from 0 through $colum {
+		@if $i == $colum {
+			.col-fix-#{$width}-xs-pull-0 {
+				@include right(auto);
+			}
+		}
+		@else {
+			$num : $colum - $i;
+			.col-fix-#{$width}-xs-pull-#{$num} {
+				@include right(#{$width / $colum * $num});
+			}
+		}
+	}
+
+	// push
+	@for $i from 0 through $colum {
+		@if $i == $colum {
+			.col-fix-#{$width}-xs-push-0 {
+				@include left(auto);
+			}
+		}
+		@else {
+			$num : $colum - $i;
+			.col-fix-#{$width}-xs-push-#{$num} {
+				@include left(#{$width / $colum * $num});
+			}
+		}
+	}
+
+	// offset
+	@for $i from 0 through $colum {
+		@if $i == $colum {
+			.col-fix-#{$width}-xs-offset-0 {
+				@include margin-left(0);
+			}
+		}
+		@else {
+			$num : $colum - $i;
+			.col-fix-#{$width}-xs-offset-#{$num} {
+				@include margin-left(#{$width / $colum * $num});
+			}
+		}
+	}
+
+	// --------------------- sm ----------------------------
+	@media #{$small-up} {
+		$tmp : "";
+		@for $i from 1 through $colum {
+			@if $tmp != "" {
+				$tmp : $tmp + ", .col-#{$width}-sm-#{$i}";
+			} @else {
+				$tmp : ".col-#{$width}-sm-#{$i}";
+			}
+		}
+		#{$tmp} {
+			@include float(left);
+		}
+
+		// width
+		@for $i from 1 through $colum {
+			$num : $colum - ($i - 1);
+			.col-fix-#{$width}-sm-#{$num} {
+				@include width(#{$width / $colum * $num});
+			}
+		}
+
+		// pull
+		@for $i from 0 through $colum {
+			@if $i == $colum {
+				.col-fix-#{$width}-sm-pull-0 {
+					@include right(auto);
+				}
+			} @else {
+				$num : $colum - $i;
+				.col-fix-#{$width}-sm-pull-#{$num} {
+					@include right(#{$width / $colum * $num});
+				}
+			}
+		}
+
+		// push
+		@for $i from 0 through $colum {
+			@if $i == $colum {
+				.col-fix-#{$width}-sm-push-0 {
+					@include left(auto);
+				}
+			} @else {
+				$num : $colum - $i;
+				.col-fix-#{$width}-sm-push-#{$num} {
+					@include left(#{$width / $colum * $num});
+				}
+			}
+		}
+
+		// offset
+		@for $i from 0 through $colum {
+			@if $i == $colum {
+				.col-fix-#{$width}-sm-offset-0 {
+					@include margin-left(0);
+				}
+			} @else {
+				$num : $colum - $i;
+				.col-fix-#{$width}-sm-offset-#{$num} {
+					@include margin-left(#{$width / $colum * $num});
+				}
+			}
+		}
+	}
+
+	// --------------------- md ----------------------------
+	@media #{$medium-up} {
+		$tmp: "";
+		@for $i from 1 through $colum {
+			@if $tmp != "" {
+				$tmp: $tmp + ", .col-#{$width}-md-#{$i}";
+			}
+			@else{
+				$tmp: ".col-#{$width}-md-#{$i}";
+			}
+		}
+		#{$tmp} {
+			@include float(left);
+		}
+
+		// width
+		@for $i from 1 through $colum {
+			$num: $colum - ($i - 1);
+			.col-fix-#{$width}-md-#{$num} {
+				@include width(#{$width / $colum * $num});
+			}
+		}
+
+		// pull
+		@for $i from 0 through $colum {
+			@if $i == $colum {
+				.col-fix-#{$width}-md-pull-0 {
+					@include right(auto);
+				}
+			}
+			@else {
+				$num : $colum - $i;
+				.col-fix-#{$width}-md-pull-#{$num} {
+					@include right(#{$width / $colum * $num});
+				}
+			}
+		}
+
+		// push
+		@for $i from 0 through $colum {
+			@if $i == $colum {
+				.col-fix-#{$width}-md-push-0 {
+					@include left(auto);
+				}
+			}
+			@else {
+				$num : $colum - $i;
+				.col-fix-#{$width}-md-push-#{$num} {
+					@include left(#{$width / $colum * $num});
+				}
+			}
+		}
+
+		// offset
+		@for $i from 0 through $colum {
+			@if $i == $colum {
+				.col-fix-#{$width}-md-offset-0 {
+					@include margin-left(0);
+				}
+			}
+			@else {
+				$num : $colum - $i;
+				.col-fix-#{$width}-md-offset-#{$num} {
+					@include margin-left(#{$width / $colum * $num});
+				}
+			}
+		}
+	}
+
+	// --------------------- lg ----------------------------
+	@media #{$large-up} {
+		$tmp : "";
+		@for $i from 1 through $colum {
+			@if $tmp != "" {
+				$tmp : $tmp + ", .col-#{$width}-lg-#{$i}";
+			} @else {
+				$tmp : ".col-#{$width}-lg-#{$i}";
+			}
+		}
+		#{$tmp} {
+			@include float(left);
+		}
+
+		// width
+		@for $i from 1 through $colum {
+			$num : $colum - ($i - 1);
+			.col-fix-#{$width}-lg-#{$num} {
+				@include width(#{$width / $colum * $num});
+			}
+		}
+
+		// pull
+		@for $i from 0 through $colum {
+			@if $i == $colum {
+				.col-fix-#{$width}-lg-pull-0 {
+					@include right(auto);
+				}
+			} @else {
+				$num : $colum - $i;
+				.col-fix-#{$width}-lg-pull-#{$num} {
+					@include right(#{$width / $colum * $num});
+				}
+			}
+		}
+
+		// push
+		@for $i from 0 through $colum {
+			@if $i == $colum {
+				.col-fix-#{$width}-lg-push-0 {
+					@include left(auto);
+				}
+			} @else {
+				$num : $colum - $i;
+				.col-fix-#{$width}-lg-push-#{$num} {
+					@include left(#{$width / $colum * $num});
+				}
+			}
+		}
+
+		// offset
+		@for $i from 0 through $colum {
+			@if $i == $colum {
+				.col-fix-#{$width}-lg-offset-0 {
+					@include margin-left(0);
+				}
+			} @else {
+				$num : $colum - $i;
+				.col-fix-#{$width}-lg-offset-#{$num} {
+					@include margin-left(#{$width / $colum * $num});
+				}
+			}
+		}
+	}
+
+	@media print {
+		.visible-#{$width}-print {
+			@include display(block !important);
+		}
+
+		table.visible-#{$width}-print {
+			@include display(table !important);
+		}
+
+		tr.visible-#{$width}-print {
+			@include display(table-row !important);
+		}
+
+		th.visible-#{$width}-print,
+		td.visible-#{$width}-print {
+			@include display(table-cell !important);
+		}
+	}
+
+	@media print {
+		.hidden-#{$width}-print {
+			@include display(none !important);
+		}
+	}
+}
+
+@if $use-liquid-layout {
+	/* =============================================== */
+	/** Liquid-Layout */
+	/* =============================================== */
+
+	// ------------------- common --------------------------
+	$tmp: "";
+	@for $i from 1 through $liquid-colum-number {
+		@if $tmp != "" {
+			$tmp: $tmp + ", .col-xs-#{$i}, .col-sm-#{$i}, .col-md-#{$i}, .col-lg-#{$i}";
+		}
+		@else{
+			$tmp: ".col-xs-#{$i}, .col-sm-#{$i}, .col-md-#{$i}, .col-lg-#{$i}";
+		}
+	}
+	#{$tmp} {
+		@include position(relative);
+		@include min-height(1px);
+	}
+
+	// --------------------- xs ----------------------------
+	$tmp: "";
+	@for $i from 1 through $liquid-colum-number {
+		@if $tmp != "" {
+			$tmp: $tmp + ", .col-xs-#{$i}";
+		}
+		@else{
+			$tmp: ".col-xs-#{$i}";
+		}
+	}
+	#{$tmp} {
+		@include float(left);
+	}
+
+	// width
+	@for $i from 1 through $liquid-colum-number {
+		$num : $liquid-colum-number - ($i - 1);
+		.col-xs-#{$num} {
+			@include width(percentage(1 / $liquid-colum-number * $num));
+		}
+	}
+
+	// pull
+	@for $i from 0 through $liquid-colum-number {
+		@if $i == $liquid-colum-number {
+			.col-xs-pull-0 {
+				@include right(auto);
+			}
+		} @else {
+			$num : $liquid-colum-number - $i;
+			.col-xs-pull-#{$num} {
+				@include right(percentage(1 / $liquid-colum-number * $num));
+			}
+		}
+	}
+
+	// push
+	@for $i from 0 through $liquid-colum-number {
+		@if $i == $liquid-colum-number {
+			.col-xs-push-0 {
+				@include left(auto);
+			}
+		} @else {
+			$num : $liquid-colum-number - $i;
+			.col-xs-push-#{$num} {
+				@include left(percentage(1 / $liquid-colum-number * $num));
+			}
+		}
+	}
+
+	// offset
+	@for $i from 0 through $liquid-colum-number {
+		@if $i == $liquid-colum-number {
+			.col-xs-offset-0 {
+				@include margin-left(0);
+			}
+		} @else {
+			$num : $liquid-colum-number - $i;
+			.col-xs-offset-#{$num} {
+				@include margin-left(percentage(1 / $liquid-colum-number * $num));
+			}
+		}
+	}
+
+	// --------------------- sm ----------------------------
+	@media #{$small-up} {
+		$tmp: "";
+		@for $i from 1 through $liquid-colum-number {
+			@if $tmp != "" {
+				$tmp: $tmp + ", .col-sm-#{$i}";
+			}
+			@else{
+				$tmp: ".col-sm-#{$i}";
+			}
+		}
+		#{$tmp} {
+			@include float(left);
+		}
+
+		// width
+		@for $i from 1 through $liquid-colum-number {
+			$num : $liquid-colum-number - ($i - 1);
+			.col-sm-#{$num} {
+				@include width(percentage(1 / $liquid-colum-number * $num));
+			}
+		}
+
+		// pull
+		@for $i from 0 through $liquid-colum-number {
+			@if $i == $liquid-colum-number {
+				.col-sm-pull-0 {
+					@include right(auto);
+				}
+			} @else {
+				$num : $liquid-colum-number - $i;
+				.col-sm-pull-#{$num} {
+					@include right(percentage(1 / $liquid-colum-number * $num));
+				}
+			}
+		}
+
+		// push
+		@for $i from 0 through $liquid-colum-number {
+			@if $i == $liquid-colum-number {
+				.col-sm-push-0 {
+					@include left(auto);
+				}
+			} @else {
+				$num : $liquid-colum-number - $i;
+				.col-sm-push-#{$num} {
+					@include left(percentage(1 / $liquid-colum-number * $num));
+				}
+			}
+		}
+
+		// offset
+		@for $i from 0 through $liquid-colum-number {
+			@if $i == $liquid-colum-number {
+				.col-sm-offset-0 {
+					@include margin-left(0);
+				}
+			} @else {
+				$num : $liquid-colum-number - $i;
+				.col-sm-offset-#{$num} {
+					@include margin-left(percentage(1 / $liquid-colum-number * $num));
+				}
+			}
+		}
+	}
+
+	// --------------------- md ----------------------------
+	@media #{$medium-up} {
+		$tmp: "";
+		@for $i from 1 through $liquid-colum-number {
+			@if $tmp != "" {
+				$tmp: $tmp + ", .col-md-#{$i}";
+			}
+			@else{
+				$tmp: ".col-md-#{$i}";
+			}
+		}
+		#{$tmp} {
+			@include float(left);
+		}
+
+		// width
+		@for $i from 1 through $liquid-colum-number {
+			$num : $liquid-colum-number - ($i - 1);
+			.col-md-#{$num} {
+				@include width(percentage(1 / $liquid-colum-number * $num));
+			}
+		}
+
+		// pull
+		@for $i from 0 through $liquid-colum-number {
+			@if $i == $liquid-colum-number {
+				.col-md-pull-0 {
+					@include right(auto);
+				}
+			} @else {
+				$num : $liquid-colum-number - $i;
+				.col-md-pull-#{$num} {
+					@include right(percentage(1 / $liquid-colum-number * $num));
+				}
+			}
+		}
+
+		// push
+		@for $i from 0 through $liquid-colum-number {
+			@if $i == $liquid-colum-number {
+				.col-md-push-0 {
+					@include left(auto);
+				}
+			} @else {
+				$num : $liquid-colum-number - $i;
+				.col-md-push-#{$num} {
+					@include left(percentage(1 / $liquid-colum-number * $num));
+				}
+			}
+		}
+
+		// offset
+		@for $i from 0 through $liquid-colum-number {
+			@if $i == $liquid-colum-number {
+				.col-md-offset-0 {
+					@include margin-left(0);
+				}
+			} @else {
+				$num : $liquid-colum-number - $i;
+				.col-md-offset-#{$num} {
+					@include margin-left(percentage(1 / $liquid-colum-number * $num));
+				}
+			}
+		}
+	}
+
+	// --------------------- lg ----------------------------
+	@media #{$large-up} {
+		$tmp: "";
+		@for $i from 1 through $liquid-colum-number {
+			@if $tmp != "" {
+				$tmp: $tmp + ", .col-lg-#{$i}";
+			}
+			@else{
+				$tmp: ".col-lg-#{$i}";
+			}
+		}
+		#{$tmp} {
+			@include float(left);
+		}
+
+		// width
+		@for $i from 1 through $liquid-colum-number {
+			$num : $liquid-colum-number - ($i - 1);
+			.col-lg-#{$num} {
+				@include width(percentage(1 / $liquid-colum-number * $num));
+			}
+		}
+
+		// pull
+		@for $i from 0 through $liquid-colum-number {
+			@if $i == $liquid-colum-number {
+				.col-lg-pull-0 {
+					@include right(auto);
+				}
+			} @else {
+				$num : $liquid-colum-number - $i;
+				.col-lg-pull-#{$num} {
+					@include right(percentage(1 / $liquid-colum-number * $num));
+				}
+			}
+		}
+
+		// push
+		@for $i from 0 through $liquid-colum-number {
+			@if $i == $liquid-colum-number {
+				.col-lg-push-0 {
+					@include left(auto);
+				}
+			} @else {
+				$num : $liquid-colum-number - $i;
+				.col-lg-push-#{$num} {
+					@include left(percentage(1 / $liquid-colum-number * $num));
+				}
+			}
+		}
+
+		// offset
+		@for $i from 0 through $liquid-colum-number {
+			@if $i == $liquid-colum-number {
+				.col-lg-offset-0 {
+					@include margin-left(0);
+				}
+			} @else {
+				$num : $liquid-colum-number - $i;
+				.col-lg-offset-#{$num} {
+					@include margin-left(percentage(1 / $liquid-colum-number * $num));
+				}
+			}
+		}
+	}
+}
+
+@if $use-fixed-layout {
+	@include getFixedLayout($main-width, $fixed-colum-number);
+}
+
+@if $use-liquid-layout or $use-fixed-layout {
+
+	/*----------------------------------------
+	layout common
+	----------------------------------------*/
+	@include clearfix();
+
+	.row {
+		@extend .clearfix;
+	}
+
+	.center {
+		@include text-align(center);
+	}
+
+
+	// ------------------ visibility -----------------------
+	.visible-xs,
+	.visible-md,
+	.visible-md,
+	.visible-lg {
+		@include display(none !important);
+	}
+
+	@media #{$small-down} {
+		.visible-xs {
+			@include display(block !important);
+		}
+		table.visible-xs {
+			@include display(table !important);
+		}
+		tr.visible-xs {
+			@include display(table-row !important);
+		}
+		th.visible-xs,
+		td.visible-xs {
+			@include display(table-cell !important);
+		}
+	}
+
+	@media #{$small-only} {
+		.visible-sm {
+			@include display(block !important);
+		}
+		table.visible-sm {
+			@include display(table !important);
+		}
+		tr.visible-sm {
+			@include display(table-row !important);
+		}
+		th.visible-sm,
+		td.visible-sm {
+			@include display(table-cell !important);
+		}
+	}
+	@media #{$medium-only} {
+		.visible-md {
+			@include display(block !important);
+		}
+		table.visible-md {
+			@include display(table !important);
+		}
+		tr.visible-md {
+			@include display(table-row !important);
+		}
+		th.visible-md,
+		td.visible-md {
+			@include display(table-cell !important);
+		}
+	}
+	@media #{$large-up} {
+		.visible-lg {
+			@include display(block !important);
+		}
+		table.visible-lg {
+			@include display(table !important);
+		}
+		tr.visible-lg {
+			@include display(table-row !important);
+		}
+		th.visible-lg,
+		td.visible-lg {
+			@include display(table-cell !important);
+		}
+	}
+	@media #{$small-down} {
+		.hidden-xs {
+			@include display(none !important);
+		}
+	}
+	@media #{$small-only} {
+		.hidden-sm {
+			@include display(none !important);
+		}
+	}
+	@media #{$medium-only} {
+		.hidden-md {
+			@include display(none !important);
+		}
+	}
+	@media #{$large-up} {
+		.hidden-lg {
+			@include display(none !important);
+		}
+	}
+	.visible-print {
+		@include display(none !important);
+	}
+	@media print {
+		.visible-print {
+			@include display(block !important);
+		}
+		table.visible-print {
+			@include display(table !important);
+		}
+		tr.visible-print {
+			@include display(table-row !important);
+		}
+		th.visible-print,
+		td.visible-print {
+			@include display(table-cell !important);
+		}
+	}
+	@media print {
+		.hidden-col-print {
+			@include display(none !important);
+		}
+	}
+}

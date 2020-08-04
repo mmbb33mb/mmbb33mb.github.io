@@ -1,0 +1,23 @@
+@if $use-fontawesome {
+	// List Icons
+	// -------------------------
+
+	.#{$fa-css-prefix}-ul {
+		@include padding-left(0);
+		@include margin-left($fa-li-width);
+		@include list-style-type(none);
+
+		> li { @include position(relative); }
+	}
+	.#{$fa-css-prefix}-li {
+		@include position(absolute);
+		@include left(-$fa-li-width);
+		@include width($fa-li-width);
+		@include top((2em / 14));
+		@include text-align(center);
+
+		&.#{$fa-css-prefix}-lg {
+			@include left(-$fa-li-width + (4em / 14));
+		}
+	}
+}

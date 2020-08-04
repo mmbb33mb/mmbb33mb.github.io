@@ -1,0 +1,15 @@
+@if $use-fontawesome {
+	// Base Class Definition
+	// -------------------------
+
+	.#{$fa-css-prefix} {
+		@include display(inline-block);
+		@include font-family(FontAwesome); // shortening font declaration
+		@include font-style(normal);
+		@include font-weight(normal);
+		@include font-size(font-size($fa-font-size-base / $fa-line-height-base));
+		@include font-size(inherit); // can't have font-size inherit on line above, so need to override
+		@include text-rendering(auto); // optimizelegibility throws things off #1094
+		@include font-smoothing(antialiased);
+	}
+}

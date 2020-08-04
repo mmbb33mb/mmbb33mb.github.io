@@ -1,0 +1,8 @@
+@if $use-fontawesome {
+	// Fixed Width Icons
+	// -------------------------
+	.#{$fa-css-prefix}-fw {
+		@include width((18em / 14));
+		@include text-align(center);
+	}
+}

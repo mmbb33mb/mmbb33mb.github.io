@@ -1,0 +1,176 @@
+@charset 'utf-8';
+
+@if $use-reset {
+	/* =============================================== */
+	/** Reset */
+	/* =============================================== */
+	html {
+		@include overflow-y(scroll);
+	}
+	body {
+		@include line-height(1);
+		@include color(#000);
+	}
+
+	@if $use-html5 {
+		/* html5doctor.com Reset Stylesheet v1.6.1
+		Last Updated: 2010-09-17 Author: Richard Clark - http://richclarkdesign.com Twitter: @rich-clark */
+
+		html, body, div, span, object, iframe,
+		h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+		abbr, address, cite, code,
+		del, dfn, em, img, ins, kbd, q, samp,
+		small, strong, sub, sup, var,
+		b, i,
+		dl, dt, dd, ol, ul, li,
+		fieldset, form, label, legend,
+		table, caption, tbody, tfoot, thead, tr, th, td,
+		article, aside, canvas, details, figcaption, figure,
+		footer, header, hgroup, menu, nav, section, summary,
+		time, mark, audio, video {
+			@include margin(0);
+			@include padding(0);
+			@include border(0);
+			@include outline(0);
+			@include font-size(100%);
+			@include vertical-align(top);
+			@include background(transparent);
+		}
+
+		article,aside,details,figcaption,figure,
+		footer,header,hgroup,menu,nav,section {
+			@include display(block);
+		}
+
+		nav ul,
+		ul{
+			@include list-style(none);
+			margin: 0;
+		}
+
+
+		blockquote, q {
+			@include quotes(none);
+		}
+
+		blockquote:before, blockquote::after,
+		q:before, q::after {
+			@include content('');
+			@include content(none);
+		}
+
+		a {
+			@include margin(0);
+			@include padding(0);
+			@include font-size(100%);
+			@include vertical-align(middle);
+			@include background(transparent);
+		}
+
+		// change colours to suit your needs
+		ins {
+			@include background-color(#ff9);
+			@include color(#000);
+			@include text-decoration(none);
+		}
+
+		// change colours to suit your needs
+		mark {
+			@include background-color(#ff9);
+			@include color(#000);
+			@include font-style(italic);
+			@include font-weight(bold);
+		}
+
+		del {
+			@include text-decoration(line-through);
+		}
+
+		abbr[title], dfn[title] {
+			@include border-bottom(1px dotted);
+			@include cursor(help);
+		}
+
+		table {
+			@include border-spacing(0);
+		}
+
+		// change border colour to suit your needs
+		hr {
+			@include display(block);
+			@include height(1px);
+			@include border(0);
+			@include border-top(1px solid #cccccc);
+			@include margin(1em 0);
+			@include padding(0);
+		}
+
+		input, select {
+			@include vertical-align(middle);
+		}
+
+	} @else {
+
+		body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td {
+			@include margin(0);
+			@include padding(0);
+		}
+		address,caption,cite,code,dfn,em,strong,th,var {
+			@include font-style(normal);
+		}
+		table {
+			@include border-spacing(0);
+		}
+		caption,th {
+			@include text-align(left);
+		}
+		q:before,q::after {
+			@include content('');
+		}
+		img,
+		object,
+		embed {
+			@include vertical-align(top);
+		}
+		hr,legend {
+			@include display(none);
+		}
+		h1,h2,h3,h4,h5,h6 {
+			@include font-size(100%);
+		}
+		img,abbr,acronym,fieldset {
+			@include border(0);
+		}
+		li {
+			@include list-style-type(none);
+		}
+	}
+
+	/* YUI 3.4.1 (build 4118) Copyright 2011 Yahoo! Inc. All rights reserved.
+	Licensed under the BSD License. http://yuilibrary.com/license/ */
+	// Percents could work for IE, but for backCompat purposes, we are using keywords.
+	// x-small is for IE6/7 quirks mode.
+	body {
+		@include font('13px/1.231 arial,helvetica,clean,sans-serif');
+		@include font-size(small, true); // for IE
+		@include font(x-small, true); // for IE in quirks mode
+	}
+
+	// Nudge down to get to 13px equivalent for these form elements
+	select, input, button, textarea {
+		@include font('99% arial,helvetica,clean,sans-serif');
+	}
+
+	// To help tables remember to inherit
+	table {
+		@include font-size(inherit);
+		@include font(100%);
+	}
+
+	// Bump up IE to get to 13px equivalent for these fixed-width elements
+	pre, code, kbd, samp, tt {
+		@include font-family(monospace);
+		@include font-size(108%, true);
+		@include line-height(100%);
+	}
+}

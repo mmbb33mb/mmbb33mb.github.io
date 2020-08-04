@@ -1,0 +1,47 @@
+@if $use-fontawesome {
+	// Bordered & Pulled
+	// -------------------------
+
+	.#{$fa-css-prefix}-border {
+		@include padding(0.2em 0.25em 0.15em);
+		@include border(solid 0.08em $fa-border-color);
+		@include border-radius(0.1em);
+	}
+
+	.#{$fa-css-prefix}-pull-left {
+		@include float(left);
+	}
+
+	.#{$fa-css-prefix}-pull-right {
+		@include float(right);
+	}
+
+	.#{$fa-css-prefix} {
+		&.#{$fa-css-prefix}-pull-left {
+			@include margin-right(0.3em);
+		}
+
+		&.#{$fa-css-prefix}-pull-right {
+			@include margin-left(0.3em);
+		}
+	}
+
+	/* Deprecated as of 4.4.0 */
+	.pull-right {
+		@include float(right);
+	}
+
+	.pull-left {
+		@include float(left);
+	}
+
+	.#{$fa-css-prefix} {
+		&.pull-left {
+			@include margin-right(0.3em);
+		}
+
+		&.pull-right {
+			@include margin-left(0.3em);
+		}
+	}
+}

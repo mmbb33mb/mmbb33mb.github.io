@@ -1,0 +1,946 @@
+@charset 'utf-8';
+
+@if $use-header-styling {
+	/* =============================================== */
+	/** HeaderStyling */
+	/* =============================================== */
+
+	.header-bottom-border {
+		@include padding-bottom(0%5em);
+		@include border-bottom(1px solid $header-style-border-base-color);
+	}
+
+	.header-bottom-border-lead {
+		@include padding-bottom(0.5em);
+		@include border-bottom(1px solid $header-style-border-base-color);
+
+		&:first-letter {
+			@include margin-right(0.1em);
+			@include font-size(1.5rem);
+		}
+	}
+
+	.header-bottom-double-border {
+		@include padding-bottom(0.5em);
+		@include border-bottom(3px double $header-style-border-base-color);
+	}
+
+	.header-top-bottom-border {
+		@include padding(0.75em 0);
+		@include border-top(1px solid $header-style-border-base-color);
+		@include border-bottom(1px solid $header-style-border-base-color);
+	}
+
+	.header-top-bottom-border-double {
+		@include position(relative);
+		@include padding(1em 0);
+
+		&::before,
+		&::after {
+			@include position(absolute);
+			@include left(0);
+			@include content("");
+			@include width(100%);
+			@include height(6px);
+			@include box-sizing(border-box);
+		}
+
+		&::before {
+			@include top(0);
+			@include border-top(2px solid $header-style-border-base-color);
+			@include border-bottom(1px solid $header-style-border-base-color);
+		}
+
+		&::after {
+			@include bottom(0);
+			@include border-top(1px solid $header-style-border-base-color);
+			@include border-bottom(2px solid $header-style-border-base-color);
+		}
+	}
+
+	.header-left-border {
+		@include padding(0.25em 0 0.25em 0.75em);
+		@include border-left(6px solid $header-style-border-base-color);
+	}
+
+	.header-left-bottom-border {
+		@include padding(0.25em 0 0.5em 0.75em);
+		@include border-left(6px solid $header-style-border-base-color);
+		@include border-bottom(1px solid $header-style-border-base-color);
+	}
+
+	.header-left-bottom-border-sub {
+		@include position(relative);
+		@include padding(0.25em 0 0.5em 0.75em);
+		@include border-left(6px solid $header-style-border-sub-color);
+
+		&::after {
+			@include position(absolute);
+			@include left(0);
+			@include bottom(0);
+			@include content("");
+			@include width(100%);
+			@include height(0);
+			@include border-bottom(1px solid $header-style-border-base-color);
+		}
+	}
+
+	.header-round-border {
+		@include padding(0.5em 0.75em);
+		@include border(1px solid $header-style-border-base-color);
+	}
+
+	.header-round-radius-border {
+		@include padding(0.5em 0.75em);
+		@include border(1px solid $header-style-border-base-color);
+		@include border-radius(4px);
+	}
+
+	.header-round-handwriting-border {
+		@include padding(1em);
+		@include border(3px solid $header-style-border-base-color);
+		@include border-radius(3em 0.7em 2em 0.7em/0.7em 2em 0.7em 3em);
+	}
+
+	.header-round-double-border {
+		@include margin(10px);
+		@include padding(10px);
+		@include text-align(center);
+		@include border(5px $header-style-border-base-color solid);
+		@include position(relative);
+		@include z-index(100);
+		@include background(#fff);
+
+		&::before {
+			@include content("");
+			@include position(absolute);
+			@include top(0);
+			@include right(0);
+			@include bottom(0);
+			@include left(0);
+			@include border(2px lighten($header-style-border-base-color, 10%) solid);
+			@include margin(2px);
+			@include display(block);
+			@include z-index(-1);
+			@include background(#fff);
+		}
+
+		&::after {
+			@include content("");
+			@include position(absolute);
+			@include top(0);
+			@include right(0);
+			@include bottom(0);
+			@include left(0);
+			@include margin(2px);
+			@include display(block);
+			@include z-index(-5);
+			@include background(#fff);
+		}
+	}
+
+	.header-round-border-corner-radius {
+		@include margin(10px);
+		@include padding(10px);
+		@include text-align(center);
+		@include box-shadow(0 0 0 5px $header-style-border-base-color inset);
+		@include position(relative);
+		@include z-index(100);
+		@include background(#fff);
+		@include overflow(hidden);
+
+		&::before {
+			@include border-radius(50%);
+			@include display(block);
+			@include position(absolute);
+			@include top(-10px);
+			@include left(-10px);
+			@include width(20px);
+			@include height(20px);
+			@include content("");
+			@include background-color($header-style-border-base-color);
+			@include box-shadow(0 0 0 2px #fff, 0 0 0 7px $header-style-border-base-color);
+		}
+
+		&::after {
+			@include border-radius(50%);
+			@include display(block);
+			@include position(absolute);
+			@include bottom(-10px);
+			@include right(-10px);
+			@include width(20px);
+			@include height(20px);
+			@include content("");
+			@include background-color(#ff6666);
+			@include box-shadow(0 0 0 2px #fff, 0 0 0 7px $header-style-border-base-color);
+		}
+	}
+
+	.header-round-border-corner-radius-all {
+		@include margin(10px);
+		@include padding(10px);
+		@include text-align(center);
+		@include box-shadow(0 0 0 3px $header-style-border-base-color inset, 0 0 0 5px rgba(lighten($header-style-border-base-color, 10%), 0.5) inset);
+		@include position(relative);
+		@include z-index(100);
+		@include background(#fff);
+		@include overflow(hidden);
+
+		&::before {
+			@include border-radius(50%);
+			@include display(block);
+			@include position(absolute);
+			@include top(-5px);
+			@include left(-5px);
+			@include width(10px);
+			@include height(10px);
+			@include content("");
+			@include background-color($header-style-border-base-color);
+			@include box-shadow(0 0 0 2px #fff, 0 0 0 5px $header-style-border-base-color, 0 0 0 7px rgba(lighten($header-style-border-base-color, 10%), 0.5));
+		}
+
+
+		&::after {
+			@include border-radius(50%);
+			@include display(block);
+			@include position(absolute);
+			@include bottom(-5px);
+			@include left(-5px);
+			@include width(10px);
+			@include height(10px);
+			@include content("");
+			@include background-color($header-style-border-base-color);
+			@include box-shadow(0 0 0 2px #fff, 0 0 0 5px $header-style-border-base-color, 0 0 0 7px rgba(lighten($header-style-border-base-color, 10%), 0.5));
+		}
+
+		span{
+
+			&::before {
+				@include border-radius(50%);
+				@include display(block);
+				@include position(absolute);
+				@include top(-5px);
+				@include right(-5px);
+				@include width(10px);
+				@include height(10px);
+				@include content("");
+				@include background-color($header-style-border-base-color);
+				@include box-shadow(0 0 0 2px #fff, 0 0 0 5px $header-style-border-base-color, 0 0 0 7px rgba(lighten($header-style-border-base-color, 10%), 0.5));
+			}
+
+			&::after {
+				@include border-radius(50%);
+				@include display(block);
+				@include position(absolute);
+				@include bottom(-5px);
+				@include right(-5px);
+				@include width(10px);
+				@include height(10px);
+				@include content("");
+				@include background-color($header-style-border-base-color);
+				@include box-shadow(0 0 0 2px #fff, 0 0 0 5px $header-style-border-base-color, 0 0 0 7px rgba(255,104,104,0.5));
+			}
+		}
+	}
+
+	.header-round-border-accent {
+		@include position(relative);
+		@include padding(0.75em 1em 0.75em 1.5em);
+		@include border(1px solid $header-style-border-base-color);
+
+		&::after {
+			@include position(absolute);
+			@include top(0.5em);
+			@include left(0.5em);
+			@include content("");
+			@include width(6px);
+			@include height(-webkit-calc(100% - 1em));
+			@include height(calc(100% - 1em));
+			@include background-color($header-style-border-sub-color);
+			@include border-radius(4px);
+		}
+	}
+
+	.header-bg {
+		@include padding(0.5em 0.75em);
+		@include background-color($header-style-border-base-color);
+	}
+
+	.header-bg-radius {
+		@include padding(0.5em 0.75em);
+		@include background-color($header-style-border-base-color);
+		@include border-radius(6px);
+	}
+
+	.header-bg-bottom-border {
+		@include padding(0.5em 0.75em);
+		@include background-color($header-style-border-base-color);
+		@include border-bottom(1px solid $header-style-border-base-color);
+	}
+
+	.header-bg-top-bottom-border {
+		@include padding(0.5em 0.75em);
+		@include background-color(lighten($header-style-border-base-color, 10%));
+		@include border-top(1px solid $header-style-border-base-color);
+		@include border-bottom(1px solid $header-style-border-base-color);
+	}
+
+	.header-bg-left-border {
+		@include padding(0.5em 0.75em);
+		@include background-color(lighten($header-style-border-base-color, 10%));
+		@include border-left(6px solid $header-style-border-base-color);
+	}
+
+	.header-bg-round-double-border {
+		@include padding(0.5em 0.75em);
+		@include background-color(lighten($header-style-border-base-color, 10%));
+		@include border(3px double $header-style-border-base-color);
+	}
+
+	.header-repletion {
+		@include padding(0.5em);
+		@include border-bottom(1px solid $header-style-border-base-color);
+
+		span {
+			@include display(block);
+			@include margin-bottom(0.2em);
+			@include color(#aaa);
+			@include font-size(0.9rem);
+		}
+	}
+
+	.header-bg-line {
+		@include overflow(hidden);
+		@include text-align(center);
+
+		span {
+			@include position(relative);
+			@include display(inline-block);
+			@include margin(0 2.5em);
+			@include padding(0 1em);
+			@include background-color($base-bg-color);
+			@include text-align(left);
+
+			&::before,
+			&::after {
+				@include position(absolute);
+				@include top(50%);
+				@include content("");
+				@include width(400%);
+				@include height(1px);
+				@include background-color($header-style-border-base-color);
+			}
+
+			&::before {
+				@include right(100%);
+			}
+
+			&::after {
+				@include left(100%);
+			}
+		}
+	}
+
+	.header-bg-line-fade {
+		@include position(relative);
+		@include text-align(center);
+
+		span {
+			@include display(inline-block);
+			@include margin(0 4em);
+			@include padding(0 1em);
+			@include background-color($base-bg-color);
+			@include text-align(left);
+		}
+
+		&::before {
+			@include position(absolute);
+			@include top(50%);
+			@include z-index(-1);
+			@include content("");
+			@include display(block);
+			@include width(100%);
+			@include height(1px);
+			@include background($header-style-border-base-color);
+			@include background(-webkit-linear-gradient(-45deg, transparent, $header-style-border-base-color 10%, $header-style-border-base-color 90%, transparent));
+			@include background(linear-gradient(-45deg, transparent, $header-style-border-base-color 10%, $header-style-border-base-color 90%, transparent));
+		}
+	}
+
+	.header-bottom-second-color {
+		@include position(relative);
+		@include padding-bottom(0.5em);
+		@include border-bottom(4px solid $header-style-border-base-color);
+
+		&::after {
+			@include position(absolute);
+			@include bottom(-4px);
+			@include left(0);
+			@include z-index(2);
+			@include content("");
+			@include width(20%);
+			@include height(4px);
+			@include background-color($header-style-border-sub-color);
+		}
+	}
+
+	.header-bottom-depth-border {
+		@include position(relative);
+		@include padding-bottom(0.5em);
+
+		&::after {
+			@include position(absolute);
+			@include bottom(0);
+			@include left(0);
+			@include content("");
+			@include width(100%);
+			@include height(0);
+			@include border-top(1px solid $header-style-border-base-color);
+			@include border-bottom(1px solid #fff);
+		}
+	}
+
+	.header-left-second-color {
+		@include position(relative);
+		@include padding(0.25em 0 0.5em 0.75em);
+		@include border-left(6px solid $header-style-border-base-color);
+
+		&::before {
+			@include position(absolute);
+			@include left(-6px);
+			@include bottom(0);
+			@include content("");
+			@include width(6px);
+			@include height(50%);
+			@include background-color($header-style-border-sub-color);
+		}
+
+		&::after {
+			@include position(absolute);
+			@include left(0);
+			@include bottom(0);
+			@include content("");
+			@include width(100%);
+			@include height(0);
+			@include border-bottom(1px solid $header-style-border-base-color);
+		}
+	}
+
+	.header-popup {
+		@include position(relative);
+		@include padding(0.5em 0.75em);
+		@include background-color($header-style-border-base-color);
+		@include border-radius(6px);
+
+		&::after {
+			@include position(absolute);
+			@include top(100%);
+			@include left(30px);
+			@include content("");
+			@include width(0);
+			@include height(0);
+			@include border(10px solid transparent);
+			@include border-top(15px solid $header-style-border-base-color);
+		}
+	}
+
+	.header-popup-depth {
+		@include position(relative);
+		@include padding(0.5em 0.75em);
+		@include background-color($header-style-border-base-color);
+		@include border-radius(6px);
+		@include box-shadow(2px 2px 4px rgba(0, 0, 0, 0.1) inset);
+
+		&::after {
+			@include position(absolute);
+			@include top(100%);
+			@include left(30px);
+			@include content("");
+			@include width(0);
+			@include height(0);
+			@include border(10px solid transparent);
+			@include border-top(15px solid $header-style-border-base-color);
+		}
+	}
+
+	.header-popup-border-only {
+		@include position(relative);
+		@include padding(0.5em 0.75em);
+		@include background-color($base-bg-color);
+		@include border(1px solid $header-style-border-base-color);
+		@include border-radius(6px);
+
+		&::before,
+		&::after {
+			@include position(absolute);
+			@include top(100%);
+			@include left(30px);
+			@include content("");
+			@include height(0);
+			@include width(0);
+			@include border(10px solid transparent);
+		}
+
+		&::before {
+			@include border-top(15px solid $header-style-border-base-color);
+		}
+
+		&::after {
+			@include margin-top(-2px);
+			@include border-top(15px solid #fff);
+		}
+	}
+
+	.header-box-type {
+		@include position(relative);
+		@include padding(0.5em 0.75em);
+		@include background-color($header-style-border-base-color);
+
+		&::after {
+			@include position(absolute);
+			@include top(-20px);
+			@include left(0);
+			@include content("");
+			@include width(100%);
+			@include height(0);
+			@include border(10px solid transparent);
+			@include border-bottom-color(lighten($header-style-border-base-color, 10%));
+		}
+	}
+
+	.header-ribbon {
+		@include position(relative);
+		@include padding(0.75em 1em);
+		@include background-color($header-style-border-base-color);
+
+		&::before,
+		&::after {
+			@include position(absolute);
+			@include top(100%);
+			@include content("");
+			@include border-style(solid);
+			@include border-color(transparent);
+		}
+
+		&::before {
+			@include left(0);
+			@include border-width(0 15px 15px 0);
+			@include border-right-color(darken($header-style-border-base-color, 10%));
+		}
+
+		&::after {
+			@include right(0);
+			@include border-style(solid);
+			@include border-width(15px 15px 0 0);
+			@include border-top-color(darken($header-style-border-base-color, 10%));
+		}
+	}
+
+	.header-ribbon2 {
+		@include position(relative);
+		@include padding(0.75em 1em);
+		@include background-color($header-style-border-base-color);
+
+		&::before,
+		&::after {
+			@include position(absolute);
+			@include content("");
+			@include border-style(solid);
+			@include border-color(transparent);
+		}
+
+		&::before {
+			@include top(100%);
+			@include left(0);
+			@include border-width(0 15px 15px 0);
+			@include border-right-color(darken($header-style-border-base-color, 10%));
+		}
+
+		&::after {
+			@include top(-15px);
+			@include right(0);
+			@include border-style(solid);
+			@include border-width(0 15px 15px 0);
+			@include border-bottom-color(darken($header-style-border-base-color, 10%));
+		}
+	}
+
+	.header-ribbon2-dashed {
+		@include position(relative);
+		@include padding(0.3em);
+		@include background-color($header-style-border-base-color);
+
+		span {
+			@include display(block);
+			@include padding(0.75em 1em);
+			@include border(1px dashed darken($header-style-border-base-color, 10%));
+		}
+
+		&::before,
+		&::after {
+			@include position(absolute);
+			@include content("");
+			@include border-style(solid);
+			@include border-color(transparent);
+		}
+
+		&::before {
+			@include top(100%);
+			@include left(0);
+			@include border-width(0 15px 15px 0);
+			@include border-right-color(darken($header-style-border-base-color, 10%));
+		}
+
+		&::after {
+			@include top(-15px);
+			@include right(0);
+			@include border-style(solid);
+			@include border-width(0 15px 15px 0);
+			@include border-bottom-color(darken($header-style-border-base-color, 10%));
+		}
+	}
+
+	.header-ribbon3 {
+		@include position(relative);
+		@include height(50px);
+		@include line-height(50px);
+		@include padding(0 1em);
+		@include background-color($header-style-border-base-color);
+
+		&::before,
+		&::after {
+			@include position(absolute);
+			@include content("");
+		}
+
+		&::before {
+			@include top(100%);
+			@include left(0);
+			@include border-width(0 15px 15px 0);
+			@include border-style(solid);
+			@include border-color(transparent);
+			@include border-right-color(darken($header-style-border-base-color, 10%));
+		}
+
+		&::after {
+			@include top(0);
+			@include right(0);
+			@include z-index(2);
+			@include border-width(25px 20px);
+			@include border-style(solid);
+			@include border-color(transparent);
+			@include border-right-color($base-bg-color)
+		}
+	}
+
+	.header-dog-ear {
+		@include position(relative);
+		@include padding(1em);
+		@include background-color($header-style-border-base-color);
+
+		&::after {
+			@include position(absolute);
+			@include top(0);
+			@include right(0);
+			@include content("");
+			@include width(0);
+			@include border-width(0 16px 16px 0);
+			@include border-style(solid);
+			@include border-color($base-bg-color $base-bg-color darken($header-style-border-base-color, 10%) darken($header-style-border-base-color, 10%));
+			@include box-shadow(-1px 1px 2px rgba(0, 0, 0, 0.1));
+		}
+	}
+
+	.header-dog-ear2 {
+		@include position(relative);
+		@include padding(1em 4em 1em 1em);
+		@include grantPrefix(background
+							 , #{linear-gradient(-155deg, rgba(0, 0, 0, 0) 1.5em, $header-style-border-base-color 0%)}
+							 , false, -webkit, false, false, false, official
+							);
+		@include border-radius(6px);
+
+		&::after {
+			@include position(absolute);
+			@include top(0);
+			@include right(0);
+			@include content("");
+			@include width(1.65507em);
+			@include height(3.5493em);
+			@include grantPrefixPropValue(background
+										 , #{linear-gradient(to left bottom, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.2))}
+										 , false, -webkit, false, false, false, official
+										);
+			@include border-bottom-left-radius(6px);
+			@include box-shadow(-0.2em 0.2em 0.3em -0.1em rgba(0, 0, 0, 0.15));
+			@include transform(translateY(-1.89424em) rotate(-40deg));
+			@include transform-origin(bottom right);
+		}
+	}
+
+	.header-page-curl {
+		@include position(relative);
+		@include padding(0.5em 0.75em);
+		@include background-color($header-style-border-base-color);
+
+		&::before,
+		&::after {
+			@include position(absolute);
+			@include bottom(8px);
+			@include z-index(-1);
+			@include content("");
+			@include width(30%);
+			@include height(50%);
+			@include box-shadow(0 10px 15px rgba(0, 0, 0, 0.2));
+		}
+
+		&::before {
+			@include transform(rotate(-3deg));
+			@include left(0.3em);
+		}
+
+		&::after {
+			@include transform(rotate(3deg));
+			@include right(0.3em);
+		}
+	}
+
+	.header-box-shadow {
+		@include padding(0.5em 0.75em);
+		@include background-color($header-style-border-base-color);
+		@include box-shadow(0 2px 6px rgba(0, 0, 0, 0.15));
+	}
+
+	.header-box-shadow2 {
+		@include padding(0.5em 0.75em);
+		@include background-color($header-style-border-base-color);
+		@include border(1px solid darken($header-style-border-base-color, 10%));
+		@include box-shadow(1px 1px 0 rgba(255, 255, 255, 0.5) inset);
+	}
+
+	.header-box-shadow3 {
+		@include padding(0.5em 0.75em);
+		@include background-color($header-style-border-base-color);
+		@include border(1px solid darken($header-style-border-base-color, 10%));
+		@include box-shadow(1px 1px 0 rgba(255, 255, 255, 0.5) inset, -1px -1px 0 rgba(100, 100, 100, 0.1) inset);
+	}
+
+	.header-cut-paper {
+		@include padding(0.5em 0.75em);
+		@include background($header-style-border-base-color);
+		@include border-top(1px dashed darken($header-style-border-base-color, 10%));
+		@include border-bottom(1px dashed darken($header-style-border-base-color, 10%));
+		@include box-shadow(0 7px 10px -5px rgba(0, 0, 0, 0.1) inset);
+	}
+
+	.header-cut-paper2 {
+		@include position(relative);
+		@include padding(0.5em 0.75em);
+		@include background($header-style-border-base-color);
+		@include border-top(1px dashed darken($header-style-border-base-color, 10%));
+		@include border-bottom(1px dashed darken($header-style-border-base-color, 10%));
+		@include box-shadow(0 7px 10px -5px rgba(0, 0, 0, 0.1) inset);
+
+		&::after {
+			@include position(absolute);
+			@include bottom(-9px);
+			@include right(10%);
+			@include content('\002702');
+			@include color(#aaa);
+			@include font-size(1.8rem);
+			@include line-height(1);
+		}
+	}
+
+	.header-counter-wrapper {
+		@include counter-reset(titleNum);
+
+		.header-counter-inner {
+			@include counter-increment(titleNum);
+
+			.header-counter {
+				@include position(relative);
+				@include padding(0 0 0.5em 2em);
+				@include border-bottom(1px solid $header-style-border-base-color);
+
+				&::before {
+					@include position(absolute);
+					@include top(0);
+					@include left(0);
+					@include content(counter(titleNum));
+					@include width(28px);
+					@include height(28px);
+					@include line-height(28px);
+					@include background-color($header-style-border-base-color);
+					@include border-radius(100%);
+					@include color($base-font-color);
+					@include font-size(0.9rem);
+					@include text-align(center);
+				}
+			}
+		}
+	}
+
+	.header-marker-bottom {
+		@include position(relative);
+		@include padding(0 0.4em 0.1em);
+
+		&::after {
+			@include position(absolute);
+			@include bottom(0);
+			@include left(0);
+			@include z-index(-1);
+			@include content("");
+			@include width(100%);
+			@include height(10px);
+			@include background-color($header-style-border-base-color);
+		}
+	}
+
+	.header-graduation {
+		@include padding(0.5em 0.75em);
+		@include grantPrefixValue(background
+								  , #{linear-gradient(top, lighten($header-style-border-base-color, 10%) 0%, $header-style-border-base-color 100%)}
+								  , false, -webkit, false, false, false, official
+								);
+		@include color($base-font-color);
+		@include text-shadow(1px 1px 1px rgba(0, 0, 0, 0.3));
+	}
+
+	.header-stripe {
+		@include padding(0.5em 0.75em);
+		@include grantPrefixValue(background
+								  , #{repeating-linear-gradient(45deg, $header-style-border-base-color, $header-style-border-base-color 5px, lighten($header-style-border-base-color, 10%) 5px, lighten($header-style-border-base-color, 10%) 10px)}
+								  , false, -webkit, false, false, false, official
+								);
+		@include color($base-font-color);
+		@include text-shadow(1px 1px 1px rgba(0, 0, 0, 0.3));
+	}
+
+	.header-stripe-sub {
+		@include position(relative);
+		@include padding-bottom(0.5em);
+
+		&::before,
+		&::after {
+			@include position(absolute);
+			@include bottom(-4px);
+			@include left(0);
+			@include content("");
+			@include height(4px);
+		}
+
+		&::before {
+			@include z-index(2);
+			@include width(15%);
+			@include background-color($header-style-border-sub-color);
+		}
+
+		&::after {
+			@include width(100%);
+			@include grantPrefixValue(background
+									  , #{repeating-linear-gradient(45deg, lighten($header-style-border-base-color, 10%), lighten($header-style-border-base-color, 10%) 2px, $header-style-border-base-color 2px, $header-style-border-base-color 4px)}
+									  , false, -webkit, false, false, false, official
+									);
+		}
+	}
+
+	.header-top-second-border {
+		@include position(relative);
+		@include padding-top(0.75em);
+		@include border-top(1px solid $header-style-border-sub-color);
+
+		&::after {
+			@include position(absolute);
+			@include top(-2px);
+			@include left(0);
+			@include z-index(2);
+			@include content("");
+			@include width(20%);
+			@include height(3px);
+			@include background-color($header-style-border-base-color);
+		}
+	}
+
+	.header-gradation-border {
+		@include padding(0.75em 1em);
+		@include border(1px solid $header-style-border-base-color);
+		@include border-top(3px solid $header-style-border-sub-color);
+		@include grantPrefixValue(background
+								  , #{linear-gradient(to bottom, #fff 0%, #f0f0f0 100%)}
+								  , false, -webkit, false, false, false, official
+								);
+	}
+
+	.header-gradation-border-mark {
+		@include position(relative);
+		@include padding(0.75em 1em 0.75em 2em);
+		@include border(1px solid $header-style-border-base-color);
+		@include border-top(3px solid $header-style-border-sub-color);
+		@include grantPrefixValue(background
+								  , #{linear-gradient(to bottom, #fff 0%, #f0f0f0 100%)}
+								  , false, -webkit, false, false, false, official
+								);
+		@include box-shadow(0 -1px 0 rgba(255, 255, 255, 1) inset);
+
+		&::after {
+			@include position(absolute);
+			@include top(1em);
+			@include left(0.6em);
+			@include z-index(2);
+			@include content("");
+			@include width(10px);
+			@include height(10px);
+			@include border(3px solid $header-style-border-sub-color);
+			@include border-radius(100%);
+		}
+	}
+
+	.header-bottom-mark {
+		@include position(relative);
+		@include padding(0 0.5em 0.5em 1.7em);
+		@include border-bottom(1px solid $header-style-border-base-color);
+
+		&::after {
+			@include position(absolute);
+			@include top(0.4em);
+			@include left(0.4em);
+			@include z-index(2);
+			@include content("");
+			@include width(12px);
+			@include height(12px);
+			@include background-color($header-style-border-base-color);
+			@include transform(totate(45deg));
+		}
+	}
+
+	.header-bottom-double-mark {
+		@include position(relative);
+		@include padding(0 0.5em 0.5em 2em);
+		@include border-bottom(1px solid $header-style-border-base-color);
+
+		&::before,
+		&::after {
+			@include position(absolute);
+			@include content("");
+			@include border-radius(100%);
+		}
+
+		&::before {
+			@include top(0.2em);
+			@include left(0.2em);
+			@include z-index(2);
+			@include width(18px);
+			@include height(18px);
+			@include background(rgba(150, 150, 150, 0.5));
+		}
+
+		&::after {
+			@include top(0.7em);
+			@include left(0.7em);
+			@include width(13px);
+			@include height(13px);
+			@include background(rgba(210, 210, 210, 0.5));
+		}
+	}
+}

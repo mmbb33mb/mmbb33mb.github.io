@@ -226,7 +226,10 @@
     .mainContainer .mainContainerInner .mainSection.blog li .image_box .thumb img {
       transform: scale(1);
       transition-duration: 0.5s;
-      opacity: .8; }
+      opacity: .8;
+      object-fit: cover;
+      height: 100%;
+      width: 100%; }
       @media (max-width: 959px) {
         .mainContainer .mainContainerInner .mainSection.blog li .image_box .thumb img {
           margin-top: 0; } }
